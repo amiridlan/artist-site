@@ -1,0 +1,496 @@
+[
+  {
+    "id": "release-001",
+    "title": "Neon Dreams",
+    "slug": "neon-dreams",
+    "type": "single",
+    "coverImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1000&h=1000&fit=crop",
+    "description": "KLP48's most ambitious single featuring all 48 members. A fusion of cyberpunk aesthetics and Malaysian culture.",
+    "releaseDate": "2026-02-14T00:00:00Z",
+    "preOrderDate": "2026-01-15T00:00:00Z",
+    "tracklist": [
+      {
+        "number": 1,
+        "title": "Neon Dreams",
+        "duration": 245,
+        "featured": true
+      },
+      {
+        "number": 2,
+        "title": "Electric Hearts",
+        "duration": 223
+      },
+      {
+        "number": 3,
+        "title": "Neon Dreams (Instrumental)",
+        "duration": 245
+      }
+    ],
+    "editions": [
+      {
+        "name": "Regular Edition",
+        "price": 45,
+        "items": ["CD", "1 Random Photo Card (48 types)", "Lyric Booklet"],
+        "inStock": true
+      },
+      {
+        "name": "Limited Edition",
+        "price": 89,
+        "items": ["CD", "DVD (MV + Making)", "Photo Book (48 pages)", "2 Random Photo Cards", "Holographic Cover"],
+        "inStock": true
+      },
+      {
+        "name": "Theater Edition",
+        "price": 120,
+        "items": ["CD", "Theater Performance DVD", "Deluxe Photo Book (96 pages)", "Complete Photo Card Set (48 cards)", "Handshake Event Ticket", "Collectible Box"],
+        "inStock": true
+      }
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      }
+    ],
+    "formats": ["cd", "digital"],
+    "featured": true,
+    "centerMember": "member-002",
+    "tags": ["2026", "title track", "full group"],
+    "sales": 0
+  },
+  {
+    "id": "release-002",
+    "title": "Malaysia Unite",
+    "slug": "malaysia-unite",
+    "type": "single",
+    "coverImage": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1000&h=1000&fit=crop",
+    "description": "A patriotic anthem celebrating Malaysian diversity and unity, released for Malaysia Day 2025.",
+    "releaseDate": "2025-08-31T00:00:00Z",
+    "tracklist": [
+      {
+        "number": 1,
+        "title": "Malaysia Unite",
+        "duration": 268,
+        "featured": true
+      },
+      {
+        "number": 2,
+        "title": "Tanah Air Ku",
+        "duration": 234
+      },
+      {
+        "number": 3,
+        "title": "Malaysia Unite (Acoustic Ver.)",
+        "duration": 256
+      }
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      },
+      {
+        "platform": "amazon-music",
+        "url": "https://music.amazon.com/albums/example"
+      }
+    ],
+    "formats": ["cd", "digital"],
+    "featured": true,
+    "centerMember": "member-001",
+    "tags": ["malaysia day", "patriotic", "2025"],
+    "sales": 87654
+  },
+  {
+    "id": "release-003",
+    "title": "First Flight",
+    "slug": "first-flight",
+    "type": "album",
+    "coverImage": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1000&h=1000&fit=crop",
+    "description": "KLP48's debut full album featuring 12 original tracks showcasing each team's unique color.",
+    "releaseDate": "2021-12-25T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "Opening Flight", "duration": 67},
+      {"number": 2, "title": "Dream Begin", "duration": 243, "featured": true},
+      {"number": 3, "title": "Shining Stars", "duration": 228},
+      {"number": 4, "title": "Unity Dance", "duration": 256},
+      {"number": 5, "title": "Team K Anthem", "duration": 234},
+      {"number": 6, "title": "Heart to Heart", "duration": 267},
+      {"number": 7, "title": "Neverending Story", "duration": 298},
+      {"number": 8, "title": "Team L Serenade", "duration": 245},
+      {"number": 9, "title": "Passion Fire", "duration": 223},
+      {"number": 10, "title": "Team P Energy", "duration": 239},
+      {"number": 11, "title": "All Together Now", "duration": 287},
+      {"number": 12, "title": "Future Calling", "duration": 312}
+    ],
+    "editions": [
+      {
+        "name": "Regular Edition",
+        "price": 65,
+        "items": ["CD", "Lyric Booklet", "1 Random Photo Card"],
+        "inStock": true
+      },
+      {
+        "name": "Limited Edition A",
+        "price": 120,
+        "items": ["CD", "DVD (All MVs)", "Photo Book (120 pages)", "Poster", "3 Photo Cards"],
+        "inStock": false
+      },
+      {
+        "name": "Limited Edition B",
+        "price": 120,
+        "items": ["CD", "Documentary DVD", "Member Interview Book", "Special Packaging"],
+        "inStock": false
+      }
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      }
+    ],
+    "formats": ["cd", "digital", "vinyl"],
+    "featured": false,
+    "centerMember": "member-001",
+    "tags": ["debut", "full album", "2021"],
+    "sales": 156789
+  },
+  {
+    "id": "release-004",
+    "title": "Dream Catchers",
+    "slug": "dream-catchers",
+    "type": "single",
+    "coverImage": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1000&h=1000&fit=crop",
+    "description": "Team L's ethereal single showcasing their elegant performance style.",
+    "releaseDate": "2025-05-10T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "Dream Catchers", "duration": 223, "featured": true},
+      {"number": 2, "title": "Moonlight Waltz", "duration": 198},
+      {"number": 3, "title": "Dream Catchers (Dance Ver.)", "duration": 223}
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      }
+    ],
+    "formats": ["cd", "digital"],
+    "featured": false,
+    "centerMember": "member-003",
+    "tags": ["team l", "elegant", "2025"],
+    "sales": 67543
+  },
+  {
+    "id": "release-005",
+    "title": "Heart Signal",
+    "slug": "heart-signal",
+    "type": "single",
+    "coverImage": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1000&h=1000&fit=crop",
+    "description": "Team K's powerful single featuring dynamic choreography and strong vocals.",
+    "releaseDate": "2025-06-28T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "Heart Signal", "duration": 187, "featured": true},
+      {"number": 2, "title": "Unstoppable", "duration": 201},
+      {"number": 3, "title": "Heart Signal (Remix)", "duration": 203}
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      }
+    ],
+    "formats": ["cd", "digital"],
+    "featured": false,
+    "centerMember": "member-001",
+    "tags": ["team k", "powerful", "2025"],
+    "sales": 72198
+  },
+  {
+    "id": "release-006",
+    "title": "Starlight Promise",
+    "slug": "starlight-promise",
+    "type": "ep",
+    "coverImage": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1000&h=1000&fit=crop",
+    "description": "A 6-track EP featuring collaboration between all three teams with magical theme.",
+    "releaseDate": "2025-07-15T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "Starlight Promise", "duration": 198, "featured": true},
+      {"number": 2, "title": "Constellation Dance", "duration": 212},
+      {"number": 3, "title": "Midnight Wishes", "duration": 234},
+      {"number": 4, "title": "Galaxy Road", "duration": 189},
+      {"number": 5, "title": "Promise Ring", "duration": 221},
+      {"number": 6, "title": "Starlight Promise (Ballad Ver.)", "duration": 245}
+    ],
+    "editions": [
+      {
+        "name": "Regular Edition",
+        "price": 55,
+        "items": ["CD", "Booklet", "1 Photo Card"],
+        "inStock": true
+      },
+      {
+        "name": "Limited Edition",
+        "price": 85,
+        "items": ["CD", "DVD", "Photo Book", "2 Photo Cards", "Poster"],
+        "inStock": true
+      }
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      }
+    ],
+    "formats": ["cd", "digital"],
+    "featured": false,
+    "centerMember": "member-004",
+    "tags": ["ep", "collaboration", "magical"],
+    "sales": 54321
+  },
+  {
+    "id": "release-007",
+    "title": "Midnight Sun",
+    "slug": "midnight-sun",
+    "type": "single",
+    "coverImage": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=1000&h=1000&fit=crop",
+    "description": "Team P's dreamy night-themed single shot in Penang's historic Georgetown.",
+    "releaseDate": "2025-03-22T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "Midnight Sun", "duration": 234, "featured": true},
+      {"number": 2, "title": "Penang Nights", "duration": 198},
+      {"number": 3, "title": "Midnight Sun (Piano Ver.)", "duration": 245}
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      }
+    ],
+    "formats": ["cd", "digital"],
+    "featured": false,
+    "centerMember": "member-004",
+    "tags": ["team p", "penang", "2025"],
+    "sales": 61234
+  },
+  {
+    "id": "release-008",
+    "title": "Summer Festival 2025",
+    "slug": "summer-festival-2025",
+    "type": "digital-single",
+    "coverImage": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1000&h=1000&fit=crop",
+    "description": "Digital-only summer anthem celebrating KLP48's first summer festival.",
+    "releaseDate": "2025-04-01T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "Summer Festival", "duration": 201, "featured": true},
+      {"number": 2, "title": "Sunshine Vibes", "duration": 187}
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      },
+      {
+        "platform": "amazon-music",
+        "url": "https://music.amazon.com/albums/example"
+      }
+    ],
+    "formats": ["digital"],
+    "featured": false,
+    "centerMember": "member-002",
+    "tags": ["summer", "festival", "digital only"],
+    "sales": 98765
+  },
+  {
+    "id": "release-009",
+    "title": "Second Chapter",
+    "slug": "second-chapter",
+    "type": "album",
+    "coverImage": "https://images.unsplash.com/photo-1512733596533-7b00ccf8ebaf?w=1000&h=1000&fit=crop",
+    "description": "KLP48's sophomore album showcasing their growth and maturity with 14 original tracks.",
+    "releaseDate": "2023-06-15T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "New Beginning", "duration": 56},
+      {"number": 2, "title": "Evolution", "duration": 267, "featured": true},
+      {"number": 3, "title": "Breaking Limits", "duration": 234},
+      {"number": 4, "title": "Together Forever", "duration": 298},
+      {"number": 5, "title": "Chapter Two", "duration": 245},
+      {"number": 6, "title": "Rising Up", "duration": 223},
+      {"number": 7, "title": "Melody of Us", "duration": 278},
+      {"number": 8, "title": "New Horizon", "duration": 256},
+      {"number": 9, "title": "Synergy", "duration": 234},
+      {"number": 10, "title": "Harmony", "duration": 267},
+      {"number": 11, "title": "Legacy", "duration": 289},
+      {"number": 12, "title": "Tomorrow's Dream", "duration": 312},
+      {"number": 13, "title": "Final Message", "duration": 198},
+      {"number": 14, "title": "Second Chapter (Finale)", "duration": 345}
+    ],
+    "editions": [
+      {
+        "name": "Regular Edition",
+        "price": 75,
+        "items": ["CD", "Lyric Booklet", "2 Random Photo Cards"],
+        "inStock": true
+      },
+      {
+        "name": "Limited Edition",
+        "price": 135,
+        "items": ["2 CDs", "Blu-ray (Concert + Documentary)", "Photo Book (150 pages)", "Poster Set", "Special Box"],
+        "inStock": true
+      }
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      }
+    ],
+    "formats": ["cd", "digital", "vinyl"],
+    "featured": false,
+    "centerMember": "member-003",
+    "tags": ["album", "2023", "growth"],
+    "sales": 198765
+  },
+  {
+    "id": "release-010",
+    "title": "Winter Wonderland",
+    "slug": "winter-wonderland",
+    "type": "digital-single",
+    "coverImage": "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1000&h=1000&fit=crop",
+    "description": "A festive digital single celebrating the holiday season with KLP48.",
+    "releaseDate": "2024-12-01T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "Winter Wonderland", "duration": 215, "featured": true},
+      {"number": 2, "title": "Snow Crystal", "duration": 189}
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      }
+    ],
+    "formats": ["digital"],
+    "featured": false,
+    "centerMember": "member-006",
+    "tags": ["winter", "holiday", "2024"],
+    "sales": 76543
+  },
+  {
+    "id": "release-011",
+    "title": "Brave Hearts",
+    "slug": "brave-hearts",
+    "type": "single",
+    "coverImage": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1000&h=1000&fit=crop",
+    "description": "An empowering single about courage and determination featuring all 48 members.",
+    "releaseDate": "2024-09-20T00:00:00Z",
+    "tracklist": [
+      {"number": 1, "title": "Brave Hearts", "duration": 256, "featured": true},
+      {"number": 2, "title": "Never Give Up", "duration": 234},
+      {"number": 3, "title": "Warrior Spirit", "duration": 221},
+      {"number": 4, "title": "Brave Hearts (Orchestra Ver.)", "duration": 278}
+    ],
+    "editions": [
+      {
+        "name": "Regular Edition",
+        "price": 48,
+        "items": ["CD", "Booklet", "1 Photo Card"],
+        "inStock": true
+      },
+      {
+        "name": "Limited Edition",
+        "price": 92,
+        "items": ["CD", "DVD", "Photo Book", "3 Photo Cards", "Sticker Set"],
+        "inStock": true
+      }
+    ],
+    "streamingLinks": [
+      {
+        "platform": "spotify",
+        "url": "https://open.spotify.com/album/example"
+      },
+      {
+        "platform": "apple-music",
+        "url": "https://music.apple.com/album/example"
+      },
+      {
+        "platform": "youtube-music",
+        "url": "https://music.youtube.com/playlist?list=example"
+      }
+    ],
+    "formats": ["cd", "digital"],
+    "featured": false,
+    "centerMember": "member-001",
+    "tags": ["empowering", "2024", "full group"],
+    "sales": 89234
+  }
+]
