@@ -1,0 +1,1018 @@
+[
+  {
+    "id": "member-001",
+    "name": {
+      "english": "Mei Lin Tan",
+      "native": "陈美玲"
+    },
+    "nickname": "Mei",
+    "photo": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "1st",
+    "position": "Captain",
+    "birthdate": "2001-03-15",
+    "age": 25,
+    "height": 165,
+    "bloodType": "A",
+    "hometown": "Kuala Lumpur",
+    "hobbies": ["Singing", "Dance", "Photography"],
+    "specialties": ["Leadership", "Vocal", "MC"],
+    "bio": "Captain of Team K and founding member of KLP48. Known for her powerful vocals and charismatic leadership. Mei Lin has been the face of the group since its inception and continues to inspire younger generations.",
+    "joinDate": "2021-01-01",
+    "status": "active",
+    "color": "#FF69B4",
+    "social": {
+      "twitter": "https://twitter.com/meilin_klp48",
+      "instagram": "https://instagram.com/meilin_klp48"
+    },
+    "stats": {
+      "centerPositions": 12,
+      "performances": 150,
+      "fanMeetings": 45
+    },
+    "featured": true
+  },
+  {
+    "id": "member-002",
+    "name": {
+      "english": "Aisha Rahman",
+      "native": "Aisha Rahman"
+    },
+    "nickname": "Aisha",
+    "photo": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "3rd",
+    "position": "Center",
+    "birthdate": "2004-07-22",
+    "age": 22,
+    "height": 162,
+    "bloodType": "O",
+    "hometown": "Kuala Lumpur",
+    "hobbies": ["Dancing", "Fashion", "Cooking"],
+    "specialties": ["Dance", "Variety Shows"],
+    "bio": "Current center for 'Neon Dreams'. Aisha's journey from shy trainee to center position has inspired countless fans. Her dedication and growth embody the KLP48 spirit.",
+    "joinDate": "2022-06-15",
+    "status": "active",
+    "color": "#00FF9F",
+    "social": {
+      "instagram": "https://instagram.com/aisha_klp48",
+      "tiktok": "https://tiktok.com/@aisha_klp48"
+    },
+    "stats": {
+      "centerPositions": 3,
+      "performances": 85,
+      "fanMeetings": 22
+    },
+    "featured": true
+  },
+  {
+    "id": "member-003",
+    "name": {
+      "english": "Siti Nurhaliza",
+      "native": "Siti Nurhaliza"
+    },
+    "nickname": "Siti",
+    "photo": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "2nd",
+    "position": "Vice Captain",
+    "birthdate": "2003-01-05",
+    "age": 23,
+    "height": 158,
+    "bloodType": "B",
+    "hometown": "Johor Bahru",
+    "hobbies": ["Singing", "Guitar", "Reading"],
+    "specialties": ["Vocal", "Songwriting"],
+    "bio": "Vice Captain of Team L with exceptional vocal talent. Siti has written several original songs for KLP48 and is known for her sweet voice and warm personality.",
+    "joinDate": "2021-08-20",
+    "status": "active",
+    "color": "#B026FF",
+    "social": {
+      "twitter": "https://twitter.com/siti_klp48",
+      "instagram": "https://instagram.com/siti_klp48",
+      "youtube": "https://youtube.com/@sitiklp48"
+    },
+    "stats": {
+      "centerPositions": 5,
+      "performances": 120,
+      "fanMeetings": 35
+    },
+    "featured": false
+  },
+  {
+    "id": "member-004",
+    "name": {
+      "english": "Wei Ling Ng",
+      "native": "黄慧玲"
+    },
+    "nickname": "Wei",
+    "photo": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1200&h=800&fit=crop",
+    "team": "Team P",
+    "generation": "1st",
+    "position": "Captain",
+    "birthdate": "2000-11-30",
+    "age": 25,
+    "height": 168,
+    "bloodType": "AB",
+    "hometown": "Penang",
+    "hobbies": ["Art", "Piano", "Gaming"],
+    "specialties": ["Piano", "Art Direction", "Choreography"],
+    "bio": "Captain of Team P and one of the founding members. Wei Ling's artistic vision has helped shape KLP48's visual identity. She's also an accomplished pianist and choreographer.",
+    "joinDate": "2021-01-01",
+    "status": "active",
+    "color": "#FFED4E",
+    "social": {
+      "instagram": "https://instagram.com/weiling_klp48",
+      "twitter": "https://twitter.com/weiling_klp48"
+    },
+    "stats": {
+      "centerPositions": 8,
+      "performances": 145,
+      "fanMeetings": 40
+    },
+    "featured": true
+  },
+  {
+    "id": "member-005",
+    "name": {
+      "english": "Priya Devi",
+      "native": "பிரியா தேவி"
+    },
+    "nickname": "Priya",
+    "photo": "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "2nd",
+    "position": "Regular",
+    "birthdate": "2003-09-18",
+    "age": 22,
+    "height": 160,
+    "bloodType": "A",
+    "hometown": "Kuala Lumpur",
+    "hobbies": ["Classical Dance", "Yoga", "Baking"],
+    "specialties": ["Bharatanatyam", "Flexibility", "Comedy"],
+    "bio": "Trained in classical Bharatanatyam dance, Priya brings unique cultural flavor to KLP48's performances. Known for her flexibility and unexpected comedic timing.",
+    "joinDate": "2021-09-01",
+    "status": "active",
+    "color": "#FF26D9",
+    "social": {
+      "instagram": "https://instagram.com/priya_klp48",
+      "tiktok": "https://tiktok.com/@priya_klp48"
+    },
+    "stats": {
+      "centerPositions": 2,
+      "performances": 110,
+      "fanMeetings": 28
+    },
+    "featured": false
+  },
+  {
+    "id": "member-006",
+    "name": {
+      "english": "Lisa Chong",
+      "native": "张丽莎"
+    },
+    "nickname": "Lisa",
+    "photo": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "3rd",
+    "position": "Regular",
+    "birthdate": "2004-02-14",
+    "age": 22,
+    "height": 163,
+    "bloodType": "O",
+    "hometown": "Ipoh",
+    "hobbies": ["Dancing", "Fashion Design", "Cats"],
+    "specialties": ["Hip Hop Dance", "Fashion"],
+    "bio": "Street dance specialist with incredible stage presence. Lisa's modern dance style adds edge to KLP48's choreography. She's also designing a fashion line.",
+    "joinDate": "2022-03-10",
+    "status": "active",
+    "color": "#26D9FF",
+    "social": {
+      "instagram": "https://instagram.com/lisa_klp48",
+      "tiktok": "https://tiktok.com/@lisa_klp48"
+    },
+    "stats": {
+      "centerPositions": 1,
+      "performances": 78,
+      "fanMeetings": 19
+    },
+    "featured": false
+  },
+  {
+    "id": "member-007",
+    "name": {
+      "english": "Nur Amira",
+      "native": "Nur Amira"
+    },
+    "nickname": "Mira",
+    "photo": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&h=800&fit=crop",
+    "team": "Team P",
+    "generation": "4th",
+    "position": "Regular",
+    "birthdate": "2005-05-20",
+    "age": 21,
+    "height": 157,
+    "bloodType": "B",
+    "hometown": "Kota Kinabalu",
+    "hobbies": ["Singing", "Hiking", "Photography"],
+    "specialties": ["High Notes", "Nature Photography"],
+    "bio": "From Sabah, Mira brings unique perspectives and stunning vocal range. Her love for nature photography has become KLP48's unofficial behind-the-scenes chronicler.",
+    "joinDate": "2023-01-15",
+    "status": "active",
+    "color": "#9D4EDD",
+    "social": {
+      "instagram": "https://instagram.com/mira_klp48"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 52,
+      "fanMeetings": 12
+    },
+    "featured": false
+  },
+  {
+    "id": "member-008",
+    "name": {
+      "english": "Yuki Tanaka",
+      "native": "田中ゆき"
+    },
+    "nickname": "Yuki",
+    "photo": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "3rd",
+    "position": "Regular",
+    "birthdate": "2004-12-08",
+    "age": 21,
+    "height": 161,
+    "bloodType": "A",
+    "hometown": "Kuala Lumpur",
+    "hobbies": ["Anime", "Cosplay", "Drawing"],
+    "specialties": ["Japanese Language", "Anime Dance Covers"],
+    "bio": "Japanese-Malaysian member who bridges cultures. Yuki's anime dance covers go viral regularly and she teaches Japanese to other members.",
+    "joinDate": "2022-07-01",
+    "status": "active",
+    "color": "#FF6B9D",
+    "social": {
+      "twitter": "https://twitter.com/yuki_klp48",
+      "instagram": "https://instagram.com/yuki_klp48",
+      "tiktok": "https://tiktok.com/@yuki_klp48"
+    },
+    "stats": {
+      "centerPositions": 1,
+      "performances": 70,
+      "fanMeetings": 18
+    },
+    "featured": false
+  },
+  {
+    "id": "member-009",
+    "name": {
+      "english": "Sarah Lee",
+      "native": "李莎拉"
+    },
+    "nickname": "Sarah",
+    "photo": "https://images.unsplash.com/photo-1502764613149-7f1d229e230f?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1502764613149-7f1d229e230f?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "1st",
+    "position": "Regular",
+    "birthdate": "2002-04-10",
+    "age": 24,
+    "height": 170,
+    "bloodType": "O",
+    "hometown": "Kuching",
+    "hobbies": ["Basketball", "Rap", "Beatboxing"],
+    "specialties": ["Rap", "Sports", "Cool Charisma"],
+    "bio": "Founding member known for her cool, tomboyish charm. Sarah's rap skills and athletic ability make her stand out. She's also surprisingly good at beatboxing.",
+    "joinDate": "2021-01-01",
+    "status": "active",
+    "color": "#00CED1",
+    "social": {
+      "twitter": "https://twitter.com/sarah_klp48",
+      "instagram": "https://instagram.com/sarah_klp48"
+    },
+    "stats": {
+      "centerPositions": 4,
+      "performances": 142,
+      "fanMeetings": 38
+    },
+    "featured": false
+  },
+  {
+    "id": "member-010",
+    "name": {
+      "english": "Fatimah Zahra",
+      "native": "Fatimah Zahra"
+    },
+    "nickname": "Fatima",
+    "photo": "https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=1200&h=800&fit=crop",
+    "team": "Team P",
+    "generation": "2nd",
+    "position": "Regular",
+    "birthdate": "2003-08-25",
+    "age": 22,
+    "height": 159,
+    "bloodType": "A",
+    "hometown": "Malacca",
+    "hobbies": ["Calligraphy", "Poetry", "Traditional Dance"],
+    "specialties": ["Graceful Movement", "Writing"],
+    "bio": "Known for her elegant and graceful performance style. Fatimah writes poetry and practices traditional Malay dance, bringing classical beauty to modern pop.",
+    "joinDate": "2021-10-05",
+    "status": "active",
+    "color": "#DA70D6",
+    "social": {
+      "instagram": "https://instagram.com/fatimah_klp48"
+    },
+    "stats": {
+      "centerPositions": 3,
+      "performances": 105,
+      "fanMeetings": 26
+    },
+    "featured": false
+  },
+  {
+    "id": "member-011",
+    "name": {
+      "english": "Emma Wong",
+      "native": "黄艾玛"
+    },
+    "nickname": "Emma",
+    "photo": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "4th",
+    "position": "Regular",
+    "birthdate": "2005-06-12",
+    "age": 21,
+    "height": 164,
+    "bloodType": "B",
+    "hometown": "Petaling Jaya",
+    "hobbies": ["Makeup", "Streaming", "K-Pop Dance"],
+    "specialties": ["Makeup Artistry", "Social Media"],
+    "bio": "Beauty enthusiast who runs popular makeup tutorials featuring KLP48 looks. Emma's social media savvy has helped boost the group's online presence.",
+    "joinDate": "2023-02-20",
+    "status": "active",
+    "color": "#FFA07A",
+    "social": {
+      "instagram": "https://instagram.com/emma_klp48",
+      "tiktok": "https://tiktok.com/@emma_klp48",
+      "youtube": "https://youtube.com/@emmaklp48"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 48,
+      "fanMeetings": 10
+    },
+    "featured": false
+  },
+  {
+    "id": "member-012",
+    "name": {
+      "english": "Aina Sofea",
+      "native": "Aina Sofea"
+    },
+    "nickname": "Aina",
+    "photo": "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=1200&h=800&fit=crop",
+    "team": "Trainee",
+    "generation": "5th",
+    "position": "Regular",
+    "birthdate": "2006-10-03",
+    "age": 20,
+    "height": 155,
+    "bloodType": "O",
+    "hometown": "Kuantan",
+    "hobbies": ["Singing", "Vlogging", "Swimming"],
+    "specialties": ["Fresh Energy", "Positive Vibes"],
+    "bio": "Newest generation member full of energy and enthusiasm. Aina's vlogs showing trainee life have gained a dedicated following. She's working hard to debut with Team L.",
+    "joinDate": "2025-03-01",
+    "status": "active",
+    "color": "#87CEEB",
+    "social": {
+      "instagram": "https://instagram.com/aina_klp48",
+      "tiktok": "https://tiktok.com/@aina_klp48"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 5,
+      "fanMeetings": 2
+    },
+    "featured": false
+  },
+  {
+    "id": "member-013",
+    "name": {
+      "english": "Kavitha Nair",
+      "native": "கவிதா நாயர்"
+    },
+    "nickname": "Kavi",
+    "photo": "https://images.unsplash.com/photo-1522556189639-b150ed9c4330?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1522556189639-b150ed9c4330?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "3rd",
+    "position": "Regular",
+    "birthdate": "2004-03-28",
+    "age": 22,
+    "height": 162,
+    "bloodType": "A",
+    "hometown": "Klang",
+    "hobbies": ["Classical Music", "Violin", "Badminton"],
+    "specialties": ["Carnatic Music", "Violin"],
+    "bio": "Classically trained in Carnatic music and violin. Kavitha's musical heritage enriches KLP48's sound. She often performs violin arrangements of group songs.",
+    "joinDate": "2022-08-15",
+    "status": "active",
+    "color": "#DDA0DD",
+    "social": {
+      "instagram": "https://instagram.com/kavitha_klp48",
+      "youtube": "https://youtube.com/@kavithaklp48"
+    },
+    "stats": {
+      "centerPositions": 1,
+      "performances": 68,
+      "fanMeetings": 16
+    },
+    "featured": false
+  },
+  {
+    "id": "member-014",
+    "name": {
+      "english": "Hannah Lim",
+      "native": "林汉娜"
+    },
+    "nickname": "Hannah",
+    "photo": "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=1200&h=800&fit=crop",
+    "team": "Team P",
+    "generation": "1st",
+    "position": "Regular",
+    "birthdate": "2001-07-19",
+    "age": 25,
+    "height": 166,
+    "bloodType": "AB",
+    "hometown": "Seremban",
+    "hobbies": ["Cooking", "Food Blogging", "Baking"],
+    "specialties": ["Cooking", "Food Reviews", "Warm Personality"],
+    "bio": "Founding member and team's unofficial chef. Hannah's cooking show segments are incredibly popular. Her warm personality makes her the emotional support of the group.",
+    "joinDate": "2021-01-01",
+    "status": "active",
+    "color": "#FFB6C1",
+    "social": {
+      "instagram": "https://instagram.com/hannah_klp48",
+      "youtube": "https://youtube.com/@hannahcooksklp48"
+    },
+    "stats": {
+      "centerPositions": 2,
+      "performances": 138,
+      "fanMeetings": 37
+    },
+    "featured": false
+  },
+  {
+    "id": "member-015",
+    "name": {
+      "english": "Nadia Hasan",
+      "native": "Nadia Hasan"
+    },
+    "nickname": "Nadia",
+    "photo": "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "2nd",
+    "position": "Regular",
+    "birthdate": "2002-11-11",
+    "age": 24,
+    "height": 167,
+    "bloodType": "B",
+    "hometown": "Shah Alam",
+    "hobbies": ["Acting", "Sketching", "Theatre"],
+    "specialties": ["Acting", "Emotional Expression"],
+    "bio": "Aspiring actress with incredible emotional range. Nadia's dramatic performances in KLP48's story-driven MVs are always memorable. She's taking acting classes.",
+    "joinDate": "2021-11-20",
+    "status": "active",
+    "color": "#E6E6FA",
+    "social": {
+      "instagram": "https://instagram.com/nadia_klp48",
+      "twitter": "https://twitter.com/nadia_klp48"
+    },
+    "stats": {
+      "centerPositions": 3,
+      "performances": 100,
+      "fanMeetings": 25
+    },
+    "featured": false
+  },
+  {
+    "id": "member-016",
+    "name": {
+      "english": "Jasmine Teo",
+      "native": "张茉莉"
+    },
+    "nickname": "Jas",
+    "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "4th",
+    "position": "Regular",
+    "birthdate": "2005-01-30",
+    "age": 21,
+    "height": 158,
+    "bloodType": "O",
+    "hometown": "Georgetown",
+    "hobbies": ["Language Learning", "Reading", "Chess"],
+    "specialties": ["Polyglot", "Intelligence", "Strategy"],
+    "bio": "Speaks 6 languages fluently and learning more. Jasmine's linguistic skills help KLP48 connect with international fans. She's also a chess champion.",
+    "joinDate": "2023-04-10",
+    "status": "active",
+    "color": "#98D8C8",
+    "social": {
+      "instagram": "https://instagram.com/jasmine_klp48"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 45,
+      "fanMeetings": 9
+    },
+    "featured": false
+  },
+  {
+    "id": "member-017",
+    "name": {
+      "english": "Zara Ibrahim",
+      "native": "Zara Ibrahim"
+    },
+    "nickname": "Zara",
+    "photo": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=1200&h=800&fit=crop",
+    "team": "Team P",
+    "generation": "3rd",
+    "position": "Regular",
+    "birthdate": "2004-09-05",
+    "age": 22,
+    "height": 160,
+    "bloodType": "A",
+    "hometown": "Putrajaya",
+    "hobbies": ["Fashion", "Modeling", "Fitness"],
+    "specialties": ["Runway Walk", "Fashion Sense"],
+    "bio": "Former model who brings runway confidence to the stage. Zara's fashion sense influences KLP48's styling. She's passionate about fitness and healthy living.",
+    "joinDate": "2022-09-01",
+    "status": "active",
+    "color": "#F4A460",
+    "social": {
+      "instagram": "https://instagram.com/zara_klp48",
+      "tiktok": "https://tiktok.com/@zara_klp48"
+    },
+    "stats": {
+      "centerPositions": 2,
+      "performances": 65,
+      "fanMeetings": 15
+    },
+    "featured": false
+  },
+  {
+    "id": "member-018",
+    "name": {
+      "english": "Chloe Chan",
+      "native": "陈可儿"
+    },
+    "nickname": "Chloe",
+    "photo": "https://images.unsplash.com/photo-1506863530036-1efeddceb993?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1506863530036-1efeddceb993?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "4th",
+    "position": "Regular",
+    "birthdate": "2005-12-25",
+    "age": 21,
+    "height": 163,
+    "bloodType": "B",
+    "hometown": "Miri",
+    "hobbies": ["Piano", "Composing", "Stargazing"],
+    "specialties": ["Piano Performance", "Music Composition"],
+    "bio": "Musical prodigy and aspiring composer. Chloe has composed several B-side tracks for KLP48. Born on Christmas Day, she's the group's 'Christmas baby'.",
+    "joinDate": "2023-05-15",
+    "status": "active",
+    "color": "#FFE4E1",
+    "social": {
+      "instagram": "https://instagram.com/chloe_klp48",
+      "youtube": "https://youtube.com/@chloeklp48music"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 42,
+      "fanMeetings": 8
+    },
+    "featured": false
+  },
+  {
+    "id": "member-019",
+    "name": {
+      "english": "Rayna Kaur",
+      "native": "ரேனா கௌர்"
+    },
+    "nickname": "Ray",
+    "photo": "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "2nd",
+    "position": "Regular",
+    "birthdate": "2003-04-17",
+    "age": 23,
+    "height": 165,
+    "bloodType": "O",
+    "hometown": "Brickfields, KL",
+    "hobbies": ["Bhangra", "DJing", "Photography"],
+    "specialties": ["Bhangra Dance", "Music Mixing"],
+    "bio": "Brings Punjabi culture and bhangra energy to KLP48. Rayna's DJ skills have led to her creating official remixes of group songs. Her energy is contagious.",
+    "joinDate": "2022-02-01",
+    "status": "active",
+    "color": "#FFD700",
+    "social": {
+      "instagram": "https://instagram.com/rayna_klp48",
+      "tiktok": "https://tiktok.com/@djray_klp48"
+    },
+    "stats": {
+      "centerPositions": 1,
+      "performances": 95,
+      "fanMeetings": 23
+    },
+    "featured": false
+  },
+  {
+    "id": "member-020",
+    "name": {
+      "english": "Sophie Lau",
+      "native": "刘素菲"
+    },
+    "nickname": "Sophie",
+    "photo": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "1st",
+    "position": "Regular",
+    "birthdate": "2001-06-08",
+    "age": 25,
+    "height": 169,
+    "bloodType": "A",
+    "hometown": "Melaka",
+    "hobbies": ["Archery", "Meditation", "Gardening"],
+    "specialties": ["Focus", "Zen Presence"],
+    "bio": "Founding member known for her calm, zen-like presence. Sophie's archery skills and meditation practice help her maintain perfect focus on stage.",
+    "joinDate": "2021-01-01",
+    "status": "graduated",
+    "color": "#ADFF2F",
+    "social": {
+      "instagram": "https://instagram.com/sophie_lau"
+    },
+    "stats": {
+      "centerPositions": 6,
+      "performances": 130,
+      "fanMeetings": 34
+    },
+    "featured": false
+  },
+  {
+    "id": "member-021",
+    "name": {
+      "english": "Alya Roslan",
+      "native": "Alya Roslan"
+    },
+    "nickname": "Alya",
+    "photo": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=1200&h=800&fit=crop",
+    "team": "Team P",
+    "generation": "4th",
+    "position": "Regular",
+    "birthdate": "2005-08-14",
+    "age": 21,
+    "height": 161,
+    "bloodType": "AB",
+    "hometown": "Terengganu",
+    "hobbies": ["Martial Arts", "Gaming", "Coding"],
+    "specialties": ["Taekwondo", "Tech Savvy"],
+    "bio": "Black belt in Taekwondo and coding enthusiast. Alya helps manage KLP48's website and apps. Her martial arts background gives her powerful stage presence.",
+    "joinDate": "2023-06-01",
+    "status": "active",
+    "color": "#FF6347",
+    "social": {
+      "instagram": "https://instagram.com/alya_klp48",
+      "twitter": "https://twitter.com/alya_klp48"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 38,
+      "fanMeetings": 7
+    },
+    "featured": false
+  },
+  {
+    "id": "member-022",
+    "name": {
+      "english": "Min Ji Park",
+      "native": "박민지"
+    },
+    "nickname": "Minji",
+    "photo": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "3rd",
+    "position": "Regular",
+    "birthdate": "2004-11-22",
+    "age": 21,
+    "height": 164,
+    "bloodType": "B",
+    "hometown": "Kuala Lumpur",
+    "hobbies": ["K-Pop Dance", "Korean Beauty", "Streaming"],
+    "specialties": ["K-Pop Choreography", "Korean Language"],
+    "bio": "Korean-Malaysian member who brings K-Pop expertise to the group. Minji teaches Korean and K-Pop dance to members. Her covers regularly trend.",
+    "joinDate": "2022-10-15",
+    "status": "active",
+    "color": "#C8A2C8",
+    "social": {
+      "instagram": "https://instagram.com/minji_klp48",
+      "tiktok": "https://tiktok.com/@minji_klp48",
+      "youtube": "https://youtube.com/@minjicovers"
+    },
+    "stats": {
+      "centerPositions": 1,
+      "performances": 58,
+      "fanMeetings": 14
+    },
+    "featured": false
+  },
+  {
+    "id": "member-023",
+    "name": {
+      "english": "Amelia Tan",
+      "native": "陈艾米"
+    },
+    "nickname": "Amy",
+    "photo": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=1200&h=800&fit=crop",
+    "team": "Trainee",
+    "generation": "5th",
+    "position": "Regular",
+    "birthdate": "2006-03-09",
+    "age": 20,
+    "height": 156,
+    "bloodType": "A",
+    "hometown": "Sandakan",
+    "hobbies": ["Wildlife Photography", "Scuba Diving", "Singing"],
+    "specialties": ["Nature Knowledge", "Diving"],
+    "bio": "From Sabah, Amy's love for wildlife and nature brings fresh perspective. She documents Borneo's wildlife and dreams of marine conservation after her idol career.",
+    "joinDate": "2025-04-01",
+    "status": "active",
+    "color": "#20B2AA",
+    "social": {
+      "instagram": "https://instagram.com/amy_klp48"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 3,
+      "fanMeetings": 1
+    },
+    "featured": false
+  },
+  {
+    "id": "member-024",
+    "name": {
+      "english": "Diana Mustafa",
+      "native": "Diana Mustafa"
+    },
+    "nickname": "Di",
+    "photo": "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "2nd",
+    "position": "Regular",
+    "birthdate": "2003-02-28",
+    "age": 23,
+    "height": 162,
+    "bloodType": "O",
+    "hometown": "Negeri Sembilan",
+    "hobbies": ["Traditional Crafts", "Pottery", "Embroidery"],
+    "specialties": ["Traditional Arts", "Craftsmanship"],
+    "bio": "Master of traditional Malaysian crafts. Diana's handmade gifts to fans are treasured. She teaches traditional arts and keeps cultural heritage alive.",
+    "joinDate": "2022-01-20",
+    "status": "active",
+    "color": "#DEB887",
+    "social": {
+      "instagram": "https://instagram.com/diana_klp48"
+    },
+    "stats": {
+      "centerPositions": 2,
+      "performances": 92,
+      "fanMeetings": 21
+    },
+    "featured": false
+  },
+  {
+    "id": "member-025",
+    "name": {
+      "english": "Vanessa Ooi",
+      "native": "黄慧思"
+    },
+    "nickname": "Nessa",
+    "photo": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1200&h=800&fit=crop",
+    "team": "Team P",
+    "generation": "3rd",
+    "position": "Regular",
+    "birthdate": "2004-10-10",
+    "age": 22,
+    "height": 167,
+    "bloodType": "B",
+    "hometown": "Sibu",
+    "hobbies": ["Dancing", "Vlogging", "Food Adventures"],
+    "specialties": ["Contemporary Dance", "Video Editing"],
+    "bio": "Contemporary dancer and talented video editor. Vanessa edits many of KLP48's behind-the-scenes videos. Her food adventure vlogs are hilarious.",
+    "joinDate": "2022-11-01",
+    "status": "active",
+    "color": "#FF69B4",
+    "social": {
+      "instagram": "https://instagram.com/vanessa_klp48",
+      "youtube": "https://youtube.com/@vanessavlogs"
+    },
+    "stats": {
+      "centerPositions": 1,
+      "performances": 55,
+      "fanMeetings": 13
+    },
+    "featured": false
+  },
+  {
+    "id": "member-026",
+    "name": {
+      "english": "Anita Das",
+      "native": "அனிதா தாஸ்"
+    },
+    "nickname": "Ani",
+    "photo": "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "1st",
+    "position": "Regular",
+    "birthdate": "2002-05-03",
+    "age": 24,
+    "height": 159,
+    "bloodType": "A",
+    "hometown": "Selangor",
+    "hobbies": ["Poetry", "Philosophy", "Astronomy"],
+    "specialties": ["Deep Thinking", "Lyric Writing"],
+    "bio": "Founding member and resident philosopher. Anita writes beautiful song lyrics and shares thought-provoking content. Her depth adds meaning to performances.",
+    "joinDate": "2021-01-01",
+    "status": "on-hiatus",
+    "color": "#9370DB",
+    "social": {
+      "instagram": "https://instagram.com/anita_das"
+    },
+    "stats": {
+      "centerPositions": 3,
+      "performances": 125,
+      "fanMeetings": 32
+    },
+    "featured": false
+  },
+  {
+    "id": "member-027",
+    "name": {
+      "english": "Bella Khoo",
+      "native": "邱美拉"
+    },
+    "nickname": "Bella",
+    "photo": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&h=800&fit=crop",
+    "team": "Trainee",
+    "generation": "5th",
+    "position": "Regular",
+    "birthdate": "2007-01-15",
+    "age": 19,
+    "height": 154,
+    "bloodType": "O",
+    "hometown": "Alor Setar",
+    "hobbies": ["Cute Culture", "Drawing", "TikTok"],
+    "specialties": ["Aegyo", "Cuteness"],
+    "bio": "Youngest member with irresistible charm. Bella's aegyo and cute personality make her a fan favorite already. She's the maknae everyone wants to protect.",
+    "joinDate": "2025-05-01",
+    "status": "active",
+    "color": "#FFB6C1",
+    "social": {
+      "instagram": "https://instagram.com/bella_klp48",
+      "tiktok": "https://tiktok.com/@bella_klp48"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 2,
+      "fanMeetings": 1
+    },
+    "featured": false
+  },
+  {
+    "id": "member-028",
+    "name": {
+      "english": "Eliza Muhamad",
+      "native": "Eliza Muhamad"
+    },
+    "nickname": "Liza",
+    "photo": "https://images.unsplash.com/photo-1502764613149-7f1d229e230f?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1502764613149-7f1d229e230f?w=1200&h=800&fit=crop",
+    "team": "Team L",
+    "generation": "4th",
+    "position": "Regular",
+    "birthdate": "2005-07-07",
+    "age": 21,
+    "height": 166,
+    "bloodType": "AB",
+    "hometown": "Perlis",
+    "hobbies": ["Singing", "Guitar", "Songwriting"],
+    "specialties": ["Acoustic Performances", "Songwriting"],
+    "bio": "Singer-songwriter with soulful voice. Eliza's acoustic performances are magical. She's written several original songs and dreams of a solo album someday.",
+    "joinDate": "2023-07-20",
+    "status": "active",
+    "color": "#F0E68C",
+    "social": {
+      "instagram": "https://instagram.com/eliza_klp48",
+      "youtube": "https://youtube.com/@elizaacoustic"
+    },
+    "stats": {
+      "centerPositions": 0,
+      "performances": 35,
+      "fanMeetings": 6
+    },
+    "featured": false
+  },
+  {
+    "id": "member-029",
+    "name": {
+      "english": "Grace Tan",
+      "native": "陈恩恩"
+    },
+    "nickname": "Grace",
+    "photo": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1200&h=800&fit=crop",
+    "team": "Team P",
+    "generation": "2nd",
+    "position": "Regular",
+    "birthdate": "2003-12-01",
+    "age": 23,
+    "height": 168,
+    "bloodType": "A",
+    "hometown": "Labuan",
+    "hobbies": ["Ballet", "Tea Ceremony", "Classical Music"],
+    "specialties": ["Ballet", "Grace", "Elegance"],
+    "bio": "Classically trained ballerina who brings elegance to every performance. Grace's refined movements and poise set her apart. She teaches ballet to younger members.",
+    "joinDate": "2022-03-01",
+    "status": "active",
+    "color": "#E0B0FF",
+    "social": {
+      "instagram": "https://instagram.com/grace_klp48"
+    },
+    "stats": {
+      "centerPositions": 2,
+      "performances": 88,
+      "fanMeetings": 20
+    },
+    "featured": false
+  },
+  {
+    "id": "member-030",
+    "name": {
+      "english": "Isabel Wong",
+      "native": "黄依莎"
+    },
+    "nickname": "Isa",
+    "photo": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200&h=800&fit=crop",
+    "team": "Team K",
+    "generation": "3rd",
+    "position": "Regular",
+    "birthdate": "2004-04-25",
+    "age": 22,
+    "height": 165,
+    "bloodType": "B",
+    "hometown": "Taiping",
+    "hobbies": ["Science", "Astronomy", "Magic Tricks"],
+    "specialties": ["Smart Image", "Magic"],
+    "bio": "Science enthusiast and amateur magician. Isabel's magic tricks during variety shows are a hit. She wants to promote STEM education to young fans.",
+    "joinDate": "2022-12-01",
+    "status": "active",
+    "color": "#B0C4DE",
+    "social": {
+      "instagram": "https://instagram.com/isabel_klp48",
+      "youtube": "https://youtube.com/@isabelmagic"
+    },
+    "stats": {
+      "centerPositions": 1,
+      "performances": 52,
+      "fanMeetings": 12
+    },
+    "featured": false
+  }
+]
