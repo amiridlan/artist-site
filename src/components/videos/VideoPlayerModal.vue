@@ -8,7 +8,7 @@
         @click.self="closeModal"
       >
         <!-- Modal Container -->
-        <div class="relative w-full max-w-6xl bg-dark-900 rounded-2xl overflow-hidden shadow-2xl">
+        <div class="relative w-full max-w-6xl bg-neutral-900 rounded-2xl overflow-hidden shadow-2xl">
           <!-- Close Button -->
           <button
             @click="closeModal"
@@ -142,15 +142,15 @@ const typeClasses = computed(() => {
     case 'music-video':
       return `${baseClasses} bg-primary-500/90`
     case 'performance':
-      return `${baseClasses} bg-accent-purple/90`
+      return `${baseClasses} bg-primary-600/90`
     case 'behind-the-scenes':
-      return `${baseClasses} bg-accent-pink/90`
+      return `${baseClasses} bg-primary-500/90`
     case 'interview':
-      return `${baseClasses} bg-accent-blue/90`
+      return `${baseClasses} bg-primary-700/90`
     case 'variety':
-      return `${baseClasses} bg-accent-yellow/90 text-dark-900`
+      return `${baseClasses} bg-primary-400/90 text-neutral-900`
     default:
-      return `${baseClasses} bg-dark-600/90`
+      return `${baseClasses} bg-neutral-600/90`
   }
 })
 

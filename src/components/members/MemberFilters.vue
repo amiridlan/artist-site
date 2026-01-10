@@ -4,7 +4,7 @@
     <div class="hidden md:flex flex-wrap items-center gap-3">
       <!-- Team Filter -->
       <div class="flex items-center gap-2">
-        <label class="text-sm font-semibold text-dark-600 uppercase tracking-wide">Team:</label>
+        <label class="text-sm font-semibold text-neutral-600 uppercase tracking-wide">Team:</label>
         <div class="flex gap-2">
           <button
             v-for="team in teams"
@@ -13,8 +13,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300',
               filters.team === team.value
-                ? 'bg-gradient-primary text-white shadow-lg scale-105'
-                : 'bg-white text-dark-700 hover:bg-primary-500/10 hover:text-primary-500'
+                ? 'bg-primary-500 text-white shadow-lg scale-105'
+                : 'bg-white text-neutral-700 hover:bg-primary-500/10 hover:text-primary-500'
             ]"
           >
             {{ team.label }}
@@ -24,7 +24,7 @@
 
       <!-- Generation Filter -->
       <div class="flex items-center gap-2">
-        <label class="text-sm font-semibold text-dark-600 uppercase tracking-wide">Gen:</label>
+        <label class="text-sm font-semibold text-neutral-600 uppercase tracking-wide">Gen:</label>
         <div class="flex gap-2">
           <button
             v-for="gen in generations"
@@ -33,8 +33,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300',
               filters.generation === gen.value
-                ? 'bg-gradient-primary text-white shadow-lg scale-105'
-                : 'bg-white text-dark-700 hover:bg-primary-500/10 hover:text-primary-500'
+                ? 'bg-primary-500 text-white shadow-lg scale-105'
+                : 'bg-white text-neutral-700 hover:bg-primary-500/10 hover:text-primary-500'
             ]"
           >
             {{ gen.label }}
@@ -44,7 +44,7 @@
 
       <!-- Status Filter -->
       <div class="flex items-center gap-2">
-        <label class="text-sm font-semibold text-dark-600 uppercase tracking-wide">Status:</label>
+        <label class="text-sm font-semibold text-neutral-600 uppercase tracking-wide">Status:</label>
         <div class="flex gap-2">
           <button
             v-for="status in statuses"
@@ -53,8 +53,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300',
               filters.status === status.value
-                ? 'bg-gradient-primary text-white shadow-lg scale-105'
-                : 'bg-white text-dark-700 hover:bg-primary-500/10 hover:text-primary-500'
+                ? 'bg-primary-500 text-white shadow-lg scale-105'
+                : 'bg-white text-neutral-700 hover:bg-primary-500/10 hover:text-primary-500'
             ]"
           >
             {{ status.label }}
@@ -67,11 +67,11 @@
     <div class="md:hidden space-y-3">
       <!-- Team Select -->
       <div>
-        <label class="block text-sm font-semibold text-dark-600 uppercase tracking-wide mb-2">Team</label>
+        <label class="block text-sm font-semibold text-neutral-600 uppercase tracking-wide mb-2">Team</label>
         <select
           :value="filters.team"
           @change="updateFilter('team', ($event.target as HTMLSelectElement).value)"
-          class="w-full px-4 py-3 rounded-lg border-2 border-dark-200 focus:border-primary-500 focus:outline-none"
+          class="w-full px-4 py-3 rounded-lg border-2 border-neutral-200 focus:border-primary-500 focus:outline-none"
         >
           <option v-for="team in teams" :key="team.value" :value="team.value">
             {{ team.label }}
@@ -81,11 +81,11 @@
 
       <!-- Generation Select -->
       <div>
-        <label class="block text-sm font-semibold text-dark-600 uppercase tracking-wide mb-2">Generation</label>
+        <label class="block text-sm font-semibold text-neutral-600 uppercase tracking-wide mb-2">Generation</label>
         <select
           :value="filters.generation"
           @change="updateFilter('generation', ($event.target as HTMLSelectElement).value)"
-          class="w-full px-4 py-3 rounded-lg border-2 border-dark-200 focus:border-primary-500 focus:outline-none"
+          class="w-full px-4 py-3 rounded-lg border-2 border-neutral-200 focus:border-primary-500 focus:outline-none"
         >
           <option v-for="gen in generations" :key="gen.value" :value="gen.value">
             {{ gen.label }}
@@ -95,11 +95,11 @@
 
       <!-- Status Select -->
       <div>
-        <label class="block text-sm font-semibold text-dark-600 uppercase tracking-wide mb-2">Status</label>
+        <label class="block text-sm font-semibold text-neutral-600 uppercase tracking-wide mb-2">Status</label>
         <select
           :value="filters.status"
           @change="updateFilter('status', ($event.target as HTMLSelectElement).value)"
-          class="w-full px-4 py-3 rounded-lg border-2 border-dark-200 focus:border-primary-500 focus:outline-none"
+          class="w-full px-4 py-3 rounded-lg border-2 border-neutral-200 focus:border-primary-500 focus:outline-none"
         >
           <option v-for="status in statuses" :key="status.value" :value="status.value">
             {{ status.label }}
@@ -110,7 +110,7 @@
 
     <!-- Active Filters Count & Reset -->
     <div v-if="activeFiltersCount > 0" class="flex items-center justify-between">
-      <span class="text-sm text-dark-600">
+      <span class="text-sm text-neutral-600">
         {{ filteredCount }} member{{ filteredCount !== 1 ? 's' : '' }} found
       </span>
       <button

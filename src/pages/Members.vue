@@ -7,7 +7,7 @@
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-outfit font-bold mb-4">
             <span class="text-gradient">Our Members</span>
           </h1>
-          <p class="text-lg md:text-xl text-dark-600 max-w-2xl">
+          <p class="text-lg md:text-xl text-neutral-600 max-w-2xl">
             Meet the talented individuals who make KLP48 Malaysia's premier idol group. {{ totalMembers }} members across {{ teams.length - 1 }} teams.
           </p>
         </div>
@@ -48,14 +48,14 @@
 
         <!-- Empty State -->
         <div v-else class="text-center py-20">
-          <svg class="w-24 h-24 mx-auto mb-6 text-dark-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-24 h-24 mx-auto mb-6 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
           <h3 class="text-2xl font-outfit font-bold mb-2">No members found</h3>
-          <p class="text-dark-600 mb-6">Try adjusting your filters or search query.</p>
+          <p class="text-neutral-600 mb-6">Try adjusting your filters or search query.</p>
           <button
             @click="resetAllFilters"
-            class="px-6 py-3 bg-gradient-primary text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
+            class="px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
           >
             Show All Members
           </button>
@@ -70,8 +70,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === 1
-                ? 'bg-dark-200 text-dark-400 cursor-not-allowed'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
             ]"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,8 +87,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === page
-                ? 'bg-gradient-primary text-white'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
             ]"
           >
             {{ page }}
@@ -101,8 +101,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === totalPages
-                ? 'bg-dark-200 text-dark-400 cursor-not-allowed'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
             ]"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

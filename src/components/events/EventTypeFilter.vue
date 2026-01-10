@@ -1,9 +1,9 @@
 <template>
-  <div class="release-type-filter mb-8 md:mb-12">
+  <div class="event-type-filter mb-8 md:mb-12">
     <!-- Desktop: Horizontal Tabs -->
     <div class="hidden md:flex items-center gap-3 overflow-x-auto scrollbar-hide pb-2">
       <button
-        v-for="type in releaseTypes"
+        v-for="type in eventTypes"
         :key="type.value"
         @click="selectType(type.value)"
         :class="[
@@ -28,13 +28,13 @@
       <button
         @click="toggleDropdown"
         class="w-full flex items-center justify-between px-5 py-3 bg-white rounded-lg shadow-md font-outfit font-semibold text-neutral-700"
-        aria-label="Filter by release type"
+        aria-label="Filter by event type"
         aria-haspopup="true"
         :aria-expanded="isDropdownOpen"
       >
         <span class="flex items-center gap-2">
           <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
           {{ activeTypeLabel }}
         </span>
@@ -57,7 +57,7 @@
           role="menu"
         >
           <button
-            v-for="type in releaseTypes"
+            v-for="type in eventTypes"
             :key="type.value"
             @click="selectType(type.value)"
             :class="[
@@ -91,12 +91,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import type { ReleaseType } from '@/types/release'
-import { RELEASE_TYPES } from '@/utils/constants'
+import type { EventType } from '@/types/event'
+import { EVENT_TYPES } from '@/utils/constants'
 
 // Props
 interface Props {
-  activeType: ReleaseType
+  activeType: EventType
   count?: number
 }
 
@@ -104,7 +104,7 @@ const props = defineProps<Props>()
 
 // Emits
 const emit = defineEmits<{
-  'update:activeType': [type: ReleaseType]
+  'update:activeType': [type: EventType]
 }>()
 
 // State
@@ -112,16 +112,16 @@ const isDropdownOpen = ref(false)
 const dropdownRef = ref<HTMLElement | null>(null)
 
 // Data
-const releaseTypes = RELEASE_TYPES
+const eventTypes = EVENT_TYPES
 
 // Computed
 const activeTypeLabel = computed(() => {
-  const type = releaseTypes.find(t => t.value === props.activeType)
+  const type = eventTypes.find(t => t.value === props.activeType)
   return type?.label || 'All'
 })
 
 // Methods
-const selectType = (type: ReleaseType) => {
+const selectType = (type: EventType) => {
   emit('update:activeType', type)
   isDropdownOpen.value = false
 }
@@ -168,5 +168,20 @@ onClickOutside(dropdownRef, () => {
 
 .type-tab:hover::after {
   transform: translateX(-50%) scaleX(1);
+}
+
+/* Hide scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Shadow effect for active tab */
+.shadow-neon {
+  box-shadow: 0 0 20px rgba(0, 255, 159, 0.3), 0 0 40px rgba(176, 38, 255, 0.2);
 }
 </style>

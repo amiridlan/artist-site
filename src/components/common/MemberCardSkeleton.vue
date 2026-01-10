@@ -3,15 +3,15 @@
     <!-- Card Container -->
     <div class="rounded-xl overflow-hidden bg-white shadow-md">
       <!-- Image Skeleton -->
-      <div class="skeleton-shimmer aspect-[3/4] bg-dark-200"></div>
+      <div class="skeleton-shimmer aspect-[3/4] bg-neutral-200"></div>
 
       <!-- Content Area (if needed for extended skeleton) -->
       <div class="p-4 space-y-2">
-        <div class="skeleton-shimmer h-6 bg-dark-200 rounded w-3/4"></div>
-        <div class="skeleton-shimmer h-4 bg-dark-200 rounded w-1/2"></div>
+        <div class="skeleton-shimmer h-6 bg-neutral-200 rounded w-3/4"></div>
+        <div class="skeleton-shimmer h-4 bg-neutral-200 rounded w-1/2"></div>
         <div class="flex gap-2 mt-3">
-          <div class="skeleton-shimmer h-6 bg-dark-200 rounded w-16"></div>
-          <div class="skeleton-shimmer h-6 bg-dark-200 rounded w-16"></div>
+          <div class="skeleton-shimmer h-6 bg-neutral-200 rounded w-16"></div>
+          <div class="skeleton-shimmer h-6 bg-neutral-200 rounded w-16"></div>
         </div>
       </div>
     </div>

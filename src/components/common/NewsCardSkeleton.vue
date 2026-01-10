@@ -1,23 +1,23 @@
 <template>
   <div class="news-card-skeleton bg-white rounded-xl overflow-hidden shadow-md">
     <!-- Image Skeleton -->
-    <div class="skeleton-shimmer h-48 md:h-56 bg-dark-200"></div>
+    <div class="skeleton-shimmer h-48 md:h-56 bg-neutral-200"></div>
 
     <!-- Content Skeleton -->
     <div class="p-5 md:p-6">
       <!-- Title Skeleton -->
-      <div class="skeleton-shimmer h-6 bg-dark-200 rounded mb-3 w-4/5"></div>
-      <div class="skeleton-shimmer h-6 bg-dark-200 rounded mb-4 w-3/5"></div>
+      <div class="skeleton-shimmer h-6 bg-neutral-200 rounded mb-3 w-4/5"></div>
+      <div class="skeleton-shimmer h-6 bg-neutral-200 rounded mb-4 w-3/5"></div>
 
       <!-- Excerpt Skeleton -->
-      <div class="skeleton-shimmer h-4 bg-dark-200 rounded mb-2 w-full"></div>
-      <div class="skeleton-shimmer h-4 bg-dark-200 rounded mb-2 w-full"></div>
-      <div class="skeleton-shimmer h-4 bg-dark-200 rounded mb-4 w-2/3"></div>
+      <div class="skeleton-shimmer h-4 bg-neutral-200 rounded mb-2 w-full"></div>
+      <div class="skeleton-shimmer h-4 bg-neutral-200 rounded mb-2 w-full"></div>
+      <div class="skeleton-shimmer h-4 bg-neutral-200 rounded mb-4 w-2/3"></div>
 
       <!-- Meta Skeleton -->
       <div class="flex items-center justify-between">
-        <div class="skeleton-shimmer h-4 bg-dark-200 rounded w-24"></div>
-        <div class="skeleton-shimmer h-4 bg-dark-200 rounded w-16"></div>
+        <div class="skeleton-shimmer h-4 bg-neutral-200 rounded w-24"></div>
+        <div class="skeleton-shimmer h-4 bg-neutral-200 rounded w-16"></div>
       </div>
     </div>
   </div>

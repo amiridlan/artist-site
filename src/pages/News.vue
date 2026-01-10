@@ -4,10 +4,10 @@
       <div class="container mx-auto px-4 lg:px-8">
         <!-- Page Header -->
         <div class="mb-8 md:mb-12">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-outfit font-bold mb-4">
-            <span class="text-gradient">Latest News</span>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-avant-garde font-bold mb-4">
+            <span class="text-primary-500">Latest News</span>
           </h1>
-          <p class="text-lg md:text-xl text-dark-600 max-w-2xl">
+          <p class="text-lg md:text-xl text-neutral-900 max-w-2xl">
             Stay updated with the latest news, announcements, and exclusive content from KLP48.
           </p>
         </div>
@@ -41,14 +41,14 @@
 
         <!-- Empty State -->
         <div v-else class="text-center py-20">
-          <svg class="w-24 h-24 mx-auto mb-6 text-dark-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-24 h-24 mx-auto mb-6 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           <h3 class="text-2xl font-outfit font-bold mb-2">No articles found</h3>
-          <p class="text-dark-600 mb-6">Try selecting a different category.</p>
+          <p class="text-neutral-900 mb-6">Try selecting a different category.</p>
           <button
             @click="selectedCategory = 'all'"
-            class="px-6 py-3 bg-gradient-primary text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
+            class="px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
           >
             Show All News
           </button>
@@ -63,8 +63,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === 1
-                ? 'bg-dark-200 text-dark-400 cursor-not-allowed'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+                : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
             ]"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,8 +80,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === page
-                ? 'bg-gradient-primary text-white'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
             ]"
           >
             {{ page }}
@@ -94,8 +94,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === totalPages
-                ? 'bg-dark-200 text-dark-400 cursor-not-allowed'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+                : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
             ]"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

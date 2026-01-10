@@ -7,47 +7,46 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Primary green accent (10% - for buttons, CTAs, highlights)
         primary: {
-          50: '#e6fff8',
-          100: '#b3ffe8',
-          200: '#80ffd8',
-          300: '#4dffc8',
-          400: '#1affb8',
-          500: '#00ff9f',
-          600: '#00cc7f',
-          700: '#00995f',
-          800: '#00663f',
-          900: '#00331f',
+          50: '#e8f5e9',
+          100: '#c8e6c9',
+          200: '#a5d6a7',
+          300: '#81c784',
+          400: '#66bb6a',
+          500: '#288800',  // Main accent color
+          600: '#237700',
+          700: '#1e6600',
+          800: '#195500',
+          900: '#144400',
         },
-        accent: {
-          purple: '#b026ff',
-          yellow: '#ffed4e',
-          pink: '#ff26d9',
-          blue: '#26d9ff',
+        // Background colors (60% + 30%)
+        surface: {
+          50: '#ffffff',
+          100: '#F9F9F7',   // 60% - Main background (primary)
+          200: '#F1F1ED',   // 30% - Cards, sections (secondary)
+          300: '#e8e8e4',
         },
-        dark: {
-          50: '#f5f5f5',
-          100: '#e0e0e0',
-          200: '#c2c2c2',
-          300: '#a3a3a3',
-          400: '#858585',
-          500: '#666666',
-          600: '#4d4d4d',
-          700: '#333333',
-          800: '#1a1a1a',
-          900: '#0a0a0a',
+        // Neutral grays for text
+        neutral: {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#1A1A1A',
         },
       },
       fontFamily: {
+        'avant-garde': ['ITC Avant Garde Gothic Std', 'Avant Garde', 'Century Gothic', 'sans-serif'],
         outfit: ['Outfit', 'sans-serif'],
-        'dm-sans': ['DM Sans', 'sans-serif'],
         'noto-jp': ['Noto Sans JP', 'sans-serif'],
       },
-      backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #00ff9f 0%, #b026ff 100%)',
-        'gradient-accent': 'linear-gradient(135deg, #b026ff 0%, #ff26d9 100%)',
-        'gradient-neon': 'linear-gradient(135deg, #00ff9f 0%, #26d9ff 50%, #b026ff 100%)',
-      },
+      backgroundImage: {},
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.5s ease-out',
@@ -74,8 +73,8 @@ export default {
         },
       },
       boxShadow: {
-        'neon': '0 0 20px rgba(0, 255, 159, 0.5)',
-        'neon-purple': '0 0 20px rgba(176, 38, 255, 0.5)',
+        'neon': '0 0 20px rgba(40, 136, 0, 0.5)',
+        'glow': '0 4px 20px rgba(40, 136, 0, 0.15)',
       },
     },
   },

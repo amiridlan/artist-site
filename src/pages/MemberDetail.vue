@@ -9,7 +9,7 @@
           class="w-full h-full object-cover"
         />
         <!-- Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/70"></div>
 
         <!-- Member Info Overlay -->
         <div class="absolute bottom-0 left-0 right-0 p-6 md:p-12">
@@ -41,7 +41,7 @@
                   >
                     {{ member.position }}
                   </span>
-                  <span v-if="member.featured" class="px-3 py-1 bg-accent-yellow text-dark-900 rounded-full text-xs font-bold uppercase">
+                  <span v-if="member.featured" class="px-3 py-1 bg-primary-400 text-neutral-900 rounded-full text-xs font-bold uppercase">
                     Featured
                   </span>
                 </div>
@@ -80,24 +80,24 @@
               <h2 class="font-outfit font-bold text-2xl mb-4">Profile</h2>
               <dl class="space-y-3">
                 <div v-if="member.nickname">
-                  <dt class="text-sm text-dark-500 uppercase tracking-wide">Nickname</dt>
-                  <dd class="text-dark-800 font-medium">{{ member.nickname }}</dd>
+                  <dt class="text-sm text-neutral-500 uppercase tracking-wide">Nickname</dt>
+                  <dd class="text-neutral-800 font-medium">{{ member.nickname }}</dd>
                 </div>
                 <div>
-                  <dt class="text-sm text-dark-500 uppercase tracking-wide">Birthday</dt>
-                  <dd class="text-dark-800 font-medium">{{ formattedBirthday }} ({{ member.age }} years old)</dd>
+                  <dt class="text-sm text-neutral-500 uppercase tracking-wide">Birthday</dt>
+                  <dd class="text-neutral-800 font-medium">{{ formattedBirthday }} ({{ member.age }} years old)</dd>
                 </div>
                 <div v-if="member.height">
-                  <dt class="text-sm text-dark-500 uppercase tracking-wide">Height</dt>
-                  <dd class="text-dark-800 font-medium">{{ member.height }} cm</dd>
+                  <dt class="text-sm text-neutral-500 uppercase tracking-wide">Height</dt>
+                  <dd class="text-neutral-800 font-medium">{{ member.height }} cm</dd>
                 </div>
                 <div v-if="member.bloodType">
-                  <dt class="text-sm text-dark-500 uppercase tracking-wide">Blood Type</dt>
-                  <dd class="text-dark-800 font-medium">{{ member.bloodType }}</dd>
+                  <dt class="text-sm text-neutral-500 uppercase tracking-wide">Blood Type</dt>
+                  <dd class="text-neutral-800 font-medium">{{ member.bloodType }}</dd>
                 </div>
                 <div>
-                  <dt class="text-sm text-dark-500 uppercase tracking-wide">Join Date</dt>
-                  <dd class="text-dark-800 font-medium">{{ formattedJoinDate }}</dd>
+                  <dt class="text-sm text-neutral-500 uppercase tracking-wide">Join Date</dt>
+                  <dd class="text-neutral-800 font-medium">{{ formattedJoinDate }}</dd>
                 </div>
               </dl>
             </div>
@@ -108,15 +108,15 @@
               <div class="grid grid-cols-2 gap-4">
                 <div v-if="member.stats.centerPositions" class="text-center p-4 bg-primary-50 rounded-lg">
                   <div class="text-3xl font-bold text-primary-500 mb-1">{{ member.stats.centerPositions }}</div>
-                  <div class="text-xs text-dark-600 uppercase tracking-wide">Center</div>
+                  <div class="text-xs text-neutral-600 uppercase tracking-wide">Center</div>
                 </div>
                 <div v-if="member.stats.performances" class="text-center p-4 bg-primary-50 rounded-lg">
                   <div class="text-3xl font-bold text-primary-500 mb-1">{{ member.stats.performances }}</div>
-                  <div class="text-xs text-dark-600 uppercase tracking-wide">Shows</div>
+                  <div class="text-xs text-neutral-600 uppercase tracking-wide">Shows</div>
                 </div>
                 <div v-if="member.stats.fanMeetings" class="text-center p-4 bg-primary-50 rounded-lg col-span-2">
                   <div class="text-3xl font-bold text-primary-500 mb-1">{{ member.stats.fanMeetings }}</div>
-                  <div class="text-xs text-dark-600 uppercase tracking-wide">Fan Meetings</div>
+                  <div class="text-xs text-neutral-600 uppercase tracking-wide">Fan Meetings</div>
                 </div>
               </div>
             </div>
@@ -142,7 +142,7 @@
                   :href="member.social.instagram"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-br from-purple-600 to-pink-500 text-white rounded-lg hover:from-purple-700 hover:to-pink-600 transition-colors"
+                  class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
                 >
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -182,7 +182,7 @@
             <!-- Bio -->
             <div class="bg-white rounded-xl p-6 md:p-8 shadow-md">
               <h2 class="font-outfit font-bold text-3xl mb-4">About</h2>
-              <p class="text-dark-700 text-lg leading-relaxed mb-6">
+              <p class="text-neutral-700 text-lg leading-relaxed mb-6">
                 {{ member.bio }}
               </p>
 
@@ -220,7 +220,7 @@
             <div class="text-center">
               <router-link
                 to="/members"
-                class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-primary text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all duration-300 hover:shadow-neon"
+                class="inline-flex items-center gap-2 px-8 py-4 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all duration-300 hover:shadow-neon"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
@@ -237,7 +237,7 @@
     <div v-else-if="isLoading" class="min-h-screen pt-24 pb-16 flex items-center justify-center">
       <div class="text-center">
         <div class="inline-block w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p class="text-xl text-dark-600">Loading member...</p>
+        <p class="text-xl text-neutral-600">Loading member...</p>
       </div>
     </div>
 
@@ -245,10 +245,10 @@
     <div v-else class="min-h-screen pt-24 pb-16 flex items-center justify-center">
       <div class="text-center">
         <h1 class="text-6xl font-outfit font-bold mb-4">404</h1>
-        <p class="text-2xl text-dark-600 mb-8">Member not found</p>
+        <p class="text-2xl text-neutral-600 mb-8">Member not found</p>
         <router-link
           to="/members"
-          class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-primary text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
         >
           Back to Members
         </router-link>
@@ -311,7 +311,7 @@ const statusClasses = computed(() => {
     case 'on-hiatus':
       return `${baseClasses} bg-orange-500`
     default:
-      return `${baseClasses} bg-dark-600`
+      return `${baseClasses} bg-neutral-600`
   }
 })
 

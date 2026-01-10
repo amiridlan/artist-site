@@ -13,7 +13,7 @@
   <transition name="slide">
     <nav
       v-if="isOpen"
-      class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-dark-900 shadow-2xl z-50 overflow-y-auto"
+      class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-neutral-900 shadow-2xl z-50 overflow-y-auto"
       role="dialog"
       aria-label="Mobile navigation"
       aria-modal="true"
@@ -65,8 +65,8 @@
               :to="item.path"
               class="block px-4 py-3 rounded-lg font-outfit font-semibold text-lg uppercase tracking-wide transition-all"
               :class="isActive(item.path)
-                ? 'bg-gradient-primary text-white'
-                : 'text-dark-700 hover:bg-primary-500/10 hover:text-primary-500'"
+                ? 'bg-primary-500 text-white'
+                : 'text-neutral-700 hover:bg-primary-500/10 hover:text-primary-500'"
               @click="closeMenu"
             >
               {{ item.label }}
@@ -75,8 +75,8 @@
         </ul>
 
         <!-- Language Selector -->
-        <div class="border-t border-dark-200 dark:border-dark-700 pt-6">
-          <p class="text-sm font-medium text-dark-500 mb-3 uppercase tracking-wide">
+        <div class="border-t border-neutral-200 dark:border-neutral-700 pt-6">
+          <p class="text-sm font-medium text-neutral-500 mb-3 uppercase tracking-wide">
             Language
           </p>
           <div class="grid grid-cols-2 gap-2">
@@ -86,8 +86,8 @@
               @click="selectLanguage(lang.code)"
               class="px-4 py-2 rounded-lg text-sm font-medium transition-all"
               :class="currentLanguageCode === lang.code
-                ? 'bg-gradient-primary text-white'
-                : 'bg-dark-100 dark:bg-dark-800 text-dark-700 hover:bg-primary-500/10 hover:text-primary-500'"
+                ? 'bg-primary-500 text-white'
+                : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 hover:bg-primary-500/10 hover:text-primary-500'"
             >
               {{ lang.name }}
             </button>
@@ -95,8 +95,8 @@
         </div>
 
         <!-- Social Links (optional) -->
-        <div class="border-t border-dark-200 dark:border-dark-700 pt-6 mt-8">
-          <p class="text-sm font-medium text-dark-500 mb-3 uppercase tracking-wide">
+        <div class="border-t border-neutral-200 dark:border-neutral-700 pt-6 mt-8">
+          <p class="text-sm font-medium text-neutral-500 mb-3 uppercase tracking-wide">
             Follow Us
           </p>
           <div class="flex space-x-4">

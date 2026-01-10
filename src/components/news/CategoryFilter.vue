@@ -9,8 +9,8 @@
         :class="[
           'category-tab px-6 py-3 rounded-full font-outfit font-semibold uppercase text-sm tracking-wide whitespace-nowrap transition-all duration-300',
           activeCategory === category.value
-            ? 'bg-gradient-primary text-white shadow-neon scale-105'
-            : 'bg-white text-dark-700 hover:bg-dark-100 hover:scale-105'
+            ? 'bg-primary-500 text-white shadow-neon scale-105'
+            : 'bg-white text-neutral-700 hover:bg-neutral-100 hover:scale-105'
         ]"
       >
         {{ category.label }}
@@ -27,7 +27,7 @@
     <div class="md:hidden relative" ref="dropdownRef">
       <button
         @click="toggleDropdown"
-        class="w-full flex items-center justify-between px-5 py-3 bg-white rounded-lg shadow-md font-outfit font-semibold text-dark-700"
+        class="w-full flex items-center justify-between px-5 py-3 bg-white rounded-lg shadow-md font-outfit font-semibold text-neutral-700"
         aria-label="Filter by category"
         aria-haspopup="true"
         :aria-expanded="isDropdownOpen"
@@ -53,7 +53,7 @@
       <transition name="dropdown">
         <div
           v-if="isDropdownOpen"
-          class="absolute z-20 w-full mt-2 bg-white rounded-lg shadow-xl border border-dark-200 py-2 animate-slide-down"
+          class="absolute z-20 w-full mt-2 bg-white rounded-lg shadow-xl border border-neutral-200 py-2 animate-slide-down"
           role="menu"
         >
           <button
@@ -64,7 +64,7 @@
               'w-full text-left px-5 py-3 text-sm transition-colors',
               activeCategory === category.value
                 ? 'bg-primary-500/10 text-primary-500 font-semibold'
-                : 'text-dark-700 hover:bg-dark-100'
+                : 'text-neutral-700 hover:bg-neutral-100'
             ]"
             role="menuitem"
           >
@@ -162,7 +162,7 @@ onClickOutside(dropdownRef, () => {
   transform: translateX(-50%) scaleX(0);
   width: 80%;
   height: 2px;
-  background: linear-gradient(135deg, #00ff9f 0%, #b026ff 100%);
+  background: #288800;
   transition: transform 0.3s ease;
 }
 

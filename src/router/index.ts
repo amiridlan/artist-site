@@ -8,7 +8,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Home.vue'),
     meta: {
       title: 'KLP48 - Malaysia\'s Premier Idol Group',
-      description: 'Official website for KLP48 idol group'
+      description: 'Official website for KLP48 idol group',
+      transition: 'fade'
     }
   },
   {
@@ -17,7 +18,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/News.vue'),
     meta: {
       title: 'News - KLP48',
-      description: 'Latest news and updates from KLP48'
+      description: 'Latest news and updates from KLP48',
+      transition: 'slide-left'
     }
   },
   {
@@ -26,7 +28,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/NewsDetail.vue'),
     meta: {
       title: 'News Article - KLP48',
-      description: 'Read the latest news from KLP48'
+      description: 'Read the latest news from KLP48',
+      transition: 'slide-left'
     }
   },
   {
@@ -35,7 +38,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Members.vue'),
     meta: {
       title: 'Members - KLP48',
-      description: 'Meet the KLP48 members'
+      description: 'Meet the KLP48 members',
+      transition: 'zoom'
     }
   },
   {
@@ -44,7 +48,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/MemberDetail.vue'),
     meta: {
       title: 'Member Profile - KLP48',
-      description: 'View KLP48 member profile'
+      description: 'View KLP48 member profile',
+      transition: 'zoom'
     }
   },
   {
@@ -53,7 +58,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Videos.vue'),
     meta: {
       title: 'Videos - KLP48',
-      description: 'Watch KLP48 music videos and performances'
+      description: 'Watch KLP48 music videos and performances',
+      transition: 'fade'
     }
   },
   {
@@ -62,7 +68,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Releases.vue'),
     meta: {
       title: 'Releases - KLP48',
-      description: 'KLP48 discography and releases'
+      description: 'KLP48 discography and releases',
+      transition: 'fade'
     }
   },
   {
@@ -71,7 +78,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Schedule.vue'),
     meta: {
       title: 'Schedule - KLP48',
-      description: 'Upcoming events and schedule'
+      description: 'Upcoming events and schedule',
+      transition: 'slide-right'
     }
   },
   {
@@ -80,7 +88,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/FanClub.vue'),
     meta: {
       title: 'Fan Club - KLP48',
-      description: 'Join the KLP48 official fan club'
+      description: 'Join the KLP48 official fan club',
+      transition: 'zoom'
     }
   },
   {
@@ -89,7 +98,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/About.vue'),
     meta: {
       title: 'About - KLP48',
-      description: 'Learn more about KLP48'
+      description: 'Learn more about KLP48',
+      transition: 'fade'
     }
   },
   {
@@ -98,7 +108,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/NotFound.vue'),
     meta: {
       title: '404 - Page Not Found',
-      description: 'The page you are looking for does not exist'
+      description: 'The page you are looking for does not exist',
+      transition: 'fade'
     }
   }
 ]

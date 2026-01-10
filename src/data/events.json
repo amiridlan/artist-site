@@ -1,0 +1,475 @@
+[
+  {
+    "id": "event-001",
+    "title": "KLP48 5th Anniversary Concert - Neon Dreams Live",
+    "slug": "5th-anniversary-concert-neon-dreams",
+    "description": "Join us for an unforgettable night as KLP48 celebrates 5 years! Experience the premiere live performance of 'Neon Dreams' along with fan-favorite hits. Special surprise guests and exclusive merchandise available.",
+    "type": "concert",
+    "status": "upcoming",
+    "startDate": "2026-03-15T00:00:00Z",
+    "startTime": "19:00",
+    "endTime": "22:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Axiata Arena",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "Jalan Barat, Bukit Jalil, 57000 Kuala Lumpur",
+      "coordinates": {
+        "lat": 3.0738,
+        "lng": 101.6833
+      }
+    },
+    "ticket": {
+      "available": true,
+      "price": {
+        "min": 88,
+        "max": 588,
+        "currency": "MYR"
+      },
+      "ticketUrl": "https://www.ticketcharge.com.my/klp48-5th-anniversary",
+      "soldOut": false
+    },
+    "image": "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&h=600&fit=crop",
+    "coverImage": "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&h=1080&fit=crop",
+    "capacity": 12000,
+    "featured": true,
+    "members": ["member-001", "member-002", "member-003"],
+    "tags": ["concert", "anniversary", "neon dreams", "live performance"],
+    "organizer": "KLP48 Official",
+    "ageRestriction": "All Ages"
+  },
+  {
+    "id": "event-002",
+    "title": "Team K Mini Concert & Handshake Event",
+    "slug": "team-k-mini-concert-handshake",
+    "description": "Meet Team K up close! Enjoy an intimate mini concert followed by individual handshake sessions with your favorite members. Limited slots available.",
+    "type": "handshake",
+    "status": "upcoming",
+    "startDate": "2026-02-08T00:00:00Z",
+    "startTime": "14:00",
+    "endTime": "18:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "KLP48 Theater",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "Pavilion KL, 168 Jalan Bukit Bintang, 55100 Kuala Lumpur"
+    },
+    "ticket": {
+      "available": true,
+      "price": {
+        "min": 50,
+        "max": 150,
+        "currency": "MYR"
+      },
+      "ticketUrl": "https://klp48.com/events/team-k-handshake",
+      "soldOut": false
+    },
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&h=600&fit=crop",
+    "capacity": 500,
+    "featured": false,
+    "tags": ["handshake", "team k", "fan meeting"],
+    "ageRestriction": "All Ages",
+    "notes": "Each ticket includes 1 handshake ticket. Additional handshake tickets can be purchased separately."
+  },
+  {
+    "id": "event-003",
+    "title": "Online Fan Meeting - Valentine's Special",
+    "slug": "online-fan-meeting-valentines-2026",
+    "description": "Celebrate Valentine's Day with KLP48! Join us for a special online fan meeting featuring games, performances, and Q&A sessions. Fan-submitted messages will be read live!",
+    "type": "online",
+    "status": "upcoming",
+    "startDate": "2026-02-14T00:00:00Z",
+    "startTime": "20:00",
+    "endTime": "22:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Online Event",
+      "city": "Online",
+      "country": "Global",
+      "onlineUrl": "https://live.klp48.com/valentine2026"
+    },
+    "ticket": {
+      "available": true,
+      "freeEvent": true,
+      "ticketUrl": "https://klp48.com/events/valentine-fanmeet"
+    },
+    "image": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&h=600&fit=crop",
+    "featured": true,
+    "tags": ["online", "fan meeting", "valentines", "livestream"],
+    "ageRestriction": "All Ages",
+    "notes": "Free event! Registration required to receive streaming link."
+  },
+  {
+    "id": "event-004",
+    "title": "KLP48 × Fans Meet & Greet - Penang Edition",
+    "slug": "meet-greet-penang-2026",
+    "description": "KLP48 is coming to Penang! Join selected members for an exclusive meet & greet session. Take photos, get autographs, and chat with your idols!",
+    "type": "meet-greet",
+    "status": "upcoming",
+    "startDate": "2026-02-22T00:00:00Z",
+    "startTime": "15:00",
+    "endTime": "17:30",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Gurney Plaza",
+      "city": "Penang",
+      "state": "Pulau Pinang",
+      "country": "Malaysia",
+      "address": "170, Persiaran Gurney, 10250 George Town, Penang"
+    },
+    "ticket": {
+      "available": true,
+      "price": {
+        "min": 80,
+        "max": 80,
+        "currency": "MYR"
+      },
+      "ticketUrl": "https://klp48.com/events/penang-meet-greet"
+    },
+    "image": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800&h=600&fit=crop",
+    "capacity": 200,
+    "attendees": 156,
+    "members": ["member-004", "member-009", "member-015"],
+    "tags": ["meet and greet", "penang", "road show"],
+    "ageRestriction": "All Ages"
+  },
+  {
+    "id": "event-005",
+    "title": "Malaysia Unite - Music Festival 2025",
+    "slug": "malaysia-unite-music-festival-2025",
+    "description": "KLP48 headlined the Malaysia Unite Music Festival with a spectacular performance of their hit single 'Malaysia Unite'. A night celebrating diversity and unity through music.",
+    "type": "concert",
+    "status": "completed",
+    "startDate": "2025-08-31T00:00:00Z",
+    "startTime": "20:00",
+    "endTime": "21:30",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Merdeka Stadium",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "Jalan Stadium, Kampung Bahru, 50150 Kuala Lumpur"
+    },
+    "ticket": {
+      "available": false,
+      "soldOut": true,
+      "price": {
+        "min": 50,
+        "max": 250,
+        "currency": "MYR"
+      }
+    },
+    "image": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&h=600&fit=crop",
+    "capacity": 30000,
+    "attendees": 30000,
+    "featured": false,
+    "tags": ["concert", "festival", "merdeka", "sold out"],
+    "ageRestriction": "All Ages"
+  },
+  {
+    "id": "event-006",
+    "title": "'Neon Dreams' Single Launch Party",
+    "slug": "neon-dreams-single-launch-party",
+    "description": "Exclusive album launch party for 'Neon Dreams' single! Be among the first to hear the new single, meet the members, and receive limited edition merchandise.",
+    "type": "other",
+    "status": "upcoming",
+    "startDate": "2026-02-13T00:00:00Z",
+    "startTime": "19:00",
+    "endTime": "21:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Hard Rock Cafe Kuala Lumpur",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "Ground Floor, Concourse Level, Kuala Lumpur City Centre, 50088 Kuala Lumpur"
+    },
+    "ticket": {
+      "available": true,
+      "price": {
+        "min": 120,
+        "max": 120,
+        "currency": "MYR"
+      },
+      "ticketUrl": "https://klp48.com/events/neon-dreams-launch"
+    },
+    "image": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=600&fit=crop",
+    "capacity": 150,
+    "attendees": 89,
+    "featured": true,
+    "tags": ["album launch", "exclusive", "neon dreams"],
+    "ageRestriction": "18+",
+    "notes": "Ticket includes a copy of the single, exclusive merchandise, and one drink."
+  },
+  {
+    "id": "event-007",
+    "title": "Team L Showcase - Johor Bahru",
+    "slug": "team-l-showcase-johor-bahru",
+    "description": "Team L brings their energy to Johor Bahru! Experience exclusive performances and meet the members of Team L in this special showcase event.",
+    "type": "concert",
+    "status": "upcoming",
+    "startDate": "2026-03-28T00:00:00Z",
+    "startTime": "16:00",
+    "endTime": "19:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "KSL City Mall",
+      "city": "Johor Bahru",
+      "state": "Johor",
+      "country": "Malaysia",
+      "address": "33 Jalan Seladang, Taman Abad, 80250 Johor Bahru"
+    },
+    "ticket": {
+      "available": true,
+      "price": {
+        "min": 40,
+        "max": 100,
+        "currency": "MYR"
+      },
+      "ticketUrl": "https://klp48.com/events/team-l-johor"
+    },
+    "image": "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&h=600&fit=crop",
+    "capacity": 800,
+    "tags": ["team l", "showcase", "johor bahru"],
+    "ageRestriction": "All Ages"
+  },
+  {
+    "id": "event-008",
+    "title": "KLP48 Birthday Celebration Livestream",
+    "slug": "klp48-birthday-livestream-jan-2026",
+    "description": "It's our birthday month! Join us for a special livestream celebration featuring performances, birthday messages from members, and exclusive announcements!",
+    "type": "online",
+    "status": "completed",
+    "startDate": "2026-01-15T00:00:00Z",
+    "startTime": "20:00",
+    "endTime": "22:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Online Event",
+      "city": "Online",
+      "country": "Global",
+      "onlineUrl": "https://live.klp48.com/birthday2026"
+    },
+    "ticket": {
+      "available": false,
+      "freeEvent": true
+    },
+    "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=600&fit=crop",
+    "attendees": 45000,
+    "tags": ["online", "birthday", "celebration", "anniversary"],
+    "ageRestriction": "All Ages"
+  },
+  {
+    "id": "event-009",
+    "title": "Trainee Showcase - New Faces 2026",
+    "slug": "trainee-showcase-new-faces-2026",
+    "description": "Meet the future of KLP48! Our trainee members present their first public showcase. Come support the next generation of talent!",
+    "type": "other",
+    "status": "upcoming",
+    "startDate": "2026-04-12T00:00:00Z",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "KLP48 Theater",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "Pavilion KL, 168 Jalan Bukit Bintang, 55100 Kuala Lumpur"
+    },
+    "ticket": {
+      "available": true,
+      "price": {
+        "min": 30,
+        "max": 30,
+        "currency": "MYR"
+      },
+      "ticketUrl": "https://klp48.com/events/trainee-showcase"
+    },
+    "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=600&fit=crop",
+    "capacity": 300,
+    "tags": ["trainee", "showcase", "debut"],
+    "ageRestriction": "All Ages"
+  },
+  {
+    "id": "event-010",
+    "title": "Hi-Touch Event - Mall Tour Kuching",
+    "slug": "hi-touch-event-kuching",
+    "description": "KLP48 mall tour arrives in Kuching! Hi-touch event with selected members plus photo opportunities. Purchase any KLP48 merchandise to participate!",
+    "type": "meet-greet",
+    "status": "upcoming",
+    "startDate": "2026-05-10T00:00:00Z",
+    "startTime": "14:00",
+    "endTime": "17:00",
+    "timeZone": "Asia/Kuching",
+    "location": {
+      "venue": "Vivacity Megamall",
+      "city": "Kuching",
+      "state": "Sarawak",
+      "country": "Malaysia",
+      "address": "Jalan Wan Alwi, 93350 Kuching, Sarawak"
+    },
+    "ticket": {
+      "available": true,
+      "freeEvent": true,
+      "ticketUrl": "https://klp48.com/events/kuching-hi-touch"
+    },
+    "image": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=600&fit=crop",
+    "capacity": 500,
+    "members": ["member-007", "member-012", "member-018"],
+    "tags": ["hi-touch", "mall tour", "kuching", "meet and greet"],
+    "ageRestriction": "All Ages",
+    "notes": "Free entry with any KLP48 merchandise purchase from the pop-up store."
+  },
+  {
+    "id": "event-011",
+    "title": "Summer Festival 2025 Performance",
+    "slug": "summer-festival-2025-performance",
+    "description": "KLP48 performed at the biggest summer festival in Malaysia, delivering hit performances that got the entire crowd singing along!",
+    "type": "concert",
+    "status": "completed",
+    "startDate": "2025-06-21T00:00:00Z",
+    "startTime": "19:30",
+    "endTime": "21:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Sunway Lagoon",
+      "city": "Petaling Jaya",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "address": "3, Jalan PJS 11/11, Bandar Sunway, 47500 Petaling Jaya"
+    },
+    "ticket": {
+      "available": false,
+      "soldOut": true,
+      "price": {
+        "min": 88,
+        "max": 188,
+        "currency": "MYR"
+      }
+    },
+    "image": "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800&h=600&fit=crop",
+    "capacity": 8000,
+    "attendees": 8000,
+    "tags": ["concert", "festival", "summer", "sold out"],
+    "ageRestriction": "All Ages"
+  },
+  {
+    "id": "event-012",
+    "title": "Graduation Ceremony - 2nd Generation",
+    "slug": "graduation-ceremony-2nd-generation",
+    "description": "A heartfelt farewell to graduating 2nd generation members. Join us in celebrating their journey and achievements with special performances and messages.",
+    "type": "other",
+    "status": "upcoming",
+    "startDate": "2026-06-20T00:00:00Z",
+    "startTime": "18:00",
+    "endTime": "21:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "KL Convention Centre",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "Jalan Pinang, 50450 Kuala Lumpur"
+    },
+    "ticket": {
+      "available": true,
+      "price": {
+        "min": 100,
+        "max": 300,
+        "currency": "MYR"
+      },
+      "ticketUrl": "https://klp48.com/events/graduation-ceremony"
+    },
+    "image": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=600&fit=crop",
+    "capacity": 2000,
+    "tags": ["graduation", "ceremony", "farewell"],
+    "ageRestriction": "All Ages",
+    "notes": "Commemorative program book included with ticket purchase."
+  },
+  {
+    "id": "event-013",
+    "title": "Monthly Theater Performance - March",
+    "slug": "monthly-theater-performance-march-2026",
+    "description": "Regular monthly theater show featuring team rotations and special unit performances. This month features Team P and special guest appearances!",
+    "type": "concert",
+    "status": "upcoming",
+    "startDate": "2026-03-07T00:00:00Z",
+    "startTime": "19:00",
+    "endTime": "21:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "KLP48 Theater",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "Pavilion KL, 168 Jalan Bukit Bintang, 55100 Kuala Lumpur"
+    },
+    "ticket": {
+      "available": true,
+      "price": {
+        "min": 50,
+        "max": 50,
+        "currency": "MYR"
+      },
+      "ticketUrl": "https://klp48.com/events/monthly-theater-march"
+    },
+    "image": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=600&fit=crop",
+    "capacity": 250,
+    "tags": ["theater", "monthly show", "team p"],
+    "ageRestriction": "All Ages"
+  },
+  {
+    "id": "event-014",
+    "title": "Fan Appreciation Day 2026",
+    "slug": "fan-appreciation-day-2026",
+    "description": "Our biggest thank you to the fans! A full day of activities including games, performances, photo sessions, merchandise sales, and more. Don't miss it!",
+    "type": "meet-greet",
+    "status": "upcoming",
+    "startDate": "2026-07-19T00:00:00Z",
+    "startTime": "10:00",
+    "endTime": "18:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Pavilion KL Main Square",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "168 Jalan Bukit Bintang, 55100 Kuala Lumpur"
+    },
+    "ticket": {
+      "available": true,
+      "freeEvent": true,
+      "ticketUrl": "https://klp48.com/events/fan-appreciation-2026"
+    },
+    "image": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&h=600&fit=crop",
+    "featured": true,
+    "tags": ["fan appreciation", "free event", "family friendly"],
+    "ageRestriction": "All Ages",
+    "notes": "Free admission! Various activities and booths throughout the day."
+  },
+  {
+    "id": "event-015",
+    "title": "New Year Countdown Concert 2025",
+    "slug": "new-year-countdown-concert-2025",
+    "description": "Ring in 2026 with KLP48! We performed at the city's biggest New Year countdown event with special guests and a spectacular fireworks finale.",
+    "type": "concert",
+    "status": "completed",
+    "startDate": "2025-12-31T00:00:00Z",
+    "startTime": "22:00",
+    "endTime": "01:00",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "location": {
+      "venue": "Dataran Merdeka",
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "address": "Jalan Raja, City Centre, 50050 Kuala Lumpur"
+    },
+    "ticket": {
+      "available": false,
+      "freeEvent": true
+    },
+    "image": "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=800&h=600&fit=crop",
+    "capacity": 50000,
+    "attendees": 45000,
+    "tags": ["concert", "new year", "countdown", "free event"],
+    "ageRestriction": "All Ages"
+  }
+]

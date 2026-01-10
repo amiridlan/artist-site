@@ -1,7 +1,7 @@
 <template>
-  <footer class="bg-dark-900 text-white/90 relative overflow-hidden">
+  <footer class="bg-neutral-900 text-white/90 relative overflow-hidden">
     <!-- Background gradient overlay -->
-    <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-accent-purple/5"></div>
+    <div class="absolute inset-0 bg-primary-500/5"></div>
 
     <div class="relative z-10 container mx-auto px-4 py-12 md:py-16">
       <!-- Main Footer Content -->
@@ -121,7 +121,7 @@
             />
             <button
               type="submit"
-              class="w-full px-4 py-2 bg-gradient-primary text-white rounded-lg font-medium text-sm hover:scale-105 transition-transform"
+              class="w-full px-4 py-2 bg-primary-500 text-white rounded-lg font-medium text-sm hover:scale-105 transition-transform"
             >
               Subscribe
             </button>
@@ -215,7 +215,7 @@ const handleNewsletterSubmit = () => {
 /* Social icon buttons */
 .social-icon-btn {
   @apply w-10 h-10 flex items-center justify-center rounded-full;
-  @apply bg-white/10 hover:bg-gradient-primary;
+  @apply bg-white/10 hover:bg-primary-500;
   @apply transition-all duration-300;
   @apply hover:scale-110 hover:shadow-neon;
 }

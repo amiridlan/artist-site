@@ -7,14 +7,14 @@
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-outfit font-bold mb-4">
             <span class="text-gradient">Releases</span>
           </h1>
-          <p class="text-lg md:text-xl text-dark-600 max-w-2xl">
+          <p class="text-lg md:text-xl text-neutral-600 max-w-2xl">
             Explore KLP48's discography featuring singles, albums, and EPs. {{ totalReleases }} releases available.
           </p>
         </div>
 
         <!-- Featured Release -->
         <div v-if="featuredReleases.length > 0" class="mb-12">
-          <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary-500 to-accent-purple p-8 md:p-12">
+          <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-primary-500 p-8 md:p-12">
             <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <!-- Cover Image -->
               <div class="relative">
@@ -24,7 +24,7 @@
                   class="w-full max-w-md mx-auto rounded-xl shadow-2xl"
                 />
                 <div v-if="isUpcoming(featuredReleases[0])" class="absolute top-4 right-4">
-                  <span class="px-4 py-2 bg-accent-yellow text-dark-900 rounded-full text-sm font-bold uppercase animate-pulse">
+                  <span class="px-4 py-2 bg-primary-400 text-neutral-900 rounded-full text-sm font-bold uppercase animate-pulse">
                     Coming Soon
                   </span>
                 </div>
@@ -55,7 +55,7 @@
                     :href="link.url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="px-6 py-3 bg-white text-dark-900 rounded-full font-medium hover:scale-105 transition-transform flex items-center gap-2"
+                    class="px-6 py-3 bg-white text-neutral-900 rounded-full font-medium hover:scale-105 transition-transform flex items-center gap-2"
                   >
                     <span>{{ getPlatformName(link.platform) }}</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,7 +68,7 @@
 
             <!-- Decorative Elements -->
             <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-accent-yellow/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-primary-400/20 rounded-full blur-3xl"></div>
           </div>
         </div>
 
@@ -79,10 +79,10 @@
               v-model="searchQuery"
               type="text"
               placeholder="Search releases by title or description..."
-              class="w-full pl-12 pr-4 py-3 md:py-4 rounded-lg border-2 border-dark-200 focus:border-primary-500 focus:outline-none text-dark-800 placeholder-dark-400 transition-colors"
+              class="w-full pl-12 pr-4 py-3 md:py-4 rounded-lg border-2 border-neutral-200 focus:border-primary-500 focus:outline-none text-neutral-800 placeholder-dark-400 transition-colors"
             />
             <svg
-              class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-dark-400"
+              class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -92,7 +92,7 @@
             <button
               v-if="searchQuery"
               @click="searchQuery = ''"
-              class="absolute right-4 top-1/2 transform -translate-y-1/2 text-dark-400 hover:text-dark-600"
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -116,13 +116,13 @@
                 type="checkbox"
                 class="w-5 h-5 rounded text-primary-500 focus:ring-2 focus:ring-primary-500"
               />
-              <span class="text-sm font-medium text-dark-700">Show Upcoming</span>
+              <span class="text-sm font-medium text-neutral-700">Show Upcoming</span>
             </label>
 
             <!-- Sort Dropdown -->
             <select
               v-model="sortBy"
-              class="px-4 py-3 rounded-lg border-2 border-dark-200 focus:border-primary-500 focus:outline-none text-dark-800 appearance-none cursor-pointer transition-colors bg-white"
+              class="px-4 py-3 rounded-lg border-2 border-neutral-200 focus:border-primary-500 focus:outline-none text-neutral-800 appearance-none cursor-pointer transition-colors bg-white"
             >
               <option value="date">Sort by Date (Newest)</option>
               <option value="title">Sort by Title (A-Z)</option>
@@ -134,11 +134,11 @@
         <!-- Loading State -->
         <div v-if="isLoading" class="release-grid mb-12">
           <div v-for="n in 6" :key="`skeleton-${n}`" class="bg-white rounded-xl overflow-hidden shadow-md animate-pulse">
-            <div class="aspect-square bg-dark-200"></div>
+            <div class="aspect-square bg-neutral-200"></div>
             <div class="p-5 space-y-3">
-              <div class="h-6 bg-dark-200 rounded w-3/4"></div>
-              <div class="h-4 bg-dark-200 rounded w-1/2"></div>
-              <div class="h-4 bg-dark-200 rounded w-full"></div>
+              <div class="h-6 bg-neutral-200 rounded w-3/4"></div>
+              <div class="h-4 bg-neutral-200 rounded w-1/2"></div>
+              <div class="h-4 bg-neutral-200 rounded w-full"></div>
             </div>
           </div>
         </div>
@@ -155,14 +155,14 @@
 
         <!-- Empty State -->
         <div v-else class="text-center py-20">
-          <svg class="w-24 h-24 mx-auto mb-6 text-dark-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-24 h-24 mx-auto mb-6 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
           </svg>
           <h3 class="text-2xl font-outfit font-bold mb-2">No releases found</h3>
-          <p class="text-dark-600 mb-6">Try adjusting your filters or search query.</p>
+          <p class="text-neutral-600 mb-6">Try adjusting your filters or search query.</p>
           <button
             @click="resetFilters"
-            class="px-6 py-3 bg-gradient-primary text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
+            class="px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
           >
             Show All Releases
           </button>
@@ -176,8 +176,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === 1
-                ? 'bg-dark-200 text-dark-400 cursor-not-allowed'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
             ]"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -192,8 +192,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === page
-                ? 'bg-gradient-primary text-white'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
             ]"
           >
             {{ page }}
@@ -205,8 +205,8 @@
             :class="[
               'px-4 py-2 rounded-lg font-medium transition-all',
               currentPage === totalPages
-                ? 'bg-dark-200 text-dark-400 cursor-not-allowed'
-                : 'bg-white text-dark-700 hover:bg-primary-500 hover:text-white'
+                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
             ]"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,7 +223,7 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { format, formatDistanceToNowStrict } from 'date-fns'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-// import ReleaseCard from '@/components/releases/ReleaseCard.vue'
+import ReleaseCard from '@/components/releases/ReleaseCard.vue'
 import ReleaseTypeFilter from '@/components/releases/ReleaseTypeFilter.vue'
 import type { Release, ReleaseType } from '@/types/release'
 import releasesData from '@/data/releases.json'

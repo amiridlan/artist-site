@@ -4,7 +4,7 @@
     @click="handleClick"
   >
     <!-- Thumbnail Container -->
-    <div class="relative aspect-video overflow-hidden bg-dark-900">
+    <div class="relative aspect-video overflow-hidden bg-neutral-900">
       <!-- Thumbnail Image -->
       <img
         :src="video.thumbnail"
@@ -37,7 +37,7 @@
 
       <!-- Featured Badge -->
       <div v-if="video.featured" class="absolute top-2 right-2">
-        <span class="px-2 py-1 bg-accent-yellow text-dark-900 rounded-full text-xs font-bold uppercase flex items-center gap-1">
+        <span class="px-2 py-1 bg-primary-400 text-neutral-900 rounded-full text-xs font-bold uppercase flex items-center gap-1">
           <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
           </svg>
@@ -53,12 +53,12 @@
       </h3>
 
       <!-- Description -->
-      <p class="text-dark-600 text-sm mb-3 line-clamp-2 leading-relaxed">
+      <p class="text-neutral-600 text-sm mb-3 line-clamp-2 leading-relaxed">
         {{ video.description }}
       </p>
 
       <!-- Meta Information -->
-      <div class="flex items-center justify-between text-xs text-dark-500">
+      <div class="flex items-center justify-between text-xs text-neutral-500">
         <!-- Views & Likes -->
         <div class="flex items-center gap-3">
           <span class="flex items-center gap-1">
@@ -87,7 +87,7 @@
         <span
           v-for="tag in video.tags.slice(0, 3)"
           :key="tag"
-          class="px-2 py-1 bg-dark-100 text-dark-600 rounded text-xs"
+          class="px-2 py-1 bg-neutral-100 text-neutral-600 rounded text-xs"
         >
           #{{ tag }}
         </span>
@@ -95,7 +95,7 @@
     </div>
 
     <!-- Hover Indicator -->
-    <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-1 bg-primary-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
   </article>
 </template>
 
@@ -152,15 +152,15 @@ const typeClasses = computed(() => {
     case 'music-video':
       return `${baseClasses} bg-primary-500/90`
     case 'performance':
-      return `${baseClasses} bg-accent-purple/90`
+      return `${baseClasses} bg-primary-600/90`
     case 'behind-the-scenes':
-      return `${baseClasses} bg-accent-pink/90`
+      return `${baseClasses} bg-primary-500/90`
     case 'interview':
-      return `${baseClasses} bg-accent-blue/90`
+      return `${baseClasses} bg-primary-700/90`
     case 'variety':
-      return `${baseClasses} bg-accent-yellow/90 text-dark-900`
+      return `${baseClasses} bg-primary-400/90 text-neutral-900`
     default:
-      return `${baseClasses} bg-dark-600/90`
+      return `${baseClasses} bg-neutral-600/90`
   }
 })
 

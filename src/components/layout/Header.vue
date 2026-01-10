@@ -14,7 +14,7 @@
           aria-label="KLP48 Home"
         >
           <div class="text-2xl md:text-3xl font-outfit font-bold">
-            <span class="text-gradient">KLP48</span>
+            <span class="text-[#288800]">KLP48</span>
           </div>
         </router-link>
 
@@ -25,12 +25,12 @@
             :key="item.path"
             :to="item.path"
             class="nav-link font-outfit font-semibold text-sm lg:text-base uppercase tracking-wide transition-all duration-300"
-            :class="isActive(item.path) ? 'text-primary-500' : 'text-dark-700 hover:text-primary-500'"
+            :class="isActive(item.path) ? 'text-primary-500' : 'text-neutral-700 hover:text-primary-500'"
           >
             {{ item.label }}
             <span
               v-if="isActive(item.path)"
-              class="block h-0.5 bg-gradient-primary mt-1 animate-slide-up"
+              class="block h-0.5 bg-primary-500 mt-1 animate-slide-up"
             ></span>
           </router-link>
         </nav>
@@ -62,7 +62,7 @@
             <transition name="dropdown">
               <div
                 v-if="isLanguageDropdownOpen"
-                class="absolute right-0 mt-2 w-48 bg-white dark:bg-dark-800 rounded-lg shadow-xl border border-dark-200 dark:border-dark-700 py-2 animate-slide-down"
+                class="absolute right-0 mt-2 w-48 bg-surface-200 rounded-lg shadow-xl border border-neutral-200 py-2 animate-slide-down"
                 role="menu"
               >
                 <button

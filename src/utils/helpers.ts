@@ -199,3 +199,99 @@ export const prefersReducedMotion = (): boolean => {
 export const generateId = (): string => {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 }
+
+/**
+ * Format date for iCalendar format (YYYYMMDDTHHMMSSZ)
+ */
+const formatICalDate = (date: Date): string => {
+  const year = date.getUTCFullYear()
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0')
+  const day = String(date.getUTCDate()).padStart(2, '0')
+  const hours = String(date.getUTCHours()).padStart(2, '0')
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0')
+  const seconds = String(date.getUTCSeconds()).padStart(2, '0')
+  return `${year}${month}${day}T${hours}${minutes}${seconds}Z`
+}
+
+/**
+ * Generate .ics file content for calendar export
+ */
+export const generateICalendar = (event: {
+  title: string
+  description?: string
+  location?: string
+  startDate: string
+  endDate?: string
+  startTime?: string
+  endTime?: string
+  url?: string
+}): string => {
+  const now = new Date()
+  const startDate = new Date(event.startDate)
+
+  // Parse time if provided
+  if (event.startTime) {
+    const [hours, minutes] = event.startTime.split(':')
+    startDate.setHours(parseInt(hours), parseInt(minutes))
+  }
+
+  let endDate = event.endDate ? new Date(event.endDate) : new Date(startDate)
+  if (event.endTime) {
+    const [hours, minutes] = event.endTime.split(':')
+    endDate.setHours(parseInt(hours), parseInt(minutes))
+  } else if (!event.endDate) {
+    // Default to 2 hours if no end time specified
+    endDate.setHours(endDate.getHours() + 2)
+  }
+
+  const icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//KLP48//Event Calendar//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    `UID:${generateId()}@klp48.com`,
+    `DTSTAMP:${formatICalDate(now)}`,
+    `DTSTART:${formatICalDate(startDate)}`,
+    `DTEND:${formatICalDate(endDate)}`,
+    `SUMMARY:${event.title}`,
+    event.description ? `DESCRIPTION:${event.description.replace(/\n/g, '\\n')}` : '',
+    event.location ? `LOCATION:${event.location}` : '',
+    event.url ? `URL:${event.url}` : '',
+    'STATUS:CONFIRMED',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ]
+    .filter(line => line !== '') // Remove empty lines
+    .join('\r\n')
+
+  return icsContent
+}
+
+/**
+ * Download .ics file
+ */
+export const downloadICalendar = (
+  event: {
+    title: string
+    description?: string
+    location?: string
+    startDate: string
+    endDate?: string
+    startTime?: string
+    endTime?: string
+    url?: string
+  },
+  filename?: string
+): void => {
+  const icsContent = generateICalendar(event)
+  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(blob)
+  link.download = filename || `${slugify(event.title)}.ics`
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(link.href)
+}

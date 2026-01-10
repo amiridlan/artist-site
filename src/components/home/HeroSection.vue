@@ -32,8 +32,8 @@
         class="absolute inset-0 w-full h-full object-cover"
       />
 
-      <!-- Overlay Gradient -->
-      <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70"></div>
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/50"></div>
     </div>
 
     <!-- Hero Content -->
@@ -178,64 +178,33 @@ onUnmounted(() => {
 
 <style scoped>
 .hero-tagline {
-  @apply font-outfit font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight;
-  background: linear-gradient(135deg, #00ff9f 0%, #b026ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family: 'ITC Avant Garde Gothic Std', 'Avant Garde', 'Century Gothic', sans-serif;
+  @apply font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight;
+  color: #288800;
 }
 
 /* Primary Button */
 .btn-primary {
-  background: linear-gradient(135deg, #00ff9f 0%, #b026ff 100%);
+  background: #288800;
   color: white;
-  position: relative;
-  overflow: hidden;
+  transition: background-color 0.3s ease;
 }
 
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #b026ff 0%, #00ff9f 100%);
-  transition: left 0.3s ease;
-  z-index: -1;
-}
-
-.btn-primary:hover::before {
-  left: 0;
+.btn-primary:hover {
+  background: #237700;
 }
 
 /* Secondary Button */
 .btn-secondary {
   background: transparent;
   color: white;
-  border: 2px solid #00ff9f;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-secondary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #00ff9f 0%, #b026ff 100%);
-  transition: left 0.3s ease;
-  z-index: -1;
-}
-
-.btn-secondary:hover::before {
-  left: 0;
+  border: 2px solid #288800;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-secondary:hover {
-  border-color: transparent;
+  background: #288800;
+  border-color: #288800;
 }
 
 /* Animation overrides to ensure visibility */

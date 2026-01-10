@@ -9,7 +9,7 @@
           class="w-full h-full object-cover"
         />
         <!-- Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/60"></div>
 
         <!-- Article Meta (Overlay on Image) -->
         <div class="absolute bottom-0 left-0 right-0 p-6 md:p-12">
@@ -65,7 +65,7 @@
       <div class="container mx-auto px-4 max-w-4xl">
         <!-- Excerpt -->
         <div class="mb-8 p-6 bg-primary-50 border-l-4 border-primary-500 rounded-r-lg">
-          <p class="text-lg md:text-xl text-dark-700 font-medium italic">
+          <p class="text-lg md:text-xl text-neutral-700 font-medium italic">
             {{ article.excerpt }}
           </p>
         </div>
@@ -83,7 +83,7 @@
             <span
               v-for="tag in article.tags"
               :key="tag"
-              class="px-4 py-2 bg-dark-100 text-dark-700 rounded-full text-sm hover:bg-primary-500 hover:text-white transition-colors cursor-pointer"
+              class="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-primary-500 hover:text-white transition-colors cursor-pointer"
             >
               #{{ tag }}
             </span>
@@ -91,7 +91,7 @@
         </div>
 
         <!-- Share Buttons -->
-        <div class="mb-12 p-6 bg-dark-50 rounded-xl">
+        <div class="mb-12 p-6 bg-neutral-50 rounded-xl">
           <h3 class="text-lg font-outfit font-semibold mb-4">Share this article</h3>
           <div class="flex flex-wrap gap-3">
             <button
@@ -114,7 +114,7 @@
             </button>
             <button
               @click="copyLink"
-              class="flex items-center gap-2 px-4 py-2 bg-dark-600 text-white rounded-lg hover:bg-dark-700 transition-colors"
+              class="flex items-center gap-2 px-4 py-2 bg-neutral-600 text-white rounded-lg hover:bg-neutral-700 transition-colors"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -128,7 +128,7 @@
         <div class="text-center">
           <router-link
             to="/news"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-primary text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all duration-300 hover:shadow-neon"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all duration-300 hover:shadow-neon"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
@@ -143,7 +143,7 @@
     <div v-else-if="isLoading" class="min-h-screen pt-24 pb-16 flex items-center justify-center">
       <div class="text-center">
         <div class="inline-block w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p class="text-xl text-dark-600">Loading article...</p>
+        <p class="text-xl text-neutral-600">Loading article...</p>
       </div>
     </div>
 
@@ -151,10 +151,10 @@
     <div v-else class="min-h-screen pt-24 pb-16 flex items-center justify-center">
       <div class="text-center">
         <h1 class="text-6xl font-outfit font-bold mb-4">404</h1>
-        <p class="text-2xl text-dark-600 mb-8">Article not found</p>
+        <p class="text-2xl text-neutral-600 mb-8">Article not found</p>
         <router-link
           to="/news"
-          class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-primary text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
         >
           Back to News
         </router-link>
@@ -195,15 +195,15 @@ const categoryClasses = computed(() => {
     case 'news':
       return `${baseClasses} bg-primary-500`
     case 'fanclub':
-      return `${baseClasses} bg-accent-purple`
+      return `${baseClasses} bg-primary-600`
     case 'store':
-      return `${baseClasses} bg-accent-pink`
+      return `${baseClasses} bg-primary-500`
     case 'event':
-      return `${baseClasses} bg-accent-blue`
+      return `${baseClasses} bg-primary-700`
     case 'release':
-      return `${baseClasses} bg-gradient-primary`
+      return `${baseClasses} bg-primary-500`
     default:
-      return `${baseClasses} bg-dark-600`
+      return `${baseClasses} bg-neutral-600`
   }
 })
 
@@ -266,7 +266,7 @@ onMounted(() => {
 <style>
 /* Prose styles for article content */
 .prose {
-  @apply text-dark-800 leading-relaxed;
+  @apply text-neutral-800 leading-relaxed;
 }
 
 .prose p {
@@ -290,7 +290,7 @@ onMounted(() => {
 }
 
 .prose strong {
-  @apply font-semibold text-dark-900;
+  @apply font-semibold text-neutral-900;
 }
 
 .prose a {

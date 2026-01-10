@@ -8,10 +8,10 @@
           :value="searchQuery"
           @input="handleSearchInput"
           placeholder="Search members by name..."
-          class="w-full pl-12 pr-4 py-3 md:py-4 rounded-lg border-2 border-dark-200 focus:border-primary-500 focus:outline-none text-dark-800 placeholder-dark-400 transition-colors"
+          class="w-full pl-12 pr-4 py-3 md:py-4 rounded-lg border-2 border-neutral-200 focus:border-primary-500 focus:outline-none text-neutral-800 placeholder-dark-400 transition-colors"
         />
         <svg
-          class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-dark-400"
+          class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -22,7 +22,7 @@
         <button
           v-if="searchQuery"
           @click="clearSearch"
-          class="absolute right-4 top-1/2 transform -translate-y-1/2 text-dark-400 hover:text-dark-600 transition-colors"
+          class="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
           aria-label="Clear search"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,7 +38,7 @@
         <select
           :value="sortBy"
           @change="handleSortChange"
-          class="w-full pl-12 pr-10 py-3 md:py-4 rounded-lg border-2 border-dark-200 focus:border-primary-500 focus:outline-none text-dark-800 appearance-none cursor-pointer transition-colors"
+          class="w-full pl-12 pr-10 py-3 md:py-4 rounded-lg border-2 border-neutral-200 focus:border-primary-500 focus:outline-none text-neutral-800 appearance-none cursor-pointer transition-colors"
         >
           <option value="name">Sort by Name</option>
           <option value="generation">Sort by Generation</option>
@@ -46,7 +46,7 @@
           <option value="joinDate">Sort by Join Date</option>
         </select>
         <svg
-          class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-dark-400 pointer-events-none"
+          class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400 pointer-events-none"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -54,7 +54,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
         </svg>
         <svg
-          class="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-dark-400 pointer-events-none"
+          class="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400 pointer-events-none"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -67,12 +67,12 @@
     <!-- Sort Order Toggle -->
     <button
       @click="toggleSortOrder"
-      class="md:w-14 px-4 md:px-0 py-3 md:py-4 rounded-lg border-2 border-dark-200 hover:border-primary-500 hover:bg-primary-500/10 transition-all flex items-center justify-center gap-2 md:gap-0"
+      class="md:w-14 px-4 md:px-0 py-3 md:py-4 rounded-lg border-2 border-neutral-200 hover:border-primary-500 hover:bg-primary-500/10 transition-all flex items-center justify-center gap-2 md:gap-0"
       :aria-label="sortOrder === 'asc' ? 'Sort ascending' : 'Sort descending'"
     >
       <svg
         v-if="sortOrder === 'asc'"
-        class="w-5 h-5 text-dark-600"
+        class="w-5 h-5 text-neutral-600"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -81,7 +81,7 @@
       </svg>
       <svg
         v-else
-        class="w-5 h-5 text-dark-600"
+        class="w-5 h-5 text-neutral-600"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
