@@ -2,25 +2,6 @@
   <div class="member-filters space-y-4 md:space-y-6 mb-8">
     <!-- Filter Tabs (Desktop) -->
     <div class="hidden md:flex flex-wrap items-center gap-3">
-      <!-- Team Filter -->
-      <div class="flex items-center gap-2">
-        <label class="text-sm font-semibold text-neutral-600 uppercase tracking-wide">Team:</label>
-        <div class="flex gap-2">
-          <button
-            v-for="team in teams"
-            :key="team.value"
-            @click="updateFilter('team', team.value)"
-            :class="[
-              'px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300',
-              filters.team === team.value
-                ? 'bg-primary-500 text-white shadow-lg scale-105'
-                : 'bg-white text-neutral-700 hover:bg-primary-500/10 hover:text-primary-500'
-            ]"
-          >
-            {{ team.label }}
-          </button>
-        </div>
-      </div>
 
       <!-- Generation Filter -->
       <div class="flex items-center gap-2">
@@ -65,19 +46,6 @@
 
     <!-- Mobile Filters -->
     <div class="md:hidden space-y-3">
-      <!-- Team Select -->
-      <div>
-        <label class="block text-sm font-semibold text-neutral-600 uppercase tracking-wide mb-2">Team</label>
-        <select
-          :value="filters.team"
-          @change="updateFilter('team', ($event.target as HTMLSelectElement).value)"
-          class="w-full px-4 py-3 rounded-lg border-2 border-neutral-200 focus:border-primary-500 focus:outline-none"
-        >
-          <option v-for="team in teams" :key="team.value" :value="team.value">
-            {{ team.label }}
-          </option>
-        </select>
-      </div>
 
       <!-- Generation Select -->
       <div>
@@ -128,7 +96,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { MemberFilter, MemberTeam, MemberGeneration, MemberStatus } from '@/types/member'
+import type { MemberFilter, MemberGeneration, MemberStatus } from '@/types/member'
 
 // Props
 interface Props {
@@ -144,26 +112,23 @@ const emit = defineEmits<{
 }>()
 
 // Filter Options
-const teams = [
-  { value: 'all', label: 'All' },
-  { value: 'Team K', label: 'Team K' },
-  { value: 'Team L', label: 'Team L' },
-  { value: 'Team P', label: 'Team P' },
-  { value: 'Trainee', label: 'Trainee' },
-]
+// const teams = [
+//   { value: 'all', label: 'All' },
+//   { value: 'Team K', label: 'Team K' },
+//   { value: 'Team L', label: 'Team L' },
+//   { value: 'Team P', label: 'Team P' },
+//   { value: 'Trainee', label: 'Trainee' },
+// ]
 
 const generations = [
   { value: 'all', label: 'All' },
   { value: '1st', label: '1st' },
   { value: '2nd', label: '2nd' },
-  { value: '3rd', label: '3rd' },
-  { value: '4th', label: '4th' },
-  { value: '5th', label: '5th' },
 ]
 
 const statuses = [
   { value: 'all', label: 'All' },
-  { value: 'active', label: 'Active' },
+  // { value: 'active', label: 'Active' },
   { value: 'graduated', label: 'Graduated' },
   { value: 'on-hiatus', label: 'On Hiatus' },
 ]
@@ -171,7 +136,7 @@ const statuses = [
 // Computed
 const activeFiltersCount = computed(() => {
   let count = 0
-  if (props.filters.team && props.filters.team !== 'all') count++
+  // if (props.filters.team && props.filters.team !== 'all') count++
   if (props.filters.generation && props.filters.generation !== 'all') count++
   if (props.filters.status && props.filters.status !== 'all') count++
   return count
@@ -187,7 +152,7 @@ const updateFilter = (key: keyof MemberFilter, value: string) => {
 
 const resetFilters = () => {
   emit('update:filters', {
-    team: 'all',
+    // team: 'all',
     generation: 'all',
     status: 'all',
     searchQuery: props.filters.searchQuery,

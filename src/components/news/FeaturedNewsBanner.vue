@@ -175,7 +175,7 @@ const navigateToArticle = () => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: #288800;
+  background: #288820;
   transition: left 0.3s ease;
   z-index: -1;
 }

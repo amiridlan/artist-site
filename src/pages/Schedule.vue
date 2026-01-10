@@ -348,7 +348,6 @@ import CalendarView from '@/components/events/CalendarView.vue'
 import type { Event, EventType, EventStatus, CalendarDay } from '@/types/event'
 import eventsData from '@/data/events.json'
 import { downloadICalendar } from '@/utils/helpers'
-import { useFadeIn, useStaggerAnimation } from '@/composables/useScrollAnimation'
 
 // State
 const allEvents = ref<Event[]>([])
@@ -358,9 +357,6 @@ const selectedType = ref<EventType>('all')
 const searchQuery = ref('')
 const currentPage = ref(1)
 const eventsPerPage = 6
-
-// Refs for animations
-const headerRef = ref<HTMLElement | null>(null)
 
 // Calendar state
 const currentMonth = ref(new Date().getMonth())
@@ -589,25 +585,12 @@ watch([selectedType, searchQuery], () => {
   currentPage.value = 1
 })
 
-// Animations
-useFadeIn(headerRef, { once: true })
-
 // Lifecycle
 onMounted(async () => {
   // Simulate loading
   setTimeout(() => {
     allEvents.value = eventsData as Event[]
     isLoading.value = false
-
-    // Animate event cards after they load
-    setTimeout(() => {
-      useStaggerAnimation('.event-card', {
-        opacity: 0,
-        y: 30,
-        duration: 0.5,
-        stagger: 0.1
-      }, { once: true })
-    }, 100)
   }, 500)
 })
 </script>

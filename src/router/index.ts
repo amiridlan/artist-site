@@ -1,6 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
+// Define route order for directional navigation
+const routeOrder: Record<string, number> = {
+  '/': 0,
+  '/news': 1,
+  '/members': 2,
+  '/releases': 3,
+  '/videos': 4,
+  '/schedule': 5,
+  '/fanclub': 6,
+  '/about': 7
+}
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -8,8 +20,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Home.vue'),
     meta: {
       title: 'KLP48 - Malaysia\'s Premier Idol Group',
-      description: 'Official website for KLP48 idol group',
-      transition: 'fade'
+      description: 'Official website for KLP48 idol group'
     }
   },
   {
@@ -18,8 +29,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/News.vue'),
     meta: {
       title: 'News - KLP48',
-      description: 'Latest news and updates from KLP48',
-      transition: 'slide-left'
+      description: 'Latest news and updates from KLP48'
     }
   },
   {
@@ -28,8 +38,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/NewsDetail.vue'),
     meta: {
       title: 'News Article - KLP48',
-      description: 'Read the latest news from KLP48',
-      transition: 'slide-left'
+      description: 'Read the latest news from KLP48'
     }
   },
   {
@@ -38,8 +47,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Members.vue'),
     meta: {
       title: 'Members - KLP48',
-      description: 'Meet the KLP48 members',
-      transition: 'zoom'
+      description: 'Meet the KLP48 members'
     }
   },
   {
@@ -48,8 +56,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/MemberDetail.vue'),
     meta: {
       title: 'Member Profile - KLP48',
-      description: 'View KLP48 member profile',
-      transition: 'zoom'
+      description: 'View KLP48 member profile'
     }
   },
   {
@@ -58,8 +65,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Videos.vue'),
     meta: {
       title: 'Videos - KLP48',
-      description: 'Watch KLP48 music videos and performances',
-      transition: 'fade'
+      description: 'Watch KLP48 music videos and performances'
     }
   },
   {
@@ -68,8 +74,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Releases.vue'),
     meta: {
       title: 'Releases - KLP48',
-      description: 'KLP48 discography and releases',
-      transition: 'fade'
+      description: 'KLP48 discography and releases'
     }
   },
   {
@@ -78,8 +83,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Schedule.vue'),
     meta: {
       title: 'Schedule - KLP48',
-      description: 'Upcoming events and schedule',
-      transition: 'slide-right'
+      description: 'Upcoming events and schedule'
     }
   },
   {
@@ -88,8 +92,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/FanClub.vue'),
     meta: {
       title: 'Fan Club - KLP48',
-      description: 'Join the KLP48 official fan club',
-      transition: 'zoom'
+      description: 'Join the KLP48 official fan club'
     }
   },
   {
@@ -98,8 +101,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/About.vue'),
     meta: {
       title: 'About - KLP48',
-      description: 'Learn more about KLP48',
-      transition: 'fade'
+      description: 'Learn more about KLP48'
     }
   },
   {
@@ -108,8 +110,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/NotFound.vue'),
     meta: {
       title: '404 - Page Not Found',
-      description: 'The page you are looking for does not exist',
-      transition: 'fade'
+      description: 'The page you are looking for does not exist'
     }
   }
 ]
@@ -131,14 +132,21 @@ const router = createRouter({
   }
 })
 
-// Navigation guards for meta tags
+// Helper function to get base path (without params)
+const getBasePath = (path: string): string => {
+  // Remove detail page params (e.g., /news/slug -> /news, /members/123 -> /members)
+  const match = path.match(/^\/[^\/]+/)
+  return match ? match[0] : path
+}
+
+// Navigation guards for meta tags and transition direction
 router.beforeEach((to, from, next) => {
   // Update document title
   const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title)
   if (nearestWithTitle) {
     document.title = nearestWithTitle.meta.title as string
   }
-  
+
   // Update meta description
   const nearestWithMeta = to.matched.slice().reverse().find(r => r.meta && r.meta.description)
   if (nearestWithMeta) {
@@ -147,7 +155,29 @@ router.beforeEach((to, from, next) => {
       metaDescription.setAttribute('content', nearestWithMeta.meta.description as string)
     }
   }
-  
+
+  // Determine transition direction based on route order
+  const fromBasePath = getBasePath(from.path)
+  const toBasePath = getBasePath(to.path)
+
+  const fromIndex = routeOrder[fromBasePath] ?? -1
+  const toIndex = routeOrder[toBasePath] ?? -1
+
+  // Set transition direction
+  if (fromIndex === -1 || toIndex === -1) {
+    // If route not in order map, use fade
+    to.meta.transition = 'fade'
+  } else if (toIndex > fromIndex) {
+    // Moving forward (left to right)
+    to.meta.transition = 'slide-left'
+  } else if (toIndex < fromIndex) {
+    // Moving backward (right to left)
+    to.meta.transition = 'slide-right'
+  } else {
+    // Same route (e.g., detail pages), use fade
+    to.meta.transition = 'fade'
+  }
+
   next()
 })
 

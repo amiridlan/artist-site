@@ -4,8 +4,8 @@
       <div class="container mx-auto px-4 lg:px-8">
         <!-- Page Header -->
         <div class="mb-8 md:mb-12">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-avant-garde font-bold mb-4">
-            <span class="text-primary-500">Latest News</span>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            <span class="text-gradient">Latest News</span>
           </h1>
           <p class="text-lg md:text-xl text-neutral-900 max-w-2xl">
             Stay updated with the latest news, announcements, and exclusive content from KLP48.

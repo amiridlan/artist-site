@@ -2,7 +2,7 @@
   <header
     :class="[
       'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-      isScrolled ? 'glass shadow-lg' : 'bg-transparent'
+      isScrolled ? 'glass shadow-lg' : 'bg-[#288820]'
     ]"
   >
     <div class="container mx-auto px-4 lg:px-8">
@@ -14,7 +14,7 @@
           aria-label="KLP48 Home"
         >
           <div class="text-2xl md:text-3xl font-outfit font-bold">
-            <span class="text-[#288800]">KLP48</span>
+            <span class="text-[#F9F9F7]">KLP48</span>
           </div>
         </router-link>
 
@@ -25,12 +25,12 @@
             :key="item.path"
             :to="item.path"
             class="nav-link font-outfit font-semibold text-sm lg:text-base uppercase tracking-wide transition-all duration-300"
-            :class="isActive(item.path) ? 'text-primary-500' : 'text-neutral-700 hover:text-primary-500'"
+            :class="isActive(item.path) ? 'text-[#F9F9F7]' : 'text-[#1A1A1A] hover:text-primary-500'"
           >
             {{ item.label }}
             <span
               v-if="isActive(item.path)"
-              class="block h-0.5 bg-primary-500 mt-1 animate-slide-up"
+              class="block h-0.5 bg-[#288820] mt-1 animate-slide-up"
             ></span>
           </router-link>
         </nav>
@@ -46,9 +46,9 @@
               aria-haspopup="true"
               :aria-expanded="isLanguageDropdownOpen"
             >
-              <span class="text-sm font-medium">{{ currentLanguageCode.toUpperCase() }}</span>
+              <span class="text-sm font-medium text-[#F9F9F7]">{{ currentLanguageCode.toUpperCase() }}</span>
               <svg
-                class="w-4 h-4 transition-transform"
+                class="w-4 h-4 transition-transform text-[#F9F9F7]"
                 :class="{ 'rotate-180': isLanguageDropdownOpen }"
                 fill="none"
                 stroke="currentColor"

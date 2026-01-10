@@ -83,7 +83,7 @@
 
   /* Text gradient removed - using solid primary color */
   .text-gradient {
-    @apply text-primary-500;
+    @apply text-[#288820];
   }
 
   /* Reduced motion support */

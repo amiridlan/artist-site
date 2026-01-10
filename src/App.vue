@@ -27,34 +27,36 @@
   opacity: 0;
 }
 
+/* Slide Left - Moving Forward (News → Members, Schedule → FanClub) */
 .slide-left-enter-active,
 .slide-left-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slide-left-enter-from {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(50px);
 }
 
 .slide-left-leave-to {
   opacity: 0;
-  transform: translateX(-30px);
+  transform: translateX(-50px);
 }
 
+/* Slide Right - Moving Backward (Members → News, FanClub → Schedule) */
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slide-right-enter-from {
   opacity: 0;
-  transform: translateX(-30px);
+  transform: translateX(-50px);
 }
 
 .slide-right-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(50px);
 }
 
 .zoom-enter-active,

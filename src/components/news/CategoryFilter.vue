@@ -162,7 +162,7 @@ onClickOutside(dropdownRef, () => {
   transform: translateX(-50%) scaleX(0);
   width: 80%;
   height: 2px;
-  background: #288800;
+  background: #288820;
   transition: transform 0.3s ease;
 }
 

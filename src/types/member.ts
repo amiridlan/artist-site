@@ -1,6 +1,6 @@
 export type MemberStatus = 'active' | 'graduated' | 'on-hiatus'
-export type MemberTeam = 'Team K' | 'Team L' | 'Team P' | 'Trainee'
-export type MemberGeneration = '1st' | '2nd' | '3rd' | '4th' | '5th'
+// export type MemberTeam = 'Team K' | 'Team L' | 'Team P' | 'Trainee'
+export type MemberGeneration = '1st' | '2nd'
 export type MemberPosition = 'Center' | 'Captain' | 'Vice Captain' | 'Regular'
 
 export interface MemberSocialLinks {
@@ -19,7 +19,7 @@ export interface Member {
   nickname?: string
   photo: string
   coverImage?: string
-  team: MemberTeam
+  // team: MemberTeam
   generation: MemberGeneration
   position: MemberPosition
   birthdate: string // ISO date format
@@ -43,7 +43,7 @@ export interface Member {
 }
 
 export interface MemberFilter {
-  team?: MemberTeam | 'all'
+  // team?: MemberTeam | 'all'
   generation?: MemberGeneration | 'all'
   status?: MemberStatus | 'all'
   searchQuery?: string
@@ -55,9 +55,9 @@ export interface MemberStats {
   totalMembers: number
   activeMembers: number
   graduatedMembers: number
-  byTeam: {
-    [key in MemberTeam]: number
-  }
+  // byTeam: {
+  //   [key in MemberTeam]: number
+  // }
   byGeneration: {
     [key in MemberGeneration]: number
   }

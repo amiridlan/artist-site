@@ -4,9 +4,7 @@
       <!-- Hero Section -->
       <section class="hero-section relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <!-- Background -->
-        <div class="absolute inset-0 bg-primary-500">
-          <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&h=1080&fit=crop')] opacity-20 bg-cover bg-center mix-blend-overlay"></div>
-        </div>
+        <div class="absolute inset-0 bg-[#288820]"></div>
 
         <!-- Content -->
         <div class="relative z-10 container mx-auto px-4 text-center text-white">
@@ -32,7 +30,7 @@
       <section ref="benefitsSection" class="py-16 md:py-24 bg-surface-100">
         <div class="container mx-auto px-4">
           <h2 class="text-3xl md:text-4xl font-avant-garde font-bold text-center mb-4">
-            Why Join Our Fan Club?
+            Fanclub Benefits
           </h2>
           <p class="text-lg text-neutral-900 text-center mb-12 max-w-2xl mx-auto">
             Become part of an exclusive community and enjoy amazing perks!
@@ -118,39 +116,6 @@
               >
                 {{ tier.price === 0 ? 'Join Free' : 'Get Started' }}
               </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Testimonials -->
-      <section ref="testimonialsSection" class="py-16 md:py-24 bg-surface-100">
-        <div class="container mx-auto px-4">
-          <h2 class="text-3xl md:text-4xl font-avant-garde font-bold text-center mb-12">
-            What Our Fans Say
-          </h2>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div
-              v-for="(testimonial, index) in testimonials"
-              :key="index"
-              class="testimonial-card p-6 rounded-xl bg-surface-200 border-2 border-neutral-200 hover:border-primary-500 transition-all"
-            >
-              <div class="flex items-center gap-4 mb-4">
-                <div class="w-12 h-12 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold">
-                  {{ testimonial.name.charAt(0) }}
-                </div>
-                <div>
-                  <div class="font-avant-garde font-semibold">{{ testimonial.name }}</div>
-                  <div class="text-sm text-neutral-500">{{ testimonial.tier }}</div>
-                </div>
-              </div>
-              <p class="text-neutral-900 italic">"{{ testimonial.quote }}"</p>
-              <div class="flex gap-1 mt-4">
-                <svg v-for="n in 5" :key="n" class="w-4 h-4 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              </div>
             </div>
           </div>
         </div>
@@ -326,7 +291,6 @@
 <script setup lang="ts">
 import { ref, h } from 'vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import { useFadeIn, useStaggerAnimation, useScaleIn } from '@/composables/useScrollAnimation'
 
 // Icons as functional components
 const TicketIcon = () => h('svg', { fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [
@@ -534,44 +498,6 @@ const handleSubmit = async () => {
   isSubmitting.value = false
   closeRegistrationModal()
 }
-
-// Animations
-useFadeIn(benefitsSection, { once: true })
-useFadeIn(testimonialsSection, { once: true })
-useFadeIn(faqSection, { once: true })
-
-// Stagger animations for benefit cards
-useStaggerAnimation('.benefit-card', {
-  opacity: 0,
-  y: 30,
-  duration: 0.6,
-  stagger: 0.15
-}, { once: true })
-
-// Stagger animations for tier cards
-useStaggerAnimation('.tier-card', {
-  opacity: 0,
-  y: 40,
-  scale: 0.95,
-  duration: 0.7,
-  stagger: 0.2
-}, { once: true })
-
-// Stagger animations for testimonial cards
-useStaggerAnimation('.testimonial-card', {
-  opacity: 0,
-  y: 30,
-  duration: 0.6,
-  stagger: 0.15
-}, { once: true })
-
-// Stagger animations for FAQ items
-useStaggerAnimation('.faq-item', {
-  opacity: 0,
-  x: -20,
-  duration: 0.5,
-  stagger: 0.1
-}, { once: true })
 </script>
 
 <style scoped>

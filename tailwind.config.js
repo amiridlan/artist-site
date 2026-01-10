@@ -9,16 +9,16 @@ export default {
       colors: {
         // Primary green accent (10% - for buttons, CTAs, highlights)
         primary: {
-          50: '#e8f5e9',
-          100: '#c8e6c9',
-          200: '#a5d6a7',
-          300: '#81c784',
-          400: '#66bb6a',
-          500: '#288800',  // Main accent color
-          600: '#237700',
-          700: '#1e6600',
-          800: '#195500',
-          900: '#144400',
+          50: '#f0f7f0',
+          100: '#d4e8d4',
+          200: '#a9d1a9',
+          300: '#7dba7d',
+          400: '#52a352',
+          500: '#288820',  // Main accent color
+          600: '#206d1a',
+          700: '#185213',
+          800: '#10360d',
+          900: '#081b06',
         },
         // Background colors (60% + 30%)
         surface: {
@@ -73,8 +73,8 @@ export default {
         },
       },
       boxShadow: {
-        'neon': '0 0 20px rgba(40, 136, 0, 0.5)',
-        'glow': '0 4px 20px rgba(40, 136, 0, 0.15)',
+        'neon': '0 0 20px rgba(40, 136, 32, 0.5)',
+        'glow': '0 4px 20px rgba(40, 136, 32, 0.15)',
       },
     },
   },

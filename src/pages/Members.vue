@@ -12,18 +12,12 @@
           </p>
         </div>
 
-        <!-- Featured Member -->
-        <FeaturedMember
-          v-if="featuredMembers.length > 0"
-          :member="featuredMembers[0]"
-        />
-
         <!-- Search and Sort -->
-        <MemberSearch
+        <!-- <MemberSearch
           v-model:search-query="filters.searchQuery"
           v-model:sort-by="filters.sortBy"
           v-model:sort-order="filters.sortOrder"
-        />
+        /> -->
 
         <!-- Filters -->
         <MemberFilters
@@ -118,9 +112,9 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import FeaturedMember from '@/components/members/FeaturedMember.vue'
+// import FeaturedMember from '@/components/members/FeaturedMember.vue'
 import MemberFilters from '@/components/members/MemberFilters.vue'
-import MemberSearch from '@/components/members/MemberSearch.vue'
+// import MemberSearch from '@/components/members/MemberSearch.vue'
 import MemberCard from '@/components/members/MemberCard.vue'
 import MemberCardSkeleton from '@/components/common/MemberCardSkeleton.vue'
 import type { Member, MemberFilter } from '@/types/member'
@@ -152,9 +146,6 @@ const teams = computed(() => [
   { value: 'Trainee', label: 'Trainee' },
 ])
 
-const featuredMembers = computed(() => {
-  return allMembers.value.filter(member => member.featured && member.status === 'active')
-})
 
 const filteredMembers = computed(() => {
   let result = [...allMembers.value]

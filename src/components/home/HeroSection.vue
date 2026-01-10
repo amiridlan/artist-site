@@ -180,31 +180,31 @@ onUnmounted(() => {
 .hero-tagline {
   font-family: 'ITC Avant Garde Gothic Std', 'Avant Garde', 'Century Gothic', sans-serif;
   @apply font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight;
-  color: #288800;
+  color: #288820;
 }
 
 /* Primary Button */
 .btn-primary {
-  background: #288800;
+  background: #288820;
   color: white;
   transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-  background: #237700;
+  background: #206d1a;
 }
 
 /* Secondary Button */
 .btn-secondary {
   background: transparent;
   color: white;
-  border: 2px solid #288800;
+  border: 2px solid #288820;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-secondary:hover {
-  background: #288800;
-  border-color: #288800;
+  background: #288820;
+  border-color: #288820;
 }
 
 /* Animation overrides to ensure visibility */

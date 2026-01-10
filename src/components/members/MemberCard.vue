@@ -157,80 +157,22 @@ const navigateToMember = () => {
 <style scoped>
 /* Card Container */
 .member-card {
-  perspective: 1000px;
-  transform-style: preserve-3d;
+  position: relative;
 }
 
-/* Card Inner with 3D Transform */
+/* Card Inner */
 .card-inner {
   position: relative;
   width: 100%;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
+  transition: box-shadow 0.3s ease;
 }
 
 .member-card:hover .card-inner {
-  transform: translateY(-8px) rotateX(2deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Card Front */
 .card-front {
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
-/* 3D Shadow Effect */
-.member-card::before {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 10%;
-  right: 10%;
-  height: 20px;
-  /* removed gradient */
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform: translateY(0);
-  z-index: -1;
-}
-
-.member-card:hover::before {
-  opacity: 1;
-  transform: translateY(5px);
-}
-
-/* Shine Effect */
-.card-front::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-/* removed gradient */
-/* removed gradient */
-/* removed gradient */
-/* removed gradient */
-/* removed gradient */
-/* removed gradient */
-  transform: translateX(-100%) translateY(-100%) rotate(45deg);
-  transition: transform 0.6s;
-}
-
-.member-card:hover .card-front::after {
-  transform: translateX(100%) translateY(100%) rotate(45deg);
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  .member-card:hover .card-inner {
-    transform: translateY(-4px);
-  }
-
-  .card-inner,
-  .card-front::after,
-  .member-card::before {
-    transition-duration: 0.01ms !important;
-  }
+  position: relative;
 }
 </style>
