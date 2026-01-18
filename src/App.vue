@@ -1,18 +1,32 @@
 <template>
-  <div id="app">
-    <router-view v-slot="{ Component, route }">
-      <transition
-        :name="route.meta.transition as string || 'fade'"
-        mode="out-in"
-      >
-        <component :is="Component" :key="route.path" />
-      </transition>
-    </router-view>
+  <div id="app" class="min-h-screen flex flex-col bg-surface-100">
+    <!-- Header (static, no animation) -->
+    <Header />
+
+    <!-- Mobile Menu (static, no animation) -->
+    <MobileMenu />
+
+    <!-- Main Content (animated) -->
+    <main class="flex-grow">
+      <router-view v-slot="{ Component, route }">
+        <transition
+          :name="route.meta.transition as string || 'fade'"
+          mode="out-in"
+        >
+          <component :is="Component" :key="route.path" />
+        </transition>
+      </router-view>
+    </main>
+
+    <!-- Footer (static, no animation) -->
+    <Footer />
   </div>
 </template>
 
 <script setup lang="ts">
-// Future: Add global app logic here (analytics, error handling, etc.)
+import Header from '@/components/layout/Header.vue'
+import Footer from '@/components/layout/Footer.vue'
+import MobileMenu from '@/components/layout/MobileMenu.vue'
 </script>
 
 <style>

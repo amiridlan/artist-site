@@ -1,296 +1,293 @@
 <template>
-  <DefaultLayout>
-    <div class="fanclub-page">
-      <!-- Hero Section -->
-      <section class="hero-section relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-        <!-- Background -->
-        <div class="absolute inset-0 bg-[#288820]"></div>
+  <div class="fanclub-page">
+    <!-- Hero Section -->
+    <section class="hero-section relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+      <!-- Background -->
+      <div class="absolute inset-0 bg-[#288820]"></div>
 
-        <!-- Content -->
-        <div class="relative z-10 container mx-auto px-4 text-center text-white">
-          <h1 class="text-5xl md:text-6xl lg:text-7xl font-avant-garde font-bold mb-6 animate-fade-in">
-            Join the KLP48 Fan Club
-          </h1>
-          <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
-            Get exclusive access to behind-the-scenes content, priority event tickets, and connect with fans worldwide!
-          </p>
-          <button
-            @click="scrollToTiers"
-            class="px-8 py-4 bg-white text-primary-500 rounded-full font-outfit font-bold text-lg hover:scale-105 transition-transform shadow-2xl"
+      <!-- Content -->
+      <div class="relative z-10 container mx-auto px-4 text-center text-white">
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-avant-garde font-bold mb-6 animate-fade-in">
+          Join the KLP48 Fan Club
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
+          Get exclusive access to behind-the-scenes content, priority event tickets, and connect with fans worldwide!
+        </p>
+        <button
+          @click="scrollToTiers"
+          class="px-8 py-4 bg-white text-primary-500 rounded-full font-outfit font-bold text-lg hover:scale-105 transition-transform shadow-2xl"
+        >
+          Explore Membership Tiers
+        </button>
+      </div>
+
+      <!-- Decorative elements -->
+      <div class="absolute bottom-0 left-0 right-0 h-32 "></div>
+    </section>
+
+    <!-- Benefits Overview -->
+    <section ref="benefitsSection" class="py-16 md:py-24 bg-surface-100">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-avant-garde font-bold text-center mb-4">
+          Fanclub Benefits
+        </h2>
+        <p class="text-lg text-neutral-900 text-center mb-12 max-w-2xl mx-auto">
+          Become part of an exclusive community and enjoy amazing perks!
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div
+            v-for="(benefit, index) in benefits"
+            :key="index"
+            class="benefit-card text-center p-6 rounded-xl bg-surface-200 border-2 border-neutral-200 hover:border-primary-500 transition-all hover:shadow-lg"
           >
-            Explore Membership Tiers
-          </button>
-        </div>
-
-        <!-- Decorative elements -->
-        <div class="absolute bottom-0 left-0 right-0 h-32 "></div>
-      </section>
-
-      <!-- Benefits Overview -->
-      <section ref="benefitsSection" class="py-16 md:py-24 bg-surface-100">
-        <div class="container mx-auto px-4">
-          <h2 class="text-3xl md:text-4xl font-avant-garde font-bold text-center mb-4">
-            Fanclub Benefits
-          </h2>
-          <p class="text-lg text-neutral-900 text-center mb-12 max-w-2xl mx-auto">
-            Become part of an exclusive community and enjoy amazing perks!
-          </p>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div
-              v-for="(benefit, index) in benefits"
-              :key="index"
-              class="benefit-card text-center p-6 rounded-xl bg-surface-200 border-2 border-neutral-200 hover:border-primary-500 transition-all hover:shadow-lg"
-            >
-              <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-primary-500 flex items-center justify-center">
-                <component :is="benefit.icon" class="w-8 h-8 text-white" />
-              </div>
-              <h3 class="font-avant-garde font-bold text-lg mb-2">{{ benefit.title }}</h3>
-              <p class="text-neutral-900 text-sm">{{ benefit.description }}</p>
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-primary-500 flex items-center justify-center">
+              <component :is="benefit.icon" class="w-8 h-8 text-white" />
             </div>
+            <h3 class="font-avant-garde font-bold text-lg mb-2">{{ benefit.title }}</h3>
+            <p class="text-neutral-900 text-sm">{{ benefit.description }}</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Membership Tiers -->
-      <section ref="tiersSection" class="py-16 md:py-24 bg-surface-200">
-        <div class="container mx-auto px-4">
-          <h2 class="text-3xl md:text-4xl font-avant-garde font-bold text-center mb-4">
-            Choose Your Membership Tier
-          </h2>
-          <p class="text-lg text-neutral-900 text-center mb-12 max-w-2xl mx-auto">
-            Select the perfect plan that fits your fan journey
-          </p>
+    <!-- Membership Tiers -->
+    <section ref="tiersSection" class="py-16 md:py-24 bg-surface-200">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-avant-garde font-bold text-center mb-4">
+          Choose Your Membership Tier
+        </h2>
+        <p class="text-lg text-neutral-900 text-center mb-12 max-w-2xl mx-auto">
+          Select the perfect plan that fits your fan journey
+        </p>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div
+            v-for="(tier, index) in tiers"
+            :key="index"
+            :class="[
+              'tier-card relative rounded-2xl p-8 transition-all duration-300 hover:scale-105',
+              tier.recommended
+                ? 'bg-primary-500 text-white shadow-2xl ring-4 ring-primary-300 transform scale-105'
+                : 'bg-surface-100 text-neutral-800 shadow-lg hover:shadow-xl'
+            ]"
+          >
+            <!-- Recommended Badge -->
             <div
-              v-for="(tier, index) in tiers"
-              :key="index"
+              v-if="tier.recommended"
+              class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-primary-400 text-white rounded-full text-xs font-bold uppercase"
+            >
+              Most Popular
+            </div>
+
+            <!-- Tier Name -->
+            <h3 class="font-avant-garde font-bold text-2xl mb-2">{{ tier.name }}</h3>
+
+            <!-- Price -->
+            <div class="mb-6">
+              <span class="text-4xl font-bold">{{ tier.price === 0 ? 'FREE' : `MYR ${tier.price}` }}</span>
+              <span v-if="tier.price > 0" :class="tier.recommended ? 'text-white/80' : 'text-neutral-500'">/month</span>
+            </div>
+
+            <!-- Features -->
+            <ul class="space-y-3 mb-8">
+              <li
+                v-for="(feature, fIndex) in tier.features"
+                :key="fIndex"
+                class="flex items-start gap-2"
+              >
+                <svg class="w-5 h-5 flex-shrink-0 mt-0.5" :class="tier.recommended ? 'text-white' : 'text-primary-500'" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span :class="tier.recommended ? 'text-white/90' : 'text-neutral-700'" class="text-sm">{{ feature }}</span>
+              </li>
+            </ul>
+
+            <!-- CTA Button -->
+            <button
+              @click="openRegistrationModal(tier)"
               :class="[
-                'tier-card relative rounded-2xl p-8 transition-all duration-300 hover:scale-105',
+                'w-full py-3 rounded-full font-outfit font-semibold transition-all',
                 tier.recommended
-                  ? 'bg-primary-500 text-white shadow-2xl ring-4 ring-primary-300 transform scale-105'
-                  : 'bg-surface-100 text-neutral-800 shadow-lg hover:shadow-xl'
+                  ? 'bg-white text-primary-500 hover:bg-neutral-50'
+                  : 'bg-primary-500 text-white hover:scale-105'
               ]"
             >
-              <!-- Recommended Badge -->
-              <div
-                v-if="tier.recommended"
-                class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-primary-400 text-white rounded-full text-xs font-bold uppercase"
-              >
-                Most Popular
-              </div>
-
-              <!-- Tier Name -->
-              <h3 class="font-avant-garde font-bold text-2xl mb-2">{{ tier.name }}</h3>
-
-              <!-- Price -->
-              <div class="mb-6">
-                <span class="text-4xl font-bold">{{ tier.price === 0 ? 'FREE' : `MYR ${tier.price}` }}</span>
-                <span v-if="tier.price > 0" :class="tier.recommended ? 'text-white/80' : 'text-neutral-500'">/month</span>
-              </div>
-
-              <!-- Features -->
-              <ul class="space-y-3 mb-8">
-                <li
-                  v-for="(feature, fIndex) in tier.features"
-                  :key="fIndex"
-                  class="flex items-start gap-2"
-                >
-                  <svg class="w-5 h-5 flex-shrink-0 mt-0.5" :class="tier.recommended ? 'text-white' : 'text-primary-500'" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <span :class="tier.recommended ? 'text-white/90' : 'text-neutral-700'" class="text-sm">{{ feature }}</span>
-                </li>
-              </ul>
-
-              <!-- CTA Button -->
-              <button
-                @click="openRegistrationModal(tier)"
-                :class="[
-                  'w-full py-3 rounded-full font-outfit font-semibold transition-all',
-                  tier.recommended
-                    ? 'bg-white text-primary-500 hover:bg-neutral-50'
-                    : 'bg-primary-500 text-white hover:scale-105'
-                ]"
-              >
-                {{ tier.price === 0 ? 'Join Free' : 'Get Started' }}
-              </button>
-            </div>
+              {{ tier.price === 0 ? 'Join Free' : 'Get Started' }}
+            </button>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- FAQ Section -->
-      <section ref="faqSection" class="py-16 md:py-24 bg-surface-200">
-        <div class="container mx-auto px-4 max-w-4xl">
-          <h2 class="text-3xl md:text-4xl font-avant-garde font-bold text-center mb-12">
-            Frequently Asked Questions
-          </h2>
+    <!-- FAQ Section -->
+    <section ref="faqSection" class="py-16 md:py-24 bg-surface-200">
+      <div class="container mx-auto px-4 max-w-4xl">
+        <h2 class="text-3xl md:text-4xl font-avant-garde font-bold text-center mb-12">
+          Frequently Asked Questions
+        </h2>
 
-          <div class="space-y-4">
-            <div
-              v-for="(faq, index) in faqs"
-              :key="index"
-              class="faq-item bg-surface-100 rounded-xl overflow-hidden shadow-md"
-            >
-              <button
-                @click="toggleFaq(index)"
-                class="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-neutral-100 transition-colors"
-              >
-                <span class="font-avant-garde font-semibold text-lg">{{ faq.question }}</span>
-                <svg
-                  :class="['w-6 h-6 transition-transform', openFaqIndex === index && 'rotate-180']"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <transition name="accordion">
-                <div v-if="openFaqIndex === index" class="px-6 pb-4">
-                  <p class="text-neutral-900 leading-relaxed">{{ faq.answer }}</p>
-                </div>
-              </transition>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Registration Modal -->
-      <teleport to="body">
-        <transition name="fade">
+        <div class="space-y-4">
           <div
-            v-if="showRegistrationModal"
-            class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            @click.self="closeRegistrationModal"
+            v-for="(faq, index) in faqs"
+            :key="index"
+            class="faq-item bg-surface-100 rounded-xl overflow-hidden shadow-md"
           >
-            <div class="relative w-full max-w-2xl bg-white rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
-              <!-- Close Button -->
-              <button
-                @click="closeRegistrationModal"
-                class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-neutral-200 hover:bg-neutral-300 text-neutral-700 flex items-center justify-center transition-colors"
-                aria-label="Close"
+            <button
+              @click="toggleFaq(index)"
+              class="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-neutral-100 transition-colors"
+            >
+              <span class="font-avant-garde font-semibold text-lg">{{ faq.question }}</span>
+              <svg
+                :class="['w-6 h-6 transition-transform', openFaqIndex === index && 'rotate-180']"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-
-              <!-- Modal Content -->
-              <div class="p-8">
-                <h3 class="text-3xl font-outfit font-bold mb-2">Join {{ selectedTier?.name }}</h3>
-                <p class="text-neutral-900 mb-6">Fill in your details to get started</p>
-
-                <!-- Registration Form -->
-                <form @submit.prevent="handleSubmit" class="space-y-6">
-                  <!-- Name -->
-                  <div>
-                    <label class="block text-sm font-semibold text-neutral-900 mb-2">Full Name *</label>
-                    <input
-                      v-model="formData.name"
-                      type="text"
-                      required
-                      class="w-full px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-
-                  <!-- Email -->
-                  <div>
-                    <label class="block text-sm font-semibold text-neutral-900 mb-2">Email Address *</label>
-                    <input
-                      v-model="formData.email"
-                      type="email"
-                      required
-                      class="w-full px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
-
-                  <!-- Phone -->
-                  <div>
-                    <label class="block text-sm font-semibold text-neutral-900 mb-2">Phone Number</label>
-                    <input
-                      v-model="formData.phone"
-                      type="tel"
-                      class="w-full px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
-                      placeholder="+60 12-345 6789"
-                    />
-                  </div>
-
-                  <!-- Country -->
-                  <div>
-                    <label class="block text-sm font-semibold text-neutral-900 mb-2">Country *</label>
-                    <select
-                      v-model="formData.country"
-                      required
-                      class="w-full px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
-                    >
-                      <option value="">Select your country</option>
-                      <option value="MY">Malaysia</option>
-                      <option value="SG">Singapore</option>
-                      <option value="ID">Indonesia</option>
-                      <option value="TH">Thailand</option>
-                      <option value="PH">Philippines</option>
-                      <option value="JP">Japan</option>
-                      <option value="KR">South Korea</option>
-                      <option value="OTHER">Other</option>
-                    </select>
-                  </div>
-
-                  <!-- Terms -->
-                  <div class="flex items-start gap-2">
-                    <input
-                      v-model="formData.agreedToTerms"
-                      type="checkbox"
-                      required
-                      class="mt-1 w-5 h-5 text-primary-500 border-2 border-neutral-300 rounded focus:ring-2 focus:ring-primary-500"
-                    />
-                    <label class="text-sm text-neutral-900">
-                      I agree to the <a href="#" class="text-primary-500 hover:underline">Terms & Conditions</a> and <a href="#" class="text-primary-500 hover:underline">Privacy Policy</a>
-                    </label>
-                  </div>
-
-                  <!-- Newsletter -->
-                  <div class="flex items-start gap-2">
-                    <input
-                      v-model="formData.newsletter"
-                      type="checkbox"
-                      class="mt-1 w-5 h-5 text-primary-500 border-2 border-neutral-300 rounded focus:ring-2 focus:ring-primary-500"
-                    />
-                    <label class="text-sm text-neutral-900">
-                      Send me news, updates, and exclusive offers
-                    </label>
-                  </div>
-
-                  <!-- Submit Button -->
-                  <button
-                    type="submit"
-                    :disabled="isSubmitting"
-                    class="w-full py-4 bg-primary-500 text-white rounded-full font-outfit font-bold text-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {{ isSubmitting ? 'Processing...' : `Join ${selectedTier?.name}` }}
-                  </button>
-
-                  <!-- Note -->
-                  <p class="text-xs text-center text-neutral-500">
-                    This is a demo form. No actual registration will be processed.
-                  </p>
-                </form>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <transition name="accordion">
+              <div v-if="openFaqIndex === index" class="px-6 pb-4">
+                <p class="text-neutral-900 leading-relaxed">{{ faq.answer }}</p>
               </div>
+            </transition>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registration Modal -->
+    <teleport to="body">
+      <transition name="fade">
+        <div
+          v-if="showRegistrationModal"
+          class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          @click.self="closeRegistrationModal"
+        >
+          <div class="relative w-full max-w-2xl bg-white rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
+            <!-- Close Button -->
+            <button
+              @click="closeRegistrationModal"
+              class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-neutral-200 hover:bg-neutral-300 text-neutral-700 flex items-center justify-center transition-colors"
+              aria-label="Close"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <!-- Modal Content -->
+            <div class="p-8">
+              <h3 class="text-3xl font-outfit font-bold mb-2">Join {{ selectedTier?.name }}</h3>
+              <p class="text-neutral-900 mb-6">Fill in your details to get started</p>
+
+              <!-- Registration Form -->
+              <form @submit.prevent="handleSubmit" class="space-y-6">
+                <!-- Name -->
+                <div>
+                  <label class="block text-sm font-semibold text-neutral-900 mb-2">Full Name *</label>
+                  <input
+                    v-model="formData.name"
+                    type="text"
+                    required
+                    class="w-full px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <!-- Email -->
+                <div>
+                  <label class="block text-sm font-semibold text-neutral-900 mb-2">Email Address *</label>
+                  <input
+                    v-model="formData.email"
+                    type="email"
+                    required
+                    class="w-full px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                <!-- Phone -->
+                <div>
+                  <label class="block text-sm font-semibold text-neutral-900 mb-2">Phone Number</label>
+                  <input
+                    v-model="formData.phone"
+                    type="tel"
+                    class="w-full px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+                    placeholder="+60 12-345 6789"
+                  />
+                </div>
+
+                <!-- Country -->
+                <div>
+                  <label class="block text-sm font-semibold text-neutral-900 mb-2">Country *</label>
+                  <select
+                    v-model="formData.country"
+                    required
+                    class="w-full px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+                  >
+                    <option value="">Select your country</option>
+                    <option value="MY">Malaysia</option>
+                    <option value="SG">Singapore</option>
+                    <option value="ID">Indonesia</option>
+                    <option value="TH">Thailand</option>
+                    <option value="PH">Philippines</option>
+                    <option value="JP">Japan</option>
+                    <option value="KR">South Korea</option>
+                    <option value="OTHER">Other</option>
+                  </select>
+                </div>
+
+                <!-- Terms -->
+                <div class="flex items-start gap-2">
+                  <input
+                    v-model="formData.agreedToTerms"
+                    type="checkbox"
+                    required
+                    class="mt-1 w-5 h-5 text-primary-500 border-2 border-neutral-300 rounded focus:ring-2 focus:ring-primary-500"
+                  />
+                  <label class="text-sm text-neutral-900">
+                    I agree to the <a href="#" class="text-primary-500 hover:underline">Terms & Conditions</a> and <a href="#" class="text-primary-500 hover:underline">Privacy Policy</a>
+                  </label>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="flex items-start gap-2">
+                  <input
+                    v-model="formData.newsletter"
+                    type="checkbox"
+                    class="mt-1 w-5 h-5 text-primary-500 border-2 border-neutral-300 rounded focus:ring-2 focus:ring-primary-500"
+                  />
+                  <label class="text-sm text-neutral-900">
+                    Send me news, updates, and exclusive offers
+                  </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button
+                  type="submit"
+                  :disabled="isSubmitting"
+                  class="w-full py-4 bg-primary-500 text-white rounded-full font-outfit font-bold text-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {{ isSubmitting ? 'Processing...' : `Join ${selectedTier?.name}` }}
+                </button>
+
+                <!-- Note -->
+                <p class="text-xs text-center text-neutral-500">
+                  This is a demo form. No actual registration will be processed.
+                </p>
+              </form>
             </div>
           </div>
-        </transition>
-      </teleport>
-    </div>
-  </DefaultLayout>
+        </div>
+      </transition>
+    </teleport>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, h } from 'vue'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 // Icons as functional components
 const TicketIcon = () => h('svg', { fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' }, [

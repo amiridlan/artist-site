@@ -1,5 +1,5 @@
 <template>
-  <DefaultLayout>
+  <div class="news-detail-wrapper">
     <article v-if="article" class="news-detail-page pt-24 pb-16">
       <!-- Hero Image Section -->
       <div class="relative h-[50vh] md:h-[60vh] lg:h-[70vh] mb-12 overflow-hidden">
@@ -160,14 +160,13 @@
         </router-link>
       </div>
     </div>
-  </DefaultLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { format } from 'date-fns'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import type { NewsArticle, NewsCategory } from '@/types/news'
 import { NEWS_CATEGORIES } from '@/utils/constants'
 import newsData from '@/data/news.json'

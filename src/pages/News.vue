@@ -1,116 +1,113 @@
 <template>
-  <DefaultLayout>
-    <div class="news-page min-h-screen pt-24 pb-16">
-      <div class="container mx-auto px-4 lg:px-8">
-        <!-- Page Header -->
-        <div class="mb-8 md:mb-12">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            <span class="text-gradient">Latest News</span>
-          </h1>
-          <p class="text-lg md:text-xl text-neutral-900 max-w-2xl">
-            Stay updated with the latest news, announcements, and exclusive content from KLP48.
-          </p>
-        </div>
+  <div class="news-page min-h-screen pt-24 pb-16">
+    <div class="container mx-auto px-4 lg:px-8">
+      <!-- Page Header -->
+      <div class="mb-8 md:mb-12">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+          <span class="text-gradient">Latest News</span>
+        </h1>
+        <p class="text-lg md:text-xl text-neutral-900 max-w-2xl">
+          Stay updated with the latest news, announcements, and exclusive content from KLP48.
+        </p>
+      </div>
 
-        <!-- Featured News Banner -->
-        <FeaturedNewsBanner
-          v-if="featuredArticles.length > 0"
-          :featured-article="featuredArticles[0]"
+      <!-- Featured News Banner -->
+      <FeaturedNewsBanner
+        v-if="featuredArticles.length > 0"
+        :featured-article="featuredArticles[0]"
+      />
+
+      <!-- Category Filter -->
+      <CategoryFilter
+        v-model:active-category="selectedCategory"
+        :count="filteredArticles.length"
+      />
+
+      <!-- Loading Skeletons -->
+      <div v-if="isLoading" class="news-grid mb-12">
+        <NewsCardSkeleton v-for="n in 6" :key="`skeleton-${n}`" />
+      </div>
+
+      <!-- News Grid -->
+      <div v-else-if="paginatedArticles.length > 0" class="news-grid mb-12">
+        <NewsCard
+          v-for="article in paginatedArticles"
+          :key="article.id"
+          :article="article"
+          :show-tags="true"
         />
+      </div>
 
-        <!-- Category Filter -->
-        <CategoryFilter
-          v-model:active-category="selectedCategory"
-          :count="filteredArticles.length"
-        />
+      <!-- Empty State -->
+      <div v-else class="text-center py-20">
+        <svg class="w-24 h-24 mx-auto mb-6 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <h3 class="text-2xl font-outfit font-bold mb-2">No articles found</h3>
+        <p class="text-neutral-900 mb-6">Try selecting a different category.</p>
+        <button
+          @click="selectedCategory = 'all'"
+          class="px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
+        >
+          Show All News
+        </button>
+      </div>
 
-        <!-- Loading Skeletons -->
-        <div v-if="isLoading" class="news-grid mb-12">
-          <NewsCardSkeleton v-for="n in 6" :key="`skeleton-${n}`" />
-        </div>
-
-        <!-- News Grid -->
-        <div v-else-if="paginatedArticles.length > 0" class="news-grid mb-12">
-          <NewsCard
-            v-for="article in paginatedArticles"
-            :key="article.id"
-            :article="article"
-            :show-tags="true"
-          />
-        </div>
-
-        <!-- Empty State -->
-        <div v-else class="text-center py-20">
-          <svg class="w-24 h-24 mx-auto mb-6 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      <!-- Pagination -->
+      <div v-if="totalPages > 1" class="flex justify-center items-center gap-2">
+        <!-- Previous Button -->
+        <button
+          @click="goToPage(currentPage - 1)"
+          :disabled="currentPage === 1"
+          :class="[
+            'px-4 py-2 rounded-lg font-medium transition-all',
+            currentPage === 1
+              ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+              : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
+          ]"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
-          <h3 class="text-2xl font-outfit font-bold mb-2">No articles found</h3>
-          <p class="text-neutral-900 mb-6">Try selecting a different category.</p>
-          <button
-            @click="selectedCategory = 'all'"
-            class="px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
-          >
-            Show All News
-          </button>
-        </div>
+        </button>
 
-        <!-- Pagination -->
-        <div v-if="totalPages > 1" class="flex justify-center items-center gap-2">
-          <!-- Previous Button -->
-          <button
-            @click="goToPage(currentPage - 1)"
-            :disabled="currentPage === 1"
-            :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all',
-              currentPage === 1
-                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
-                : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
-            ]"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+        <!-- Page Numbers -->
+        <button
+          v-for="page in visiblePages"
+          :key="page"
+          @click="goToPage(page)"
+          :class="[
+            'px-4 py-2 rounded-lg font-medium transition-all',
+            currentPage === page
+              ? 'bg-primary-500 text-white'
+              : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
+          ]"
+        >
+          {{ page }}
+        </button>
 
-          <!-- Page Numbers -->
-          <button
-            v-for="page in visiblePages"
-            :key="page"
-            @click="goToPage(page)"
-            :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all',
-              currentPage === page
-                ? 'bg-primary-500 text-white'
-                : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
-            ]"
-          >
-            {{ page }}
-          </button>
-
-          <!-- Next Button -->
-          <button
-            @click="goToPage(currentPage + 1)"
-            :disabled="currentPage === totalPages"
-            :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all',
-              currentPage === totalPages
-                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
-                : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
-            ]"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+        <!-- Next Button -->
+        <button
+          @click="goToPage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+          :class="[
+            'px-4 py-2 rounded-lg font-medium transition-all',
+            currentPage === totalPages
+              ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+              : 'bg-white text-neutral-900 hover:bg-primary-500 hover:text-white'
+          ]"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
     </div>
-  </DefaultLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import FeaturedNewsBanner from '@/components/news/FeaturedNewsBanner.vue'
 import CategoryFilter from '@/components/news/CategoryFilter.vue'
 import NewsCard from '@/components/news/NewsCard.vue'

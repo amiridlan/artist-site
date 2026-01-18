@@ -1,117 +1,114 @@
 <template>
-  <DefaultLayout>
-    <div class="members-page min-h-screen pt-24 pb-16">
-      <div class="container mx-auto px-4 lg:px-8">
-        <!-- Page Header -->
-        <div class="mb-8 md:mb-12">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-outfit font-bold mb-4">
-            <span class="text-gradient">Our Members</span>
-          </h1>
-          <p class="text-lg md:text-xl text-neutral-600 max-w-2xl">
-            Meet the talented individuals who make KLP48 Malaysia's premier idol group. {{ totalMembers }} members across {{ teams.length - 1 }} teams.
-          </p>
-        </div>
+  <div class="members-page min-h-screen pt-24 pb-16">
+    <div class="container mx-auto px-4 lg:px-8">
+      <!-- Page Header -->
+      <div class="mb-8 md:mb-12">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-outfit font-bold mb-4">
+          <span class="text-gradient">Our Members</span>
+        </h1>
+        <p class="text-lg md:text-xl text-neutral-600 max-w-2xl">
+          Meet the talented individuals who make KLP48 Malaysia's premier idol group. {{ totalMembers }} members across {{ teams.length - 1 }} teams.
+        </p>
+      </div>
 
-        <!-- Search and Sort -->
-        <!-- <MemberSearch
-          v-model:search-query="filters.searchQuery"
-          v-model:sort-by="filters.sortBy"
-          v-model:sort-order="filters.sortOrder"
-        /> -->
+      <!-- Search and Sort -->
+      <!-- <MemberSearch
+        v-model:search-query="filters.searchQuery"
+        v-model:sort-by="filters.sortBy"
+        v-model:sort-order="filters.sortOrder"
+      /> -->
 
-        <!-- Filters -->
-        <MemberFilters
-          :filters="filters"
-          :filtered-count="filteredMembers.length"
-          @update:filters="updateFilters"
+      <!-- Filters -->
+      <MemberFilters
+        :filters="filters"
+        :filtered-count="filteredMembers.length"
+        @update:filters="updateFilters"
+      />
+
+      <!-- Loading Skeletons -->
+      <div v-if="isLoading" class="member-grid mb-12">
+        <MemberCardSkeleton v-for="n in 12" :key="`skeleton-${n}`" />
+      </div>
+
+      <!-- Member Grid -->
+      <div v-else-if="paginatedMembers.length > 0" class="member-grid mb-12">
+        <MemberCard
+          v-for="member in paginatedMembers"
+          :key="member.id"
+          :member="member"
         />
+      </div>
 
-        <!-- Loading Skeletons -->
-        <div v-if="isLoading" class="member-grid mb-12">
-          <MemberCardSkeleton v-for="n in 12" :key="`skeleton-${n}`" />
-        </div>
+      <!-- Empty State -->
+      <div v-else class="text-center py-20">
+        <svg class="w-24 h-24 mx-auto mb-6 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <h3 class="text-2xl font-outfit font-bold mb-2">No members found</h3>
+        <p class="text-neutral-600 mb-6">Try adjusting your filters or search query.</p>
+        <button
+          @click="resetAllFilters"
+          class="px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
+        >
+          Show All Members
+        </button>
+      </div>
 
-        <!-- Member Grid -->
-        <div v-else-if="paginatedMembers.length > 0" class="member-grid mb-12">
-          <MemberCard
-            v-for="member in paginatedMembers"
-            :key="member.id"
-            :member="member"
-          />
-        </div>
-
-        <!-- Empty State -->
-        <div v-else class="text-center py-20">
-          <svg class="w-24 h-24 mx-auto mb-6 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      <!-- Pagination -->
+      <div v-if="totalPages > 1" class="flex justify-center items-center gap-2">
+        <!-- Previous Button -->
+        <button
+          @click="goToPage(currentPage - 1)"
+          :disabled="currentPage === 1"
+          :class="[
+            'px-4 py-2 rounded-lg font-medium transition-all',
+            currentPage === 1
+              ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+              : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
+          ]"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
-          <h3 class="text-2xl font-outfit font-bold mb-2">No members found</h3>
-          <p class="text-neutral-600 mb-6">Try adjusting your filters or search query.</p>
-          <button
-            @click="resetAllFilters"
-            class="px-6 py-3 bg-primary-500 text-white rounded-full font-outfit font-semibold uppercase text-sm tracking-wide hover:scale-105 transition-all"
-          >
-            Show All Members
-          </button>
-        </div>
+        </button>
 
-        <!-- Pagination -->
-        <div v-if="totalPages > 1" class="flex justify-center items-center gap-2">
-          <!-- Previous Button -->
-          <button
-            @click="goToPage(currentPage - 1)"
-            :disabled="currentPage === 1"
-            :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all',
-              currentPage === 1
-                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
-                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
-            ]"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+        <!-- Page Numbers -->
+        <button
+          v-for="page in visiblePages"
+          :key="page"
+          @click="goToPage(page)"
+          :class="[
+            'px-4 py-2 rounded-lg font-medium transition-all',
+            currentPage === page
+              ? 'bg-primary-500 text-white'
+              : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
+          ]"
+        >
+          {{ page }}
+        </button>
 
-          <!-- Page Numbers -->
-          <button
-            v-for="page in visiblePages"
-            :key="page"
-            @click="goToPage(page)"
-            :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all',
-              currentPage === page
-                ? 'bg-primary-500 text-white'
-                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
-            ]"
-          >
-            {{ page }}
-          </button>
-
-          <!-- Next Button -->
-          <button
-            @click="goToPage(currentPage + 1)"
-            :disabled="currentPage === totalPages"
-            :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all',
-              currentPage === totalPages
-                ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
-                : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
-            ]"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+        <!-- Next Button -->
+        <button
+          @click="goToPage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+          :class="[
+            'px-4 py-2 rounded-lg font-medium transition-all',
+            currentPage === totalPages
+              ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
+              : 'bg-white text-neutral-700 hover:bg-primary-500 hover:text-white'
+          ]"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
     </div>
-  </DefaultLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 // import FeaturedMember from '@/components/members/FeaturedMember.vue'
 import MemberFilters from '@/components/members/MemberFilters.vue'
 // import MemberSearch from '@/components/members/MemberSearch.vue'

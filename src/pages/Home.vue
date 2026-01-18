@@ -1,5 +1,5 @@
 <template>
-  <DefaultLayout>
+  <div class="home-page">
     <!-- Hero Section -->
     <HeroSection />
 
@@ -12,10 +12,9 @@
         </p>
       </div>
     </section>
-  </DefaultLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import HeroSection from '@/components/home/HeroSection.vue'
 </script>

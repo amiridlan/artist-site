@@ -1,5 +1,5 @@
 <template>
-  <DefaultLayout>
+  <div class="member-detail-wrapper">
     <article v-if="member" class="member-detail-page pt-20 pb-16">
       <!-- Hero Section with Cover Image -->
       <div class="relative h-[60vh] md:h-[70vh] mb-12 overflow-hidden">
@@ -254,14 +254,13 @@
         </router-link>
       </div>
     </div>
-  </DefaultLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { format } from 'date-fns'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import type { Member } from '@/types/member'
 import membersData from '@/data/members.json'
 
