@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-cream-50 text-charcoal-800 font-body;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+
+  ::selection {
+    @apply bg-jade-500/20 text-charcoal-900;
+  }
+}
+
+@layer components {
+  /* Frosted glass effect */
+  .glass {
+    @apply bg-white/70 backdrop-blur-lg border border-white/20;
+  }
+
+  .glass-jade {
+    @apply bg-jade-500/10 backdrop-blur-lg border border-jade-500/20;
+  }
+
+  /* Jade green glow on interactive elements */
+  .glow-jade {
+    @apply shadow-jade-glow transition-shadow duration-300;
+  }
+
+  .glow-jade:hover {
+    @apply shadow-jade-glow-lg;
+  }
+
+  /* Gold songket border accent */
+  .border-songket {
+    border-image: linear-gradient(90deg, #C9A84C 0%, #e5d599 25%, #C9A84C 50%, #e5d599 75%, #C9A84C 100%) 1;
+  }
+
+  /* Card with jade left border */
+  .card-jade {
+    @apply bg-white rounded-lg shadow-card border-l-4 border-jade-500
+           transition-all duration-300 hover:shadow-card-hover;
+  }
+
+  /* Batik pattern overlay (pseudo-element) */
+  .batik-overlay {
+    @apply relative overflow-hidden;
+  }
+
+  .batik-overlay::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300B4A0' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .batik-overlay:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Pill toggle for language switcher */
+  .pill-toggle {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium
+           transition-all duration-200 cursor-pointer select-none;
+  }
+
+  .pill-toggle-active {
+    @apply bg-jade-500 text-white shadow-jade-glow;
+  }
+
+  .pill-toggle-inactive {
+    @apply bg-white/50 text-charcoal-600 hover:bg-jade-50 hover:text-jade-700;
+  }
+
+  /* Section divider with batik pattern */
+  .divider-batik {
+    @apply w-full h-px relative my-12;
+    background: linear-gradient(90deg, transparent, #C9A84C, #00B4A0, #C9A84C, transparent);
+  }
+}
+
+@layer utilities {
+  /* Noren curtain shape clip-path */
+  .clip-noren {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+  }
+
+  /* Arch shape inspired by Islamic geometric archways */
+  .clip-arch {
+    clip-path: ellipse(50% 100% at 50% 100%);
+  }
+
+  /* Hexagonal frame for member cards */
+  .clip-hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom scrollbar with jade theme */
+  .scrollbar-jade::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-jade::-webkit-scrollbar-track {
+    @apply bg-cream-100 rounded-full;
+  }
+  .scrollbar-jade::-webkit-scrollbar-thumb {
+    @apply bg-jade-400 rounded-full hover:bg-jade-500;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

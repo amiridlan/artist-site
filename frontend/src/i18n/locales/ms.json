@@ -1,0 +1,177 @@
+{
+  "nav": {
+    "home": "Laman Utama",
+    "news": "Berita",
+    "members": "Ahli",
+    "releases": "Diskografi",
+    "videos": "Video",
+    "about": "Tentang Kami",
+    "schedule": "Jadual",
+    "fanclub": "Kelab Peminat"
+  },
+  "common": {
+    "all": "Semua",
+    "seeMore": "Lihat lagi",
+    "viewAll": "Lihat semua",
+    "backToHome": "Kembali ke Laman Utama",
+    "gen": "Gen",
+    "generation": "Generasi",
+    "loading": "Memuatkan..."
+  },
+  "home": {
+    "heroSubtitle": "Kumpulan Adik Rasmi AKB48 di Malaysia",
+    "heroSubtitleJp": "マレーシア公式AKB48姉妹グループ",
+    "meetMembers": "Kenali Ahli",
+    "latestNews": "Berita Terkini",
+    "newsHeading": "Berita",
+    "newsSubtitle": "Kemas kini terkini dari KLP48",
+    "membersHeading": "Ahli",
+    "membersSubtitle": "Kenali bintang-bintang KLP48",
+    "discographyHeading": "Diskografi",
+    "discographySubtitle": "Keluaran muzik kami",
+    "trackList": "Senarai Lagu"
+  },
+  "news": {
+    "title": "Berita",
+    "subtitle": "Ikuti perkembangan terkini KLP48",
+    "empty": "Tiada artikel ditemui dalam kategori ini.",
+    "backToNews": "Kembali ke Berita",
+    "notFound": "Artikel Tidak Ditemui",
+    "notFoundDesc": "Artikel yang anda cari tidak wujud."
+  },
+  "newsCategories": {
+    "all": "Semua",
+    "news": "Berita",
+    "fanclub": "Kelab Peminat",
+    "store": "Kedai",
+    "event": "Acara",
+    "release": "Keluaran"
+  },
+  "members": {
+    "title": "Ahli",
+    "subtitle": "Kenali bintang-bintang KLP48",
+    "allGenerations": "Semua Generasi",
+    "firstGen": "Gen Pertama",
+    "secondGen": "Gen Kedua",
+    "active": "Aktif",
+    "concluded": "Tamat",
+    "empty": "Tiada ahli ditemui dengan penapis yang dipilih.",
+    "backToMembers": "Kembali ke Ahli",
+    "notFound": "Ahli Tidak Ditemui",
+    "birthday": "Hari Lahir",
+    "from": "Asal",
+    "height": "Tinggi",
+    "cm": "cm",
+    "about": "Tentang",
+    "hobbies": "Hobi"
+  },
+  "memberStatus": {
+    "all": "Semua",
+    "active": "Aktif",
+    "concluded": "Tamat"
+  },
+  "releases": {
+    "title": "Diskografi",
+    "subtitle": "Keluaran muzik KLP48",
+    "trackList": "Senarai Lagu",
+    "empty": "Tiada keluaran ditemui."
+  },
+  "releaseTypes": {
+    "all": "Semua",
+    "single": "Single",
+    "album": "Album",
+    "ep": "EP",
+    "digitalSingle": "Single Digital"
+  },
+  "videos": {
+    "title": "Video",
+    "subtitle": "Tonton persembahan dan video muzik KLP48",
+    "empty": "Tiada video ditemui.",
+    "playerPlaceholder": "Pemain video akan disambungkan apabila ID YouTube tersedia."
+  },
+  "videoTypes": {
+    "all": "Semua",
+    "musicVideo": "Video Muzik",
+    "performance": "Persembahan",
+    "dancePractice": "Latihan Tarian",
+    "behindTheScenes": "Di Sebalik Tabir"
+  },
+  "schedule": {
+    "title": "Jadual",
+    "subtitle": "Acara akan datang dan yang lepas",
+    "empty": "Tiada acara ditemui.",
+    "upcoming": "Akan Datang",
+    "ongoing": "Sedang Berlangsung",
+    "completed": "Selesai",
+    "cancelled": "Dibatalkan"
+  },
+  "eventTypes": {
+    "all": "Semua",
+    "concert": "Konsert",
+    "meetGreet": "Sesi Jumpa",
+    "handshake": "Acara Berjabat Tangan",
+    "online": "Acara Dalam Talian",
+    "other": "Lain-lain"
+  },
+  "about": {
+    "title": "Tentang KLP48",
+    "subtitle": "Kisah kumpulan adik AKB48 di Malaysia",
+    "ourStory": "Kisah Kami",
+    "storyP1": "KLP48 ialah kumpulan adik rasmi AKB48 di Malaysia, ditubuhkan sebagai sebahagian daripada keluarga 48 Group global yang bermula dengan AKB48 di Akihabara, Tokyo. KLP48 mewakili jambatan budaya antara Malaysia dan Jepun, membawa budaya idol yang disayangi ke arena hiburan Asia Tenggara yang meriah.",
+    "storyP2": "Kumpulan ini membuat penampilan sulung bersejarah pada 16 Ogos 2024 di Zepp Kuala Lumpur, mempersembahkan lagu-lagu ikonik termasuk \"Heavy Rotation\" dan \"Aitakatta\" kepada penonton yang bersemangat. Penampilan sulung ini menandakan satu pencapaian dalam industri hiburan Malaysia.",
+    "storyP3": "Identiti KLP48 berakar umbi pada jed Malaysia — warna rasmi kumpulan yang melambangkan aura lembut, empati, dan gabungan budaya. Kumpulan ini menjelmakan konsep \"idol yang boleh anda temui,\" mengekalkan tradisi 48 Group iaitu persembahan teater intim dan interaksi rapat dengan peminat.",
+    "milestones": "Pencapaian",
+    "milestone1Title": "Pentas Sulung",
+    "milestone1Desc": "KLP48 membuat penampilan sulung di Zepp Kuala Lumpur dengan persembahan Heavy Rotation, Aitakatta, dan lain-lain.",
+    "milestone2Title": "Pelepasan MV Heavy Rotation",
+    "milestone2Desc": "Video muzik rasmi untuk versi Heavy Rotation oleh KLP48 dikeluarkan.",
+    "milestone3Title": "Pelepasan Single Flying Get",
+    "milestone3Desc": "KLP48 mengeluarkan versi lagu musim panas ikonik AKB48.",
+    "milestone4Title": "Pelepasan EP First Cry",
+    "milestone4Desc": "EP sulung KLP48 yang menampilkan koleksi lagu yang mempamerkan kepelbagaian kumpulan.",
+    "milestone5Title": "Konsert Ulang Tahun Pertama \"BLOOM\"",
+    "milestone5Desc": "KLP48 meraikan ulang tahun pertama dengan konsert BLOOM di Zepp Kuala Lumpur.",
+    "milestone6Title": "Pelepasan Green Flash",
+    "milestone6Desc": "Rakaman langsung dari konsert BLOOM dikeluarkan sebagai single.",
+    "groupFamily": "Keluarga 48 Group",
+    "groupFamilyDesc": "KLP48 adalah sebahagian daripada rangkaian 48 Group global, sebuah keluarga kumpulan idol yang diasaskan berdasarkan konsep yang dicipta oleh penerbit Yasushi Akimoto. Bermula dengan AKB48 pada tahun 2005, rangkaian ini telah berkembang merangkumi kumpulan adik di seluruh Jepun dan antarabangsa."
+  },
+  "fanclub": {
+    "title": "Kelab Peminat",
+    "subtitle": "Sertai Kelab Peminat rasmi KLP48 dan dapatkan akses eksklusif kepada ahli, acara, dan kandungan.",
+    "ctaHeading": "Jadilah Peminat Rasmi",
+    "ctaDesc": "Lebih dekat dengan KLP48 melalui faedah eksklusif, akses keutamaan ke acara, dan kandungan untuk ahli sahaja.",
+    "joinNow": "Sertai Sekarang",
+    "joinDiscord": "Sertai Discord",
+    "benefitsHeading": "Faedah Ahli",
+    "benefit1Title": "Tiket Keutamaan",
+    "benefit1Desc": "Akses awal dan pembelian keutamaan untuk konsert, acara berjabat tangan, dan acara istimewa.",
+    "benefit2Title": "Sesi Jumpa",
+    "benefit2Desc": "Sesi pertemuan peminat eksklusif dengan ahli KLP48, secara dalam talian dan bersemuka.",
+    "benefit3Title": "Kandungan Eksklusif",
+    "benefit3Desc": "Gambar di sebalik tabir, video, dan catatan blog untuk ahli sahaja.",
+    "benefit4Title": "Sembang Radio Discord",
+    "benefit4Desc": "Sesi Discord interaktif bulanan di mana anda boleh bercakap terus dengan ahli.",
+    "benefit5Title": "Barangan Ahli",
+    "benefit5Desc": "Barangan eksklusif kelab peminat dan akses awal ke barangan edisi terhad.",
+    "benefit6Title": "Acara Hari Lahir",
+    "benefit6Desc": "Acara sambutan hari lahir istimewa untuk ahli kegemaran anda."
+  },
+  "footer": {
+    "tagline1": "Kumpulan adik rasmi AKB48 di Malaysia.",
+    "tagline2": "Menjambatani budaya idol Malaysia dan Jepun.",
+    "navigation": "Navigasi",
+    "sponsors": "Penaja",
+    "copyright": "© {year} KLP48. Hak cipta terpelihara.",
+    "faq": "Soalan Lazim",
+    "privacy": "Dasar Privasi",
+    "terms": "Terma Perkhidmatan",
+    "contact": "Hubungi Kami"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Halaman Tidak Ditemui",
+    "desc": "Halaman yang anda cari tidak wujud atau telah dipindahkan.",
+    "backHome": "Kembali ke Laman Utama"
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "news": "ニュース",
+    "members": "メンバー",
+    "releases": "リリース",
+    "videos": "動画",
+    "about": "概要",
+    "schedule": "スケジュール",
+    "fanclub": "ファンクラブ"
+  },
+  "common": {
+    "all": "すべて",
+    "seeMore": "もっと見る",
+    "viewAll": "すべて見る",
+    "backToHome": "ホームに戻る",
+    "gen": "期",
+    "generation": "期生",
+    "loading": "読み込み中..."
+  },
+  "home": {
+    "heroSubtitle": "マレーシア公式AKB48姉妹グループ",
+    "heroSubtitleJp": "マレーシア公式AKB48姉妹グループ",
+    "meetMembers": "メンバー紹介",
+    "latestNews": "最新ニュース",
+    "newsHeading": "ニュース",
+    "newsSubtitle": "KLP48の最新情報",
+    "membersHeading": "メンバー",
+    "membersSubtitle": "KLP48のメンバーを紹介",
+    "discographyHeading": "ディスコグラフィー",
+    "discographySubtitle": "私たちの音楽リリース",
+    "trackList": "トラックリスト"
+  },
+  "news": {
+    "title": "ニュース",
+    "subtitle": "KLP48の最新情報をチェック",
+    "empty": "このカテゴリーの記事は見つかりませんでした。",
+    "backToNews": "ニュースに戻る",
+    "notFound": "記事が見つかりません",
+    "notFoundDesc": "お探しの記事は存在しません。"
+  },
+  "newsCategories": {
+    "all": "すべて",
+    "news": "ニュース",
+    "fanclub": "ファンクラブ",
+    "store": "ストア",
+    "event": "イベント",
+    "release": "リリース"
+  },
+  "members": {
+    "title": "メンバー",
+    "subtitle": "KLP48のメンバーを紹介",
+    "allGenerations": "全期生",
+    "firstGen": "1期生",
+    "secondGen": "2期生",
+    "active": "活動中",
+    "concluded": "卒業",
+    "empty": "選択した条件に該当するメンバーが見つかりませんでした。",
+    "backToMembers": "メンバーに戻る",
+    "notFound": "メンバーが見つかりません",
+    "birthday": "生年月日",
+    "from": "出身地",
+    "height": "身長",
+    "cm": "cm",
+    "about": "プロフィール",
+    "hobbies": "趣味"
+  },
+  "memberStatus": {
+    "all": "すべて",
+    "active": "活動中",
+    "concluded": "卒業"
+  },
+  "releases": {
+    "title": "ディスコグラフィー",
+    "subtitle": "KLP48の音楽リリース",
+    "trackList": "トラックリスト",
+    "empty": "リリースが見つかりませんでした。"
+  },
+  "releaseTypes": {
+    "all": "すべて",
+    "single": "シングル",
+    "album": "アルバム",
+    "ep": "EP",
+    "digitalSingle": "配信シングル"
+  },
+  "videos": {
+    "title": "動画",
+    "subtitle": "KLP48のパフォーマンスとミュージックビデオ",
+    "empty": "動画が見つかりませんでした。",
+    "playerPlaceholder": "YouTube IDがバックエンドから利用可能になると、ビデオプレーヤーが接続されます。"
+  },
+  "videoTypes": {
+    "all": "すべて",
+    "musicVideo": "ミュージックビデオ",
+    "performance": "パフォーマンス",
+    "dancePractice": "ダンス練習",
+    "behindTheScenes": "メイキング"
+  },
+  "schedule": {
+    "title": "スケジュール",
+    "subtitle": "今後のイベントと過去のイベント",
+    "empty": "イベントが見つかりませんでした。",
+    "upcoming": "今後",
+    "ongoing": "開催中",
+    "completed": "終了",
+    "cancelled": "中止"
+  },
+  "eventTypes": {
+    "all": "すべて",
+    "concert": "コンサート",
+    "meetGreet": "ファンミーティング",
+    "handshake": "握手会",
+    "online": "オンラインイベント",
+    "other": "その他"
+  },
+  "about": {
+    "title": "KLP48について",
+    "subtitle": "マレーシアのAKB48姉妹グループの物語",
+    "ourStory": "私たちの物語",
+    "storyP1": "KLP48は、東京・秋葉原のAKB48から始まったグローバル48グループファミリーの一員として設立された、マレーシア公式のAKB48姉妹グループです。KLP48はマレーシアと日本の文化的架け橋として、愛されるアイドル文化を東南アジアの活気あるエンターテインメントシーンに届けています。",
+    "storyP2": "グループは2024年8月16日、Zepp Kuala Lumpurで歴史的なデビューを果たし、「ヘビーローテーション」「会いたかった」などの名曲を熱狂的な観客に披露しました。このデビューはマレーシアのエンターテインメント業界における重要な節目となりました。",
+    "storyP3": "KLP48のアイデンティティはマレーシアンジェイドに根ざしています。グループの公式ブランドカラーは、穏やかなオーラ、共感、そして文化の融合を象徴しています。グループは「会いに行けるアイドル」のコンセプトを体現し、48グループの伝統であるシアター公演やファンとの親密な交流を大切にしています。",
+    "milestones": "マイルストーン",
+    "milestone1Title": "デビューステージ",
+    "milestone1Desc": "KLP48がZepp Kuala Lumpurでヘビーローテーション、会いたかったなどを披露してデビュー。",
+    "milestone2Title": "ヘビーローテーションMVリリース",
+    "milestone2Desc": "KLP48によるヘビーローテーションの公式ミュージックビデオがリリース。",
+    "milestone3Title": "フライングゲットシングルリリース",
+    "milestone3Desc": "KLP48がAKB48の象徴的な夏のアンセムのカバーをリリース。",
+    "milestone4Title": "First Cry EPリリース",
+    "milestone4Desc": "グループの幅広さを披露する楽曲を収録したKLP48のデビューEP。",
+    "milestone5Title": "1周年記念コンサート「BLOOM」",
+    "milestone5Desc": "KLP48がZepp Kuala LumpurでBLOOMコンサートを開催し、1周年を祝福。",
+    "milestone6Title": "Green Flashリリース",
+    "milestone6Desc": "BLOOMコンサートのライブ録音がシングルとしてリリース。",
+    "groupFamily": "48グループファミリー",
+    "groupFamilyDesc": "KLP48は、プロデューサー秋元康が生み出したコンセプトに基づくアイドルグループのファミリー、グローバル48グループネットワークの一員です。2005年のAKB48から始まり、日本国内外に姉妹グループが広がり、それぞれが地元の文化を48グループのアイデンティティに取り入れています。"
+  },
+  "fanclub": {
+    "title": "ファンクラブ",
+    "subtitle": "KLP48公式ファンクラブに入会して、メンバー、イベント、コンテンツへの限定アクセスを手に入れよう。",
+    "ctaHeading": "公式ファンになろう",
+    "ctaDesc": "限定特典、イベントへの優先アクセス、会員限定コンテンツでKLP48をもっと身近に。",
+    "joinNow": "今すぐ入会",
+    "joinDiscord": "Discordに参加",
+    "benefitsHeading": "会員特典",
+    "benefit1Title": "優先チケット",
+    "benefit1Desc": "コンサート、握手会、特別イベントのチケット先行・優先販売。",
+    "benefit2Title": "ファンミーティング",
+    "benefit2Desc": "KLP48メンバーとの限定ファンミーティング。オンライン・対面の両方で開催。",
+    "benefit3Title": "限定コンテンツ",
+    "benefit3Desc": "メイキング写真、動画、会員限定ブログ記事。",
+    "benefit4Title": "Discordラジオトーク",
+    "benefit4Desc": "メンバーと直接話せる月例Discordインタラクティブセッション。",
+    "benefit5Title": "会員限定グッズ",
+    "benefit5Desc": "ファンクラブ限定グッズと数量限定アイテムへの先行アクセス。",
+    "benefit6Title": "誕生日イベント",
+    "benefit6Desc": "推しメンバーの特別な誕生日イベント。"
+  },
+  "footer": {
+    "tagline1": "マレーシア公式AKB48姉妹グループ。",
+    "tagline2": "マレーシアと日本のアイドル文化の架け橋。",
+    "navigation": "ナビゲーション",
+    "sponsors": "スポンサー",
+    "copyright": "© {year} KLP48. All rights reserved.",
+    "faq": "よくある質問",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "contact": "お問い合わせ"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "ページが見つかりません",
+    "desc": "お探しのページは存在しないか、移動された可能性があります。",
+    "backHome": "ホームに戻る"
+  }
+}

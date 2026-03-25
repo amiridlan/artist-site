@@ -1,0 +1,116 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        jade: {
+          50: '#e6f7f5',
+          100: '#b3e8e2',
+          200: '#80d9cf',
+          300: '#4dcabc',
+          400: '#26bfae',
+          500: '#00B4A0',
+          600: '#009988',
+          700: '#006B5E',
+          800: '#004d43',
+          900: '#002f29',
+        },
+        sakura: {
+          50: '#fef2f6',
+          100: '#fde6ed',
+          200: '#fbc0d4',
+          300: '#f8a3c0',
+          400: '#F4A7BB',
+          500: '#e8809f',
+          600: '#d4567a',
+          700: '#b03358',
+          800: '#8c1f3f',
+          900: '#681229',
+        },
+        gold: {
+          50: '#faf6eb',
+          100: '#f2eacc',
+          200: '#e5d599',
+          300: '#d8c066',
+          400: '#C9A84C',
+          500: '#b8923a',
+          600: '#9a7630',
+          700: '#7c5b26',
+          800: '#5e411c',
+          900: '#402a12',
+        },
+        charcoal: {
+          50: '#e8e8ec',
+          100: '#c4c4ce',
+          200: '#9e9eb0',
+          300: '#787892',
+          400: '#5c5c7c',
+          500: '#404066',
+          600: '#333356',
+          700: '#262646',
+          800: '#1A1A2E',
+          900: '#0d0d17',
+        },
+        cream: {
+          50: '#FFF8F0',
+          100: '#FFF3E6',
+          200: '#FFEBDA',
+          300: '#FFE0C9',
+        },
+      },
+      fontFamily: {
+        heading: ['Zen Kaku Gothic New', 'Noto Sans JP', 'sans-serif'],
+        body: ['Inter', 'Noto Sans', 'sans-serif'],
+        jp: ['Noto Sans JP', 'sans-serif'],
+        zh: ['Noto Sans SC', 'sans-serif'],
+      },
+      backgroundImage: {
+        'jade-gradient': 'linear-gradient(135deg, #00B4A0 0%, #006B5E 100%)',
+        'gold-gradient': 'linear-gradient(135deg, #C9A84C 0%, #9a7630 100%)',
+        'sakura-gradient': 'linear-gradient(135deg, #F4A7BB 0%, #fde6ed 100%)',
+        'hero-overlay': 'linear-gradient(180deg, rgba(26,26,46,0.3) 0%, rgba(26,26,46,0.7) 100%)',
+      },
+      boxShadow: {
+        'jade-glow': '0 0 20px rgba(0, 180, 160, 0.3)',
+        'jade-glow-lg': '0 0 40px rgba(0, 180, 160, 0.4)',
+        'gold-glow': '0 0 20px rgba(201, 168, 76, 0.3)',
+        'card': '0 4px 20px rgba(26, 26, 46, 0.08)',
+        'card-hover': '0 8px 40px rgba(26, 26, 46, 0.12)',
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-jade': 'pulseJade 2s ease-in-out infinite',
+        'ticker': 'ticker 30s linear infinite',
+        'marquee': 'marquee 40s linear infinite',
+        'sakura-fall': 'sakuraFall 10s linear infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        pulseJade: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(0, 180, 160, 0.3)' },
+          '50%': { boxShadow: '0 0 40px rgba(0, 180, 160, 0.6)' },
+        },
+        ticker: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        sakuraFall: {
+          '0%': { transform: 'translateY(-10%) rotate(0deg)', opacity: '1' },
+          '100%': { transform: 'translateY(110vh) rotate(720deg)', opacity: '0' },
+        },
+      },
+    },
+  },
+  plugins: [],
+}

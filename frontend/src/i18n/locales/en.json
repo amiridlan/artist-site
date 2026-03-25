@@ -1,0 +1,177 @@
+{
+  "nav": {
+    "home": "Home",
+    "news": "News",
+    "members": "Member",
+    "releases": "Release",
+    "videos": "Movie",
+    "about": "About",
+    "schedule": "Schedule",
+    "fanclub": "Fanclub"
+  },
+  "common": {
+    "all": "All",
+    "seeMore": "See more",
+    "viewAll": "View all",
+    "backToHome": "Back to Home",
+    "gen": "Gen",
+    "generation": "Generation",
+    "loading": "Loading..."
+  },
+  "home": {
+    "heroSubtitle": "Malaysia's Official AKB48 Sister Group",
+    "heroSubtitleJp": "マレーシア公式AKB48姉妹グループ",
+    "meetMembers": "Meet the Members",
+    "latestNews": "Latest News",
+    "newsHeading": "News",
+    "newsSubtitle": "Latest updates from KLP48",
+    "membersHeading": "Members",
+    "membersSubtitle": "Meet the stars of KLP48",
+    "discographyHeading": "Discography",
+    "discographySubtitle": "Our music releases",
+    "trackList": "Track List"
+  },
+  "news": {
+    "title": "News",
+    "subtitle": "Stay up to date with KLP48",
+    "empty": "No articles found in this category.",
+    "backToNews": "Back to News",
+    "notFound": "Article Not Found",
+    "notFoundDesc": "The article you're looking for doesn't exist."
+  },
+  "newsCategories": {
+    "all": "All",
+    "news": "News",
+    "fanclub": "Fan Club",
+    "store": "Store",
+    "event": "Event",
+    "release": "Release"
+  },
+  "members": {
+    "title": "Members",
+    "subtitle": "Meet the stars of KLP48",
+    "allGenerations": "All Generations",
+    "firstGen": "1st Gen",
+    "secondGen": "2nd Gen",
+    "active": "Active",
+    "concluded": "Concluded",
+    "empty": "No members found with the selected filters.",
+    "backToMembers": "Back to Members",
+    "notFound": "Member Not Found",
+    "birthday": "Birthday",
+    "from": "From",
+    "height": "Height",
+    "cm": "cm",
+    "about": "About",
+    "hobbies": "Hobbies"
+  },
+  "memberStatus": {
+    "all": "All",
+    "active": "Active",
+    "concluded": "Concluded"
+  },
+  "releases": {
+    "title": "Discography",
+    "subtitle": "KLP48's music releases",
+    "trackList": "Track List",
+    "empty": "No releases found."
+  },
+  "releaseTypes": {
+    "all": "All",
+    "single": "Single",
+    "album": "Album",
+    "ep": "EP",
+    "digitalSingle": "Digital Single"
+  },
+  "videos": {
+    "title": "Movie",
+    "subtitle": "Watch KLP48 performances and music videos",
+    "empty": "No videos found.",
+    "playerPlaceholder": "Video player will be connected when YouTube IDs are available from the backend."
+  },
+  "videoTypes": {
+    "all": "All",
+    "musicVideo": "Music Video",
+    "performance": "Performance",
+    "dancePractice": "Dance Practice",
+    "behindTheScenes": "Behind the Scenes"
+  },
+  "schedule": {
+    "title": "Schedule",
+    "subtitle": "Upcoming and past events",
+    "empty": "No events found.",
+    "upcoming": "Upcoming",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "eventTypes": {
+    "all": "All",
+    "concert": "Concert",
+    "meetGreet": "Meet & Greet",
+    "handshake": "Handshake Event",
+    "online": "Online Event",
+    "other": "Other"
+  },
+  "about": {
+    "title": "About KLP48",
+    "subtitle": "The story of Malaysia's AKB48 sister group",
+    "ourStory": "Our Story",
+    "storyP1": "KLP48 is Malaysia's official AKB48 sister group, established as part of the global 48 Group family that originated with AKB48 in Akihabara, Tokyo. KLP48 represents the cultural bridge between Malaysia and Japan, bringing the beloved idol culture to Southeast Asia's vibrant entertainment scene.",
+    "storyP2": "The group made its historic debut on August 16, 2024, at Zepp Kuala Lumpur, performing iconic songs including \"Heavy Rotation\" and \"Aitakatta\" to an enthusiastic crowd. This debut marked a milestone in Malaysia's entertainment industry, establishing the country as part of the prestigious 48 Group network.",
+    "storyP3": "KLP48's identity is rooted in Malaysian jade — the group's official brand color symbolizing gentle aura, empathy, and the fusion of cultures. The group embodies the concept of \"idols you can meet,\" maintaining the 48 Group tradition of intimate theater performances and close fan interaction.",
+    "milestones": "Milestones",
+    "milestone1Title": "Debut Stage",
+    "milestone1Desc": "KLP48 debuted at Zepp Kuala Lumpur with performances of Heavy Rotation, Aitakatta, and more.",
+    "milestone2Title": "Heavy Rotation MV Release",
+    "milestone2Desc": "Official music video for KLP48's cover of Heavy Rotation was released.",
+    "milestone3Title": "Flying Get Single Release",
+    "milestone3Desc": "KLP48 released their cover of AKB48's iconic summer anthem.",
+    "milestone4Title": "First Cry EP Release",
+    "milestone4Desc": "KLP48's debut EP featuring a collection of songs showcasing the group's range.",
+    "milestone5Title": "1st Anniversary Concert \"BLOOM\"",
+    "milestone5Desc": "KLP48 celebrated their 1st anniversary with the BLOOM concert at Zepp Kuala Lumpur.",
+    "milestone6Title": "Green Flash Release",
+    "milestone6Desc": "Live recording from the BLOOM concert released as a single.",
+    "groupFamily": "The 48 Group Family",
+    "groupFamilyDesc": "KLP48 is part of the global 48 Group network, a family of idol groups founded on the concept created by producer Yasushi Akimoto. Starting with AKB48 in 2005, the network has grown to include sister groups across Japan and internationally, each bringing their local culture to the 48 Group identity."
+  },
+  "fanclub": {
+    "title": "Fan Club",
+    "subtitle": "Join the official KLP48 Fan Club and get exclusive access to members, events, and content.",
+    "ctaHeading": "Become an Official Fan",
+    "ctaDesc": "Get closer to KLP48 with exclusive benefits, priority access to events, and members-only content.",
+    "joinNow": "Join Now",
+    "joinDiscord": "Join Discord",
+    "benefitsHeading": "Member Benefits",
+    "benefit1Title": "Priority Tickets",
+    "benefit1Desc": "Early access and priority purchasing for concerts, handshake events, and special events.",
+    "benefit2Title": "Meet & Greet",
+    "benefit2Desc": "Exclusive fan meeting sessions with KLP48 members, both online and in-person.",
+    "benefit3Title": "Exclusive Content",
+    "benefit3Desc": "Behind-the-scenes photos, videos, and members-only blog posts.",
+    "benefit4Title": "Discord Radio Talk",
+    "benefit4Desc": "Monthly interactive Discord sessions where you can talk directly with the members.",
+    "benefit5Title": "Member Merchandise",
+    "benefit5Desc": "Fan club exclusive merchandise and early access to limited edition items.",
+    "benefit6Title": "Birthday Events",
+    "benefit6Desc": "Special birthday celebration events for your favorite members."
+  },
+  "footer": {
+    "tagline1": "Malaysia's official AKB48 sister group.",
+    "tagline2": "Bridging Malaysian and Japanese idol culture.",
+    "navigation": "Navigation",
+    "sponsors": "Sponsors",
+    "copyright": "© {year} KLP48. All rights reserved.",
+    "faq": "FAQ",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page Not Found",
+    "desc": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to Home"
+  }
+}
