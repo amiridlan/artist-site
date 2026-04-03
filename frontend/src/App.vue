@@ -1,5 +1,10 @@
 <template>
-  <div id="klp48-app" class="min-h-screen flex flex-col bg-cream-50">
+  <LoadingScreen v-if="showLoading" @done="onLoadingDone" />
+  <div
+    id="klp48-app"
+    class="min-h-screen flex flex-col bg-cream-50"
+    :style="{ opacity: 1 }"
+  >
     <Header />
     <MobileMenu />
     <main class="flex-grow">
@@ -14,9 +19,17 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
 import MobileMenu from '@/components/layout/MobileMenu.vue'
+import LoadingScreen from '@/components/ui/LoadingScreen.vue'
+
+const showLoading = ref(true)
+
+function onLoadingDone() {
+  showLoading.value = false
+}
 </script>
 
 <style>
@@ -53,5 +66,18 @@ import MobileMenu from '@/components/layout/MobileMenu.vue'
 .slide-right-leave-to {
   opacity: 0;
   transform: translateX(40px);
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(50px);
+}
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-50px);
 }
 </style>

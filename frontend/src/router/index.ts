@@ -70,7 +70,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/fanclub',
     name: 'FanClub',
-    component: () => import('@/pages/FanClub.vue'),
+    component: () => import('@/pages/Fanclub.vue'),
     meta: { title: 'Fan Club - KLP48' },
   },
   {
@@ -104,7 +104,9 @@ router.beforeEach((to, from, next) => {
   const fromIdx = routeOrder[fromBase] ?? -1
   const toIdx = routeOrder[toBase] ?? -1
 
-  if (fromIdx === -1 || toIdx === -1) to.meta.transition = 'fade'
+  const slideUpRoutes = new Set(['/', '/about'])
+  if (slideUpRoutes.has(to.path) || slideUpRoutes.has(from.path)) to.meta.transition = 'slide-up'
+  else if (fromIdx === -1 || toIdx === -1) to.meta.transition = 'fade'
   else if (toIdx > fromIdx) to.meta.transition = 'slide-left'
   else if (toIdx < fromIdx) to.meta.transition = 'slide-right'
   else to.meta.transition = 'fade'

@@ -29,7 +29,9 @@
     "membersSubtitle": "KLP48のメンバーを紹介",
     "discographyHeading": "ディスコグラフィー",
     "discographySubtitle": "私たちの音楽リリース",
-    "trackList": "トラックリスト"
+    "trackList": "トラックリスト",
+    "sponsorsHeading": "スポンサー",
+    "sponsorsSubtitle": "ご支援いただいています"
   },
   "news": {
     "title": "ニュース",

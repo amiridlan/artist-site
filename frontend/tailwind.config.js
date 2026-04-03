@@ -61,6 +61,11 @@ export default {
           200: '#FFEBDA',
           300: '#FFE0C9',
         },
+        forest: {
+          500: '#3a8000',
+          600: '#2d6400',
+          700: '#225000',
+        },
       },
       fontFamily: {
         heading: ['Zen Kaku Gothic New', 'Noto Sans JP', 'sans-serif'],

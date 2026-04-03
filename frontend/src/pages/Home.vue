@@ -192,6 +192,32 @@
         </div>
       </div>
     </section>
+
+    <!-- Sponsors Section -->
+    <section ref="sponsorsSectionRef" class="py-20 bg-cream-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal-800">{{ $t('home.sponsorsHeading') }}</h2>
+          <p class="text-charcoal-500 mt-2">{{ $t('home.sponsorsSubtitle') }}</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div
+            v-for="sponsor in SPONSORS"
+            :key="sponsor"
+            class="flex flex-col items-center gap-3 group"
+          >
+            <!-- Logo placeholder — replace src with actual logo path when ready -->
+            <div class="w-full aspect-video rounded-xl bg-white border border-charcoal-100 shadow-card flex items-center justify-center group-hover:shadow-card-hover group-hover:border-forest-500/30 transition-all duration-300">
+              <svg class="w-8 h-8 text-charcoal-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <span class="text-xs font-medium text-charcoal-500 text-center group-hover:text-charcoal-800 transition-colors">{{ sponsor }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -201,6 +227,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { apiFetch } from '@/composables/useApi'
 import { formatDate, getCategoryColor } from '@/utils/helpers'
+import { SPONSORS } from '@/utils/constants'
 import type { NewsArticle } from '@/types/news'
 import type { Member } from '@/types/member'
 import type { Release } from '@/types/release'
@@ -209,11 +236,11 @@ const news = ref<NewsArticle[]>([])
 const members = ref<Member[]>([])
 const releases = ref<Release[]>([])
 
-const heroRef = ref<HTMLElement | null>(null)
 const heroContentRef = ref<HTMLElement | null>(null)
 const newsSectionRef = ref<HTMLElement | null>(null)
 const membersSectionRef = ref<HTMLElement | null>(null)
 const releaseSectionRef = ref<HTMLElement | null>(null)
+const sponsorsSectionRef = ref<HTMLElement | null>(null)
 
 const latestNews = computed(() => news.value.slice(0, 3))
 const featuredNews = computed(() => news.value.filter(n => n.featured))
@@ -243,7 +270,7 @@ onMounted(async () => {
   }
 
   // Section scroll reveals
-  const sections = [newsSectionRef, membersSectionRef, releaseSectionRef]
+  const sections = [newsSectionRef, membersSectionRef, releaseSectionRef, sponsorsSectionRef]
   sections.forEach(sectionRef => {
     if (!sectionRef.value) return
     gsap.from(sectionRef.value.children, {
