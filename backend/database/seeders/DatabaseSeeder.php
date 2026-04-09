@@ -15,10 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@klp48.my',
-        ]);
+        if (!User::where('email', 'admin@klp48.my')->exists()) {
+            User::factory()->create([
+                'name' => 'Admin',
+                'email' => 'admin@klp48.my',
+            ]);
+        }
 
         $this->call([
             MemberSeeder::class,
@@ -26,6 +28,7 @@ class DatabaseSeeder extends Seeder
             ReleaseSeeder::class,
             VideoSeeder::class,
             EventSeeder::class,
+            FanclubSeeder::class,
         ]);
     }
 }

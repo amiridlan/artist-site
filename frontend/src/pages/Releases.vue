@@ -27,14 +27,20 @@
           :key="release.id"
           class="bg-white rounded-xl shadow-card overflow-hidden group hover:shadow-card-hover transition-all duration-300"
         >
-          <!-- Cover art placeholder -->
-          <div class="relative aspect-square bg-jade-gradient overflow-hidden">
-            <div class="absolute inset-0 flex items-center justify-center">
+          <!-- Cover art -->
+          <div class="relative aspect-square bg-charcoal-800 overflow-hidden">
+            <img
+              v-if="release.coverImage"
+              :src="release.coverImage"
+              :alt="release.title"
+              class="w-full h-full object-cover"
+            />
+            <div v-else class="absolute inset-0 bg-jade-gradient flex items-center justify-center">
               <svg class="w-20 h-20 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/>
               </svg>
             </div>
-            <!-- Vinyl reveal on hover -->
+            <!-- Hover overlay: track list -->
             <div class="absolute inset-0 bg-charcoal-800/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 flex items-center justify-center">
               <div class="text-center px-6">
                 <p class="text-white/50 text-xs uppercase tracking-wider mb-3">{{ $t('releases.trackList') }}</p>

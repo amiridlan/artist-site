@@ -105,7 +105,8 @@
     "upcoming": "Upcoming",
     "ongoing": "Ongoing",
     "completed": "Completed",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "more": "more"
   },
   "eventTypes": {
     "all": "All",
@@ -162,6 +163,7 @@
   "footer": {
     "tagline1": "Malaysia's official AKB48 sister group.",
     "tagline2": "Bridging Malaysian and Japanese idol culture.",
+    "sisterGroups": "Sister Groups",
     "navigation": "Navigation",
     "sponsors": "Sponsors",
     "copyright": "© {year} KLP48. All rights reserved.",

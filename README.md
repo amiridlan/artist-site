@@ -1,185 +1,194 @@
-KLP48 Website Redesign
-A modern, high-performance frontend redesign of the KLP48 official website with focus on user experience and visual appeal.
-🎨 Design Direction
-Pop Editorial Maximalism - A bold, magazine-style interface combining:
+# KLP48 Official Website
 
-High-energy layouts with Japanese street style influence
-Dynamic animations and parallax effects
-Vibrant gradients with neon accents
-Grid-breaking compositions
-Mix of kawaii elements with editorial sophistication
+Full-stack website for KLP48 — Malaysia's AKB48 sister group — consisting of a Vue 3 frontend and a Laravel backend with a custom Vue + Inertia admin panel.
 
-🛠️ Tech Stack
+---
 
-Framework: Vue 3 (Composition API)
-Build Tool: Vite
-Language: TypeScript
-Styling: TailwindCSS v3
-State Management: Pinia
-Routing: Vue Router
-Package Manager: npm
+## Tech Stack
 
-📁 Project Structure
-klp48-redesign/
-├── public/ # Static assets
-├── src/
-│ ├── assets/ # Images, icons
-│ ├── components/ # Vue components
-│ ├── composables/ # Vue composables
-│ ├── data/ # Mock data (JSON)
-│ ├── layouts/ # Layout components
-│ ├── pages/ # Page components
-│ ├── router/ # Vue Router config
-│ ├── stores/ # Pinia stores
-│ ├── styles/ # Global styles
-│ ├── types/ # TypeScript types
-│ └── utils/ # Helper functions
-└── ...config files
-🚀 Getting Started
-Prerequisites
+### Frontend (`/frontend`)
+| Layer | Technology |
+|---|---|
+| Framework | Vue 3 (Composition API) |
+| Build Tool | Vite |
+| Language | TypeScript |
+| Styling | TailwindCSS v4 |
+| Routing | Vue Router |
+| i18n | vue-i18n (EN / MS / JA) |
+| HTTP | Axios |
 
-Node.js 18+
-npm 9+
+### Backend (`/backend`)
+| Layer | Technology |
+|---|---|
+| Framework | Laravel 13 |
+| Language | PHP 8.3 |
+| Admin Panel | Vue 3 + Inertia.js |
+| Database | PostgreSQL |
+| Auth | Laravel session auth |
+| File Storage | Laravel Storage (local, `public` disk) |
+| API | Laravel RESTful API + JSON Resources |
 
-Installation
-bash# Install dependencies
+---
+
+## Project Structure
+
+```
+artist-site/
+├── frontend/               # Public-facing Vue 3 SPA
+│   └── src/
+│       ├── components/     # UI components (Header, Footer, etc.)
+│       ├── composables/    # useApi, etc.
+│       ├── i18n/           # EN / MS / JA locale files
+│       ├── pages/          # Home, Members, Releases, Schedule, etc.
+│       ├── types/          # TypeScript interfaces
+│       └── utils/          # Helpers, constants
+│
+└── backend/                # Laravel API + Admin panel
+    ├── app/
+    │   ├── Http/
+    │   │   ├── Controllers/
+    │   │   │   ├── Admin/      # Inertia admin controllers (CRUD)
+    │   │   │   └── Api/        # Public JSON API controllers
+    │   │   ├── Middleware/     # HandleInertiaRequests
+    │   │   └── Resources/      # API JSON transformers
+    │   └── Models/             # Member, Release, News, Video, Event
+    ├── database/
+    │   ├── migrations/
+    │   └── seeders/
+    ├── resources/
+    │   ├── css/app.css
+    │   ├── js/
+    │   │   ├── Pages/
+    │   │   │   ├── Auth/Login.vue
+    │   │   │   └── Admin/
+    │   │   │       ├── Dashboard.vue
+    │   │   │       ├── Members/   Index, Create, Edit
+    │   │   │       ├── News/      Index, Create, Edit
+    │   │   │       ├── Releases/  Index, Create, Edit
+    │   │   │       ├── Videos/    Index, Create, Edit
+    │   │   │       └── Events/    Index, Create, Edit
+    │   │   ├── Layouts/AdminLayout.vue
+    │   │   └── Components/Admin/   # Shared form components
+    │   └── views/app.blade.php     # Inertia root template
+    ├── routes/
+    │   ├── api.php         # Public API routes (/api/*)
+    │   └── web.php         # Admin routes (/admin/*)
+    └── storage/app/public/ # Uploaded & seeded images
+        ├── members/
+        ├── releases/
+        ├── sister-groups/
+        └── events/
+```
+
+---
+
+## Admin Panel
+
+The admin panel is built with **Vue 3 + Inertia.js** and lives at `/admin`.
+
+**Login:** `/admin/login`
+**Default credentials:** `admin@klp48.my` / (set via seeder using `User::factory`)
+
+### Resources managed
+- Members (photo upload, hobbies tags, social links, multi-language)
+- News (rich content, featured/published toggles, multi-language)
+- Releases (cover art, track list repeater, streaming links, multi-language)
+- Videos (YouTube ID, thumbnail, multi-language)
+- Events (date range, venue, ticket URL, multi-language)
+
+### Translation support
+Each resource supports optional Malay (MS) and Japanese (JA) translations via a collapsible Translations section. Translations are stored in a polymorphic `translations` table.
+
+---
+
+## Getting Started
+
+### Backend
+
+```bash
+cd backend
+
+# Install PHP dependencies
+composer install
+
+# Copy env and generate key
+cp .env.example .env
+php artisan key:generate
+
+# Configure database in .env (PostgreSQL)
+# DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
+
+# Run migrations and seeders
+php artisan migrate --seed
+
+# Create storage symlink
+php artisan storage:link
+
+# Install JS dependencies and build admin assets
+npm install
+npm run build
+
+# Start development server
+php artisan serve
+```
+
+### Frontend
+
+```bash
+cd frontend
+
+# Install dependencies
 npm install
 
 # Start development server
-
 npm run dev
 
 # Build for production
-
 npm run build
+```
 
-# Preview production build
+### Backend Dev Mode (all-in-one)
 
-npm run preview
+```bash
+cd backend
+composer run dev
+```
 
-# Lint code
+This starts `php artisan serve`, queue worker, log watcher, and Vite in parallel.
 
-npm run lint
+---
 
-# Format code
+## Public API
 
-npm run format
-🎯 Development Roadmap
-Sprint 0: Project Setup ✅
+The backend exposes a JSON API at `http://localhost:8000/api`:
 
-Initialize project structure
-Configure TailwindCSS
-Set up TypeScript
-Create base configuration files
-Define type definitions
-Create utility functions
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/members` | All members |
+| GET | `/api/members/{slug}` | Single member |
+| GET | `/api/news` | News articles |
+| GET | `/api/news/{slug}` | Single article |
+| GET | `/api/releases` | Releases |
+| GET | `/api/videos` | Videos |
+| GET | `/api/events` | Events |
 
-Sprint 1: Core Navigation & Hero (Current)
+Add `?lang=ms` or `?lang=ja` to any endpoint for translated responses.
 
-Build responsive header
-Implement hero section
-Create footer
-Add page transitions
+---
 
-Sprint 2: News Section
+## Image Storage
 
-Design news cards
-Implement filtering
-Add pagination
+All content images (member photos, release covers, event images) are stored in `backend/storage/app/public/` and served via `backend/public/storage/` (symlink).
 
-Sprint 3: Member Section
+The seeded images are pre-populated from the original `/images/` folder which has since been removed. New images uploaded through the admin panel follow the same storage pattern automatically.
 
-Create member cards
-Build member profiles
-Add search/filter
+---
 
-Sprint 4: Video & Release Sections
+## License
 
-Implement video player
-Create release showcase
-Add streaming links
-
-Sprint 5: Schedule & Events
-
-Build calendar view
-Create event cards
-Add calendar export
-
-Sprint 6: Fan Club & Polish
-
-Design fan club page
-Performance optimization
-Accessibility audit
-SEO optimization
-
-Sprint 7: Animations
-
-Scroll-triggered animations
-Hover effects
-Page transitions
-Loading animations
-
-🎨 Design Tokens
-Colors
-
-Primary: Pink gradient (#ed3b9b → #dd1e7b)
-Secondary: Blue (#0ea5e9 → #0369a1)
-Accent Neon: #00ff9f
-Accent Purple: #b026ff
-Accent Yellow: #ffed4e
-Accent Orange: #ff6b35
-
-Typography
-
-Display: Outfit (Bold, characterful)
-Body: DM Sans (Clean, readable)
-Japanese: Noto Sans JP
-
-📱 Responsive Breakpoints
-
-Mobile: < 640px
-Tablet: 640px - 1024px
-Desktop: > 1024px
-Large Desktop: > 1280px
-
-⚡ Performance Targets
-
-Lighthouse Performance: >90
-First Contentful Paint: <1.5s
-Time to Interactive: <3s
-Cumulative Layout Shift: <0.1
-
-🔒 Security
-
-XSS prevention with Vue's template binding
-CSRF protection (future backend integration)
-Secure environment variable handling
-Content Security Policy headers
-
-📝 Code Standards
-
-ESLint: Enforced linting rules
-Prettier: Consistent code formatting
-TypeScript: Strict type checking
-Git Hooks: Pre-commit linting
-
-🌐 Browser Support
-
-Chrome/Edge (last 2 versions)
-Firefox (last 2 versions)
-Safari (last 2 versions)
-Mobile Safari (iOS 13+)
-Chrome Android (last 2 versions)
-
-📄 License
 Copyright © 2026 KLP48. All rights reserved.
-👥 Contributing
-This is a frontend redesign project. For contribution guidelines, please contact the development team.
-📞 Contact
-For questions or support:
 
-Email: support_klp48@twopointzero.world
-Twitter: @KLP48official
+## Contact
 
-Sprint 0 Status: ✅ Complete
-Next Sprint: Sprint 1 - Core Navigation & Hero Section
+- Email: support_klp48@twopointzero.world
+- Twitter: @KLP48official

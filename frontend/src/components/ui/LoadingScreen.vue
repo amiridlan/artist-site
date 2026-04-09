@@ -1,4 +1,16 @@
 <template>
+  <!-- Flying logo: sits above everything during the transition -->
+  <Teleport to="body">
+    <div
+      v-if="isFlying"
+      class="pointer-events-none overflow-hidden"
+      :style="flyingStyle"
+    >
+      <img src="/images/klp.png" alt="" class="w-full h-full object-fill" />
+    </div>
+  </Teleport>
+
+  <!-- Loading overlay -->
   <Transition name="loading-exit">
     <div
       v-if="!isDone"
@@ -6,7 +18,6 @@
     >
       <!-- Logo with drawn-in reveal -->
       <div class="relative flex items-center justify-center">
-        <!-- SVG border that draws around the logo -->
         <svg
           class="absolute"
           :width="logoW + 16"
@@ -26,12 +37,16 @@
           />
         </svg>
 
-        <!-- Logo revealed via clip-path, delayed after border draws -->
         <img
+          ref="logoRef"
           src="/images/klp.png"
           alt="KLP48"
-          :style="{ clipPath: logoClip, transition: 'clip-path 0.8s cubic-bezier(0.4, 0, 0.2, 1)' }"
           class="h-44 w-auto relative"
+          :style="{
+            clipPath: logoClip,
+            transition: 'clip-path 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+            opacity: isFlying ? 0 : 1,
+          }"
         />
       </div>
 
@@ -55,41 +70,93 @@ import { ref, onMounted } from 'vue'
 
 const emit = defineEmits<{ done: [] }>()
 
-// Logo dimensions: h-44 = 176px, logo is roughly portrait 0.73 ratio
 const logoH = 176
 const logoW = Math.round(logoH * 0.73)
 const perimeter = 2 * ((logoW + 12) + (logoH + 12))
 
 const progress = ref(0)
 const isDone = ref(false)
+const isFlying = ref(false)
 const borderOffset = ref(perimeter)
 const logoClip = ref('inset(0 0 100% 0)')
+const logoRef = ref<HTMLImageElement | null>(null)
+const flyingStyle = ref<Record<string, string>>({})
 
-const DURATION = 2200 // total loading animation duration in ms
+const DURATION = 2200
+
+function flyLogoToHeader() {
+  const fromEl = logoRef.value
+  const toEl = document.querySelector('header img[alt="KLP48"]') as HTMLImageElement | null
+
+  if (!fromEl || !toEl) {
+    // Fallback: just fade out
+    isDone.value = true
+    setTimeout(() => emit('done'), 1400)
+    return
+  }
+
+  const from = fromEl.getBoundingClientRect()
+  const to = toEl.getBoundingClientRect()
+
+  // Place flying clone exactly over the loading screen logo (no transition yet)
+  flyingStyle.value = {
+    position: 'fixed',
+    top: `${from.top}px`,
+    left: `${from.left}px`,
+    width: `${from.width}px`,
+    height: `${from.height}px`,
+    zIndex: '300',
+    transition: 'none',
+  }
+  isFlying.value = true
+
+  // Hide real header logo while the clone is flying
+  toEl.style.opacity = '0'
+
+  // Two rAFs: ensure first paint of flying clone at start position before animating
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      // Animate clone to header position
+      flyingStyle.value = {
+        position: 'fixed',
+        top: `${to.top}px`,
+        left: `${to.left}px`,
+        width: `${to.width}px`,
+        height: `${to.height}px`,
+        zIndex: '300',
+        transition: 'top 0.75s cubic-bezier(0.4, 0, 0.2, 1), left 0.75s cubic-bezier(0.4, 0, 0.2, 1), width 0.75s cubic-bezier(0.4, 0, 0.2, 1), height 0.75s cubic-bezier(0.4, 0, 0.2, 1)',
+      }
+
+      // Fade out the overlay at the same time
+      isDone.value = true
+
+      // Once clone arrives, swap in the real header logo
+      setTimeout(() => {
+        toEl.style.transition = 'opacity 0.2s ease'
+        toEl.style.opacity = '1'
+        isFlying.value = false
+      }, 750)
+
+      // Unmount after overlay fade finishes
+      setTimeout(() => emit('done'), 1400)
+    })
+  })
+}
 
 onMounted(() => {
-  // Draw border
   setTimeout(() => { borderOffset.value = 0 }, 150)
-
-  // Reveal logo after border finishes
   setTimeout(() => { logoClip.value = 'inset(0 0 0% 0)' }, 950)
 
-  // Animate progress 0 → 100 over DURATION using rAF
   const startTime = performance.now()
 
   const animate = (now: number) => {
     const elapsed = now - startTime
-    const raw = (elapsed / DURATION) * 100
-    progress.value = Math.min(100, raw)
+    progress.value = Math.min(100, (elapsed / DURATION) * 100)
 
     if (progress.value < 100) {
       requestAnimationFrame(animate)
     } else {
-      // Hold at 100%, then start fade-out, then destroy after transition completes
-      setTimeout(() => {
-        isDone.value = true             // triggers <Transition> leave (1400ms)
-        setTimeout(() => emit('done'), 1400) // destroy component after fade finishes
-      }, 400)
+      setTimeout(flyLogoToHeader, 400)
     }
   }
 

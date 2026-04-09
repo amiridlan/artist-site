@@ -40,4 +40,10 @@ return [
         'api_key' => env('LIBRETRANSLATE_API_KEY', ''),
     ],
 
+    'toyyibpay' => [
+        'url'           => env('TOYYIBPAY_URL', 'https://dev.toyyibpay.com'),
+        'secret_key'    => env('TOYYIBPAY_SECRET_KEY', ''),
+        'category_code' => env('TOYYIBPAY_CATEGORY_CODE', ''),
+    ],
+
 ];

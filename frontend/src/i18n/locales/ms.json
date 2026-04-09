@@ -105,7 +105,8 @@
     "upcoming": "Akan Datang",
     "ongoing": "Sedang Berlangsung",
     "completed": "Selesai",
-    "cancelled": "Dibatalkan"
+    "cancelled": "Dibatalkan",
+    "more": "lagi"
   },
   "eventTypes": {
     "all": "Semua",
@@ -162,6 +163,7 @@
   "footer": {
     "tagline1": "Kumpulan adik rasmi AKB48 di Malaysia.",
     "tagline2": "Menjambatani budaya idol Malaysia dan Jepun.",
+    "sisterGroups": "Kumpulan Adik-Beradik",
     "navigation": "Navigasi",
     "sponsors": "Penaja",
     "copyright": "© {year} KLP48. Hak cipta terpelihara.",

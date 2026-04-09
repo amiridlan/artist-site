@@ -8,17 +8,14 @@ export interface ReleaseTrack {
 
 export interface Release {
   id: string
+  slug: string
   title: string
   type: Exclude<ReleaseType, 'all'>
   releaseDate: string
   coverImage?: string
   tracks: ReleaseTrack[]
   description?: string
-  streamingLinks?: {
-    spotify?: string
-    appleMusic?: string
-    youtubeMusic?: string
-  }
+  streamingLinks?: Record<string, string>
 }
 
 export interface ReleaseFilter {

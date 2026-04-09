@@ -17,25 +17,88 @@
         </div>
 
         <div class="relative z-10 text-center">
-          <h2 class="text-2xl md:text-3xl font-heading font-bold text-charcoal-800 mb-4">
-            {{ $t('fanclub.ctaHeading') }}
-          </h2>
-          <p class="text-charcoal-500 max-w-xl mx-auto mb-8">
-            {{ $t('fanclub.ctaDesc') }}
-          </p>
+          <!-- LOGGED IN + ACTIVE (including cancelled-but-not-yet-expired) -->
+          <template v-if="fan.isActive">
+            <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full text-sm font-medium"
+                 :class="fan.user?.tier === 'gold' ? 'bg-amber-100 text-amber-800' : 'bg-jade-50 text-jade-700'">
+              <span>{{ fan.user?.tier === 'gold' ? '⭐' : '♡' }}</span>
+              {{ fan.user?.tier === 'gold' ? 'Gold' : 'Basic' }} Member
+            </div>
+            <h2 class="text-2xl md:text-3xl font-heading font-bold text-charcoal-800 mb-2">
+              Welcome back, {{ fan.user?.name?.split(' ')[0] }}!
+            </h2>
+            <p class="text-charcoal-500 max-w-xl mx-auto mb-6">
+              <template v-if="fan.user?.status === 'cancelled'">
+                Membership cancelled — access remains until <strong>{{ formatDate(fan.user?.expires_at) }}</strong>.
+              </template>
+              <template v-else>
+                Your membership is active until {{ formatDate(fan.user?.expires_at) }}.
+              </template>
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <RouterLink
+                to="/fanclub/portal"
+                class="px-8 py-3 bg-jade-gradient text-white font-semibold rounded-full hover:shadow-jade-glow transition-all duration-300 inline-block"
+              >
+                Go to My Portal
+              </RouterLink>
+              <RouterLink
+                v-if="fan.user?.status === 'cancelled'"
+                to="/fanclub/subscribe"
+                class="px-8 py-3 border-2 border-charcoal-200 text-charcoal-700 font-semibold rounded-full hover:border-jade-300 hover:text-jade-700 transition-all duration-300"
+              >
+                Renew Membership
+              </RouterLink>
+            </div>
+          </template>
 
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="https://klp48.my/fanclub"
-               target="_blank" rel="noopener noreferrer"
-               class="px-8 py-3 bg-jade-gradient text-white font-semibold rounded-full hover:shadow-jade-glow transition-all duration-300">
-              {{ $t('fanclub.joinNow') }}
-            </a>
-            <a href="https://discord.gg/klp48"
-               target="_blank" rel="noopener noreferrer"
-               class="px-8 py-3 border-2 border-charcoal-200 text-charcoal-700 font-semibold rounded-full hover:border-jade-300 hover:text-jade-700 transition-all duration-300">
-              {{ $t('fanclub.joinDiscord') }}
-            </a>
-          </div>
+          <!-- LOGGED IN + NOT ACTIVE (expired / cancelled) -->
+          <template v-else-if="fan.isLoggedIn">
+            <h2 class="text-2xl md:text-3xl font-heading font-bold text-charcoal-800 mb-4">
+              {{ fan.user?.status === 'expired' ? 'Membership Expired' : 'Membership Inactive' }}
+            </h2>
+            <p class="text-charcoal-500 max-w-xl mx-auto mb-8">
+              Renew your membership to restore access to all exclusive content and benefits.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <RouterLink
+                to="/fanclub/subscribe"
+                class="px-8 py-3 bg-jade-gradient text-white font-semibold rounded-full hover:shadow-jade-glow transition-all duration-300"
+              >
+                Renew Membership
+              </RouterLink>
+              <button
+                @click="fan.logout()"
+                class="text-charcoal-400 text-sm hover:text-charcoal-600 transition-colors"
+              >
+                Sign out
+              </button>
+            </div>
+          </template>
+
+          <!-- GUEST -->
+          <template v-else>
+            <h2 class="text-2xl md:text-3xl font-heading font-bold text-charcoal-800 mb-4">
+              {{ $t('fanclub.ctaHeading') }}
+            </h2>
+            <p class="text-charcoal-500 max-w-xl mx-auto mb-8">
+              {{ $t('fanclub.ctaDesc') }}
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <RouterLink
+                to="/fanclub/register"
+                class="px-8 py-3 bg-jade-gradient text-white font-semibold rounded-full hover:shadow-jade-glow transition-all duration-300"
+              >
+                {{ $t('fanclub.joinNow') }}
+              </RouterLink>
+              <RouterLink
+                to="/fanclub/login"
+                class="px-8 py-3 border-2 border-charcoal-200 text-charcoal-700 font-semibold rounded-full hover:border-jade-300 hover:text-jade-700 transition-all duration-300"
+              >
+                Sign In
+              </RouterLink>
+            </div>
+          </template>
         </div>
       </div>
 
@@ -62,12 +125,17 @@
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
+import { useFanStore } from '@/stores/fan'
 
-const { t } = useI18n()
+const { t }  = useI18n()
+const fan    = useFanStore()
 
-const headerRef = ref<HTMLElement | null>(null)
-const ctaRef = ref<HTMLElement | null>(null)
+const headerRef   = ref<HTMLElement | null>(null)
+const ctaRef      = ref<HTMLElement | null>(null)
 const benefitsRef = ref<HTMLElement | null>(null)
+
+const formatDate = (d: string | null | undefined) =>
+  d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '—'
 
 const benefits = computed(() => [
   { icon: '🎫', title: t('fanclub.benefit1Title'), description: t('fanclub.benefit1Desc') },
@@ -78,7 +146,12 @@ const benefits = computed(() => [
   { icon: '⭐', title: t('fanclub.benefit6Title'), description: t('fanclub.benefit6Desc') },
 ])
 
-onMounted(() => {
+onMounted(async () => {
+  // Restore session if token exists
+  if (fan.isLoggedIn && !fan.user) {
+    await fan.fetchMe()
+  }
+
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {
       y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',

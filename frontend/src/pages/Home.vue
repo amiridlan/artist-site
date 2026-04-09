@@ -178,7 +178,13 @@
             class="flex-shrink-0 w-56 group"
           >
             <div class="w-56 h-56 rounded-xl overflow-hidden mb-3 bg-charcoal-700 shadow-lg group-hover:shadow-jade-glow transition-all duration-300">
-              <div class="w-full h-full flex items-center justify-center bg-jade-gradient opacity-60 group-hover:opacity-80 transition-opacity">
+              <img
+                v-if="release.coverImage"
+                :src="release.coverImage"
+                :alt="release.title"
+                class="w-full h-full object-cover"
+              />
+              <div v-else class="w-full h-full flex items-center justify-center bg-jade-gradient opacity-60 group-hover:opacity-80 transition-opacity">
                 <svg class="w-16 h-16 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/>
                 </svg>
@@ -218,6 +224,32 @@
         </div>
       </div>
     </section>
+
+    <!-- Sister Groups Section -->
+    <section ref="sisterGroupsSectionRef" class="py-20 bg-charcoal-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+          <p class="text-white/40">{{ $t('footer.sisterGroups') }}</p>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+          <a
+            v-for="group in SISTER_GROUPS"
+            :key="group.name"
+            :href="group.url || undefined"
+            :target="group.url ? '_blank' : undefined"
+            rel="noopener noreferrer"
+            class="flex flex-col items-center gap-2 group"
+            :class="!group.url ? 'pointer-events-none' : ''"
+          >
+            <div class="w-full aspect-video rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-jade-500/40 group-hover:bg-white/10 transition-all duration-200">
+              <span class="text-xs font-heading font-bold text-white/30 group-hover:text-jade-400 transition-colors text-center leading-tight px-1">
+                {{ group.name }}
+              </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -227,7 +259,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { apiFetch } from '@/composables/useApi'
 import { formatDate, getCategoryColor } from '@/utils/helpers'
-import { SPONSORS } from '@/utils/constants'
+import { SPONSORS, SISTER_GROUPS } from '@/utils/constants'
 import type { NewsArticle } from '@/types/news'
 import type { Member } from '@/types/member'
 import type { Release } from '@/types/release'
@@ -240,6 +272,7 @@ const heroContentRef = ref<HTMLElement | null>(null)
 const newsSectionRef = ref<HTMLElement | null>(null)
 const membersSectionRef = ref<HTMLElement | null>(null)
 const releaseSectionRef = ref<HTMLElement | null>(null)
+const sisterGroupsSectionRef = ref<HTMLElement | null>(null)
 const sponsorsSectionRef = ref<HTMLElement | null>(null)
 
 const latestNews = computed(() => news.value.slice(0, 3))
@@ -270,7 +303,7 @@ onMounted(async () => {
   }
 
   // Section scroll reveals
-  const sections = [newsSectionRef, membersSectionRef, releaseSectionRef, sponsorsSectionRef]
+  const sections = [newsSectionRef, membersSectionRef, releaseSectionRef, sisterGroupsSectionRef, sponsorsSectionRef]
   sections.forEach(sectionRef => {
     if (!sectionRef.value) return
     gsap.from(sectionRef.value.children, {

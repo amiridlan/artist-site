@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class MemberResource extends JsonResource
 {
@@ -21,8 +22,8 @@ class MemberResource extends JsonResource
                 'native' => $this->name_native,
             ],
             'nickname' => $this->nickname,
-            'photo' => $this->photo,
-            'coverImage' => $this->cover_image,
+            'photo' => $this->photo ? Storage::url($this->photo) : null,
+            'coverImage' => $this->cover_image ? Storage::url($this->cover_image) : null,
             'generation' => $this->generation,
             'birthdate' => $this->birthdate,
             'age' => $this->age,

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ReleaseResource extends JsonResource
 {
@@ -20,7 +21,7 @@ class ReleaseResource extends JsonResource
             'title' => $translations['title'] ?? $this->title,
             'type' => $this->type,
             'releaseDate' => $this->release_date->toDateString(),
-            'coverImage' => $this->cover_image,
+            'coverImage' => $this->cover_image ? Storage::url($this->cover_image) : null,
             'description' => $translations['description'] ?? $this->description,
             'tracks' => $this->tracks,
             'streamingLinks' => $this->streaming_links,

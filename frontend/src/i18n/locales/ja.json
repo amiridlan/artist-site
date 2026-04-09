@@ -105,7 +105,8 @@
     "upcoming": "今後",
     "ongoing": "開催中",
     "completed": "終了",
-    "cancelled": "中止"
+    "cancelled": "中止",
+    "more": "件以上"
   },
   "eventTypes": {
     "all": "すべて",
@@ -162,6 +163,7 @@
   "footer": {
     "tagline1": "マレーシア公式AKB48姉妹グループ。",
     "tagline2": "マレーシアと日本のアイドル文化の架け橋。",
+    "sisterGroups": "姉妹グループ",
     "navigation": "ナビゲーション",
     "sponsors": "スポンサー",
     "copyright": "© {year} KLP48. All rights reserved.",

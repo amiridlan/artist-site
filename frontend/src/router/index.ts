@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { useFanStore } from '@/stores/fan'
 
 const routeOrder: Record<string, number> = {
   '/': 0,
@@ -73,6 +74,38 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/Fanclub.vue'),
     meta: { title: 'Fan Club - KLP48' },
   },
+  // Fanclub auth & portal routes
+  {
+    path: '/fanclub/login',
+    name: 'FanclubLogin',
+    component: () => import('@/pages/FanclubLogin.vue'),
+    meta: { title: 'Fan Club Login - KLP48', fanGuest: true },
+  },
+  {
+    path: '/fanclub/register',
+    name: 'FanclubRegister',
+    component: () => import('@/pages/FanclubRegister.vue'),
+    meta: { title: 'Join Fan Club - KLP48' },
+  },
+  {
+    path: '/fanclub/subscribe',
+    name: 'FanclubSubscribe',
+    component: () => import('@/pages/FanclubSubscribe.vue'),
+    // Requires login — only existing members can renew
+    meta: { title: 'Renew Membership - KLP48 Fan Club', requiresFan: true },
+  },
+  {
+    path: '/fanclub/portal',
+    name: 'FanclubPortal',
+    component: () => import('@/pages/FanclubPortal.vue'),
+    meta: { title: 'My Portal - KLP48 Fan Club', requiresFan: true, requiresActive: true },
+  },
+  {
+    path: '/fanclub/payment/return',
+    name: 'FanclubPaymentReturn',
+    component: () => import('@/pages/FanclubPaymentReturn.vue'),
+    meta: { title: 'Payment - KLP48 Fan Club' },
+  },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
@@ -99,10 +132,28 @@ router.beforeEach((to, from, next) => {
   const title = to.meta?.title as string | undefined
   if (title) document.title = title
 
+  const fan = useFanStore()
+
+  // Fan-only routes: must be logged in
+  if (to.meta.requiresFan && !fan.isLoggedIn) {
+    return next({ path: '/fanclub/login', query: { redirect: to.fullPath } })
+  }
+
+  // Active-member-only routes: must be active subscriber
+  if (to.meta.requiresActive && !fan.isActive) {
+    return next('/fanclub/subscribe')
+  }
+
+  // Guest-only fanclub pages: redirect logged-in active members to portal
+  if (to.meta.fanGuest && fan.isLoggedIn && fan.isActive) {
+    return next('/fanclub/portal')
+  }
+
+  // Page transition logic
   const fromBase = getBasePath(from.path)
-  const toBase = getBasePath(to.path)
-  const fromIdx = routeOrder[fromBase] ?? -1
-  const toIdx = routeOrder[toBase] ?? -1
+  const toBase   = getBasePath(to.path)
+  const fromIdx  = routeOrder[fromBase] ?? -1
+  const toIdx    = routeOrder[toBase]   ?? -1
 
   const slideUpRoutes = new Set(['/', '/about'])
   if (slideUpRoutes.has(to.path) || slideUpRoutes.has(from.path)) to.meta.transition = 'slide-up'
