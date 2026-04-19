@@ -2,8 +2,8 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-900">
     <div class="w-full max-w-md">
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-teal-400">KLP48</h1>
-        <p class="text-gray-400 mt-1">Admin Panel</p>
+        <img :src="'/images/klp.png'" alt="KLP48" class="h-16 mx-auto mb-3" />
+        <p class="text-gray-400 text-sm">Admin Panel</p>
       </div>
 
       <div class="bg-white rounded-2xl shadow-xl p-8">

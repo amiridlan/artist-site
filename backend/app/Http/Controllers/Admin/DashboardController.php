@@ -8,6 +8,7 @@ use App\Models\FanclubMember;
 use App\Models\Member;
 use App\Models\News;
 use App\Models\Release;
+use App\Models\SocialMediaPlatform;
 use App\Models\Video;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,27 @@ class DashboardController extends Controller
             $months[]   = ['month' => $key, 'total' => $cumulative];
         }
 
+        // Social media summary — latest snapshot per platform + 30-day delta
+        $socialSummary = SocialMediaPlatform::with('latestSnapshot')
+            ->where('is_active', true)
+            ->get()
+            ->map(function (SocialMediaPlatform $platform) {
+                $latest   = $platform->latestSnapshot;
+                $monthAgo = $platform->snapshots()
+                    ->where('fetched_at', '<=', Carbon::now()->subDays(30))
+                    ->orderByDesc('fetched_at')
+                    ->first();
+
+                $delta = ($latest && $monthAgo) ? $latest->followers - $monthAgo->followers : 0;
+
+                return [
+                    'platform'     => $platform->platform,
+                    'display_name' => $platform->display_name,
+                    'followers'    => $latest?->followers ?? 0,
+                    'delta'        => $delta,
+                ];
+            });
+
         return Inertia::render('Admin/Dashboard', [
             'stats' => [
                 'members'  => Member::count(),
@@ -54,7 +76,8 @@ class DashboardController extends Controller
                 ->orderBy('date')
                 ->limit(5)
                 ->get(['id', 'title', 'date', 'venue', 'status']),
-            'fanclubChart' => $months,
+            'fanclubChart'   => $months,
+            'socialSummary'  => $socialSummary,
         ]);
     }
 }

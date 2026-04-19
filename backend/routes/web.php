@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ReleaseController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FanclubController;
+use App\Http\Controllers\Admin\SocialMediaController;
 use Illuminate\Support\Facades\Route;
 
 // Admin auth
@@ -28,6 +29,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('videos', VideoController::class)->except(['show']);
         Route::resource('events', EventController::class)->except(['show']);
         Route::resource('fanclub', FanclubController::class)->except(['show']);
+
+        Route::get('social-media', [SocialMediaController::class, 'index'])->name('social-media.index');
+        Route::post('social-media/sync', [SocialMediaController::class, 'sync'])->name('social-media.sync');
+        Route::get('social-media/{platform}', [SocialMediaController::class, 'show'])->name('social-media.show');
     });
 });
 

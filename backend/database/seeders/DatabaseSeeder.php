@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             VideoSeeder::class,
             EventSeeder::class,
             FanclubSeeder::class,
+            SocialMediaSeeder::class,
         ]);
     }
 }

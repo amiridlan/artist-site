@@ -28,10 +28,14 @@
               </div>
             </td>
             <td class="px-6 py-3">
-              <Badge :color="member.generation === '1st' ? 'green' : 'blue'">{{ member.generation }} Gen</Badge>
+              <span class="px-2 py-0.5 rounded-full text-xs font-medium capitalize" :class="generationClass(member.generation)">
+                {{ member.generation }} Gen
+              </span>
             </td>
             <td class="px-6 py-3">
-              <Badge :color="statusColor(member.status)">{{ member.status }}</Badge>
+              <span class="px-2 py-0.5 rounded-full text-xs font-medium capitalize" :class="statusClass(member.status)">
+                {{ member.status }}
+              </span>
             </td>
             <td class="px-6 py-3 text-gray-500">{{ member.sort_order }}</td>
             <td class="px-6 py-3 text-right">
@@ -52,29 +56,19 @@ import { Link, router } from '@inertiajs/vue3'
 
 defineProps({ members: Array })
 
-const statusColor = (s) => ({ active: 'green', graduated: 'yellow', concluded: 'gray' }[s] || 'gray')
+const generationClass = (gen) => gen === '1st'
+  ? 'bg-green-100 text-green-700'
+  : 'bg-blue-100 text-blue-700'
+
+const statusClass = (s) => ({
+  active:    'bg-green-100 text-green-700',
+  graduated: 'bg-yellow-100 text-yellow-700',
+  concluded: 'bg-gray-100 text-gray-600',
+}[s] ?? 'bg-gray-100 text-gray-600')
 
 const destroy = (member) => {
   if (!confirm(`Delete ${member.name_english}?`)) return
   router.delete(route('admin.members.destroy', member.id))
 }
-</script>
-
-<script>
-const Badge = {
-  props: { color: String },
-  template: `<span class="px-2 py-0.5 rounded-full text-xs font-medium capitalize" :class="classes"><slot /></span>`,
-  computed: {
-    classes() {
-      return {
-        green:  'bg-green-100 text-green-700',
-        blue:   'bg-blue-100 text-blue-700',
-        yellow: 'bg-yellow-100 text-yellow-700',
-        gray:   'bg-gray-100 text-gray-600',
-      }[this.color] || 'bg-gray-100 text-gray-600'
-    }
-  }
-}
-export default { components: { Badge } }
 </script>
 

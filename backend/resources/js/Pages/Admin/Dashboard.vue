@@ -5,6 +5,31 @@
       <StatCard v-for="s in statCards" :key="s.label" :label="s.label" :value="s.value" :href="s.href" :color="s.color" />
     </div>
 
+    <!-- Social media summary -->
+    <div class="bg-white rounded-xl border border-gray-200 mb-8">
+      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <div>
+          <h3 class="font-semibold text-gray-800">Social Media</h3>
+          <p class="text-xs text-gray-400 mt-0.5">Follower counts across all platforms</p>
+        </div>
+        <Link :href="route('admin.social-media.index')" class="text-sm text-teal-600 hover:text-teal-800 font-medium">
+          View analytics →
+        </Link>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-gray-100">
+        <div v-for="p in socialSummary" :key="p.platform" class="px-5 py-4">
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="w-2 h-2 rounded-full inline-block" :style="{ background: socialColor(p.platform) }"></span>
+            <p class="text-xs text-gray-500">{{ p.display_name }}</p>
+          </div>
+          <p class="text-xl font-bold text-gray-800">{{ formatSocial(p.followers) }}</p>
+          <p class="text-xs mt-0.5" :class="p.delta >= 0 ? 'text-green-600' : 'text-red-500'">
+            {{ p.delta >= 0 ? '↑' : '↓' }} {{ formatSocial(Math.abs(p.delta)) }} / 30d
+          </p>
+        </div>
+      </div>
+    </div>
+
     <!-- Fanclub growth chart -->
     <div class="bg-white rounded-xl border border-gray-200 mb-8">
       <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
@@ -74,10 +99,20 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Filler)
 
 const props = defineProps({
-  stats: Object,
+  stats:         Object,
   upcomingEvents: Array,
-  fanclubChart: Array, // [{ month: 'YYYY-MM', total: N }, …] — 36 months
+  fanclubChart:  Array,
+  socialSummary: Array,
 })
+
+const SOCIAL_COLORS = { youtube: '#FF0000', instagram: '#E1306C', tiktok: '#010101', facebook: '#1877F2', twitter: '#1DA1F2' }
+const socialColor = (p) => SOCIAL_COLORS[p] ?? '#6b7280'
+const formatSocial = (n) => {
+  if (!n) return '0'
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M'
+  if (n >= 1_000)     return (n / 1_000).toFixed(1).replace(/\.0$/, '') + 'K'
+  return String(n)
+}
 
 const statCards = computed(() => [
   { label: 'Members',  value: props.stats.members,  href: route('admin.members.index'),  color: 'teal'   },
