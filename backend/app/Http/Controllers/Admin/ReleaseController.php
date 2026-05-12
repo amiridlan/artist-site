@@ -17,12 +17,21 @@ class ReleaseController extends Controller
 
     private array $translatableFields = ['title', 'description'];
 
+    private function mediaDisk(): string
+    {
+        return config('filesystems.media_disk');
+    }
+
     public function index(): Response
     {
+        $disk = $this->mediaDisk();
+
         return Inertia::render('Admin/Releases/Index', [
-            'releases' => Release::orderByDesc('release_date')->get([
-                'id', 'slug', 'title', 'type', 'release_date', 'cover_image',
-            ]),
+            'releases' => Release::orderByDesc('release_date')
+                ->get(['id', 'slug', 'title', 'type', 'release_date', 'cover_image'])
+                ->map(fn ($r) => array_merge($r->toArray(), [
+                    'cover_image_url' => $r->cover_image ? Storage::disk($disk)->url($r->cover_image) : null,
+                ])),
         ]);
     }
 
@@ -46,8 +55,10 @@ class ReleaseController extends Controller
             'cover_image'     => ['nullable', 'image', 'max:4096'],
         ]);
 
+        $disk = $this->mediaDisk();
+
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('releases', 'public');
+            $data['cover_image'] = $request->file('cover_image')->store('releases', $disk);
         }
 
         $release = Release::create($data);
@@ -58,10 +69,12 @@ class ReleaseController extends Controller
 
     public function edit(Release $release): Response
     {
+        $disk = $this->mediaDisk();
+
         return Inertia::render('Admin/Releases/Edit', [
             'release'      => $release,
             'translations' => $this->loadTranslations($release, $this->translatableFields),
-            'coverUrl'     => $release->cover_image ? Storage::url($release->cover_image) : null,
+            'coverUrl'     => $release->cover_image ? Storage::disk($disk)->url($release->cover_image) : null,
         ]);
     }
 
@@ -80,9 +93,11 @@ class ReleaseController extends Controller
             'cover_image'     => ['nullable', 'image', 'max:4096'],
         ]);
 
+        $disk = $this->mediaDisk();
+
         if ($request->hasFile('cover_image')) {
-            if ($release->cover_image) Storage::disk('public')->delete($release->cover_image);
-            $data['cover_image'] = $request->file('cover_image')->store('releases', 'public');
+            if ($release->cover_image) Storage::disk($disk)->delete($release->cover_image);
+            $data['cover_image'] = $request->file('cover_image')->store('releases', $disk);
         } else {
             unset($data['cover_image']);
         }
@@ -95,7 +110,8 @@ class ReleaseController extends Controller
 
     public function destroy(Release $release): RedirectResponse
     {
-        if ($release->cover_image) Storage::disk('public')->delete($release->cover_image);
+        $disk = $this->mediaDisk();
+        if ($release->cover_image) Storage::disk($disk)->delete($release->cover_image);
         $release->delete();
 
         return redirect()->route('admin.releases.index')->with('success', 'Release deleted.');

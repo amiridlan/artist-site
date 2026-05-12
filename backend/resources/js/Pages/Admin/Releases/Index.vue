@@ -17,7 +17,7 @@
         <tbody class="divide-y divide-gray-100">
           <tr v-for="release in releases" :key="release.id" class="hover:bg-gray-50">
             <td class="px-6 py-3 flex items-center gap-3">
-              <img v-if="release.cover_image" :src="`/storage/${release.cover_image}`" class="w-10 h-10 rounded object-cover flex-shrink-0" />
+              <img v-if="release.cover_image_url" :src="release.cover_image_url" class="w-10 h-10 rounded object-cover flex-shrink-0" />
               <div v-else class="w-10 h-10 rounded bg-gray-100 flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
               </div>

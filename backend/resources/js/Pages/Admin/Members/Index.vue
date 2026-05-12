@@ -18,7 +18,7 @@
         <tbody class="divide-y divide-gray-100">
           <tr v-for="member in members" :key="member.id" class="hover:bg-gray-50">
             <td class="px-6 py-3 flex items-center gap-3">
-              <img v-if="member.photo" :src="`/storage/${member.photo}`" class="w-9 h-9 rounded-full object-cover flex-shrink-0" />
+              <img v-if="member.photo_url" :src="member.photo_url" class="w-9 h-9 rounded-full object-cover flex-shrink-0" />
               <div v-else class="w-9 h-9 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-semibold text-sm flex-shrink-0">
                 {{ member.name_english.charAt(0) }}
               </div>

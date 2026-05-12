@@ -17,6 +17,11 @@ class VideoController extends Controller
 
     private array $translatableFields = ['title', 'description'];
 
+    private function mediaDisk(): string
+    {
+        return config('filesystems.media_disk');
+    }
+
     public function index(): Response
     {
         return Inertia::render('Admin/Videos/Index', [
@@ -45,8 +50,10 @@ class VideoController extends Controller
             'thumbnail'   => ['nullable', 'image', 'max:4096'],
         ]);
 
+        $disk = $this->mediaDisk();
+
         if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('videos', 'public');
+            $data['thumbnail'] = $request->file('thumbnail')->store('videos', $disk);
         }
 
         $video = Video::create($data);
@@ -57,10 +64,12 @@ class VideoController extends Controller
 
     public function edit(Video $video): Response
     {
+        $disk = $this->mediaDisk();
+
         return Inertia::render('Admin/Videos/Edit', [
             'video'        => $video,
             'translations' => $this->loadTranslations($video, $this->translatableFields),
-            'thumbnailUrl' => $video->thumbnail ? Storage::url($video->thumbnail) : null,
+            'thumbnailUrl' => $video->thumbnail ? Storage::disk($disk)->url($video->thumbnail) : null,
         ]);
     }
 
@@ -78,9 +87,11 @@ class VideoController extends Controller
             'thumbnail'   => ['nullable', 'image', 'max:4096'],
         ]);
 
+        $disk = $this->mediaDisk();
+
         if ($request->hasFile('thumbnail')) {
-            if ($video->thumbnail) Storage::disk('public')->delete($video->thumbnail);
-            $data['thumbnail'] = $request->file('thumbnail')->store('videos', 'public');
+            if ($video->thumbnail) Storage::disk($disk)->delete($video->thumbnail);
+            $data['thumbnail'] = $request->file('thumbnail')->store('videos', $disk);
         } else {
             unset($data['thumbnail']);
         }
@@ -93,7 +104,8 @@ class VideoController extends Controller
 
     public function destroy(Video $video): RedirectResponse
     {
-        if ($video->thumbnail) Storage::disk('public')->delete($video->thumbnail);
+        $disk = $this->mediaDisk();
+        if ($video->thumbnail) Storage::disk($disk)->delete($video->thumbnail);
         $video->delete();
 
         return redirect()->route('admin.videos.index')->with('success', 'Video deleted.');

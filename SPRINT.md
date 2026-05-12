@@ -187,3 +187,70 @@
 - Color palette: Jade #00B4A0, Sakura #F4A7BB, Gold #C9A84C, Charcoal #1A1A2E, Cream #FFF8F0
 - i18n uses LibreTranslate (primary) + MyMemory (fallback) for auto-translation — Malay uses `ms` locale (not Indonesian `id`)
 - Manual translations in admin panel are preserved when auto-translate runs (auto_translated flag)
+
+---
+
+## Sprint 10: Infrastructure — Supabase + Cloudflare R2
+
+**Status:** In Progress
+**Goal:** Migrate from local PostgreSQL + local file storage to Supabase (hosted DB) and Cloudflare R2 (media storage). No frontend SPA changes needed — all storage is handled by the Laravel backend.
+
+### Phase 0 — Cleanup (Dead Code Removal)
+
+| #   | Task                                                                                      | Status |
+| --- | ----------------------------------------------------------------------------------------- | ------ |
+| 0.1 | Delete `backend/resources/js/bootstrap.js` (dead axios setup — nothing uses `window.axios`) | Done   |
+| 0.2 | Remove `import './bootstrap'` from `backend/resources/js/app.js`                         | Done   |
+| 0.3 | Uninstall `axios` from backend npm (`npm uninstall axios` inside Docker container)        | Done   |
+
+### Phase 1 — Cloudflare R2 Storage
+
+| #   | Task                                                                                           | Status  |
+| --- | ---------------------------------------------------------------------------------------------- | ------- |
+| 1.1 | Add `r2` disk + `media_disk` env-driven config to `backend/config/filesystems.php`            | Done    |
+| 1.2 | Update `MemberController` — replace `Storage::disk('public')` with media_disk, add `photo_url` | Done   |
+| 1.3 | Update `NewsController` — same disk pattern                                                    | Done    |
+| 1.4 | Update `ReleaseController` — same disk pattern + `cover_image_url` to index response          | Done    |
+| 1.5 | Update `VideoController` — same disk pattern                                                   | Done    |
+| 1.6 | Update `EventController` — same disk pattern                                                   | Done    |
+| 1.7 | Fix `Members/Index.vue` — replace `` `/storage/${member.photo}` `` with `member.photo_url`    | Done    |
+| 1.8 | Fix `Releases/Index.vue` — replace `` `/storage/${release.cover_image}` `` with `release.cover_image_url` | Done |
+| 1.9 | Run `composer require league/flysystem-aws-s3-v3` in `backend/`                               | Done    |
+| 1.10 | **MANUAL** — Fill in real R2 credentials in `backend/.env`                                   | Pending |
+| 1.11 | **MANUAL** — Upload existing `storage/app/public/` files to R2 (one-time migration)          | Pending |
+
+#### R2 env vars to fill in (`backend/.env`):
+```
+MEDIA_DISK=r2
+R2_ACCESS_KEY_ID=your_r2_access_key
+R2_SECRET_ACCESS_KEY=your_r2_secret_key
+R2_BUCKET=your_bucket_name
+R2_ENDPOINT=https://<account_id>.r2.cloudflarestorage.com
+R2_PUBLIC_URL=https://your-r2-public-domain.com
+```
+
+### Phase 2 — Supabase PostgreSQL
+
+| #   | Task                                                                      | Status  |
+| --- | ------------------------------------------------------------------------- | ------- |
+| 2.1 | Add Supabase placeholder env vars to `backend/.env`                       | Done    |
+| 2.2 | **MANUAL** — Fill in real Supabase credentials in `backend/.env`          | Pending |
+| 2.3 | **MANUAL** — Run `php artisan migrate --force` against Supabase DB        | Pending |
+| 2.4 | **MANUAL** — Run `php artisan db:seed --force` to seed initial data       | Pending |
+
+#### Supabase env vars to fill in (`backend/.env`):
+```
+DB_HOST=db.<your-project-ref>.supabase.co
+DB_PORT=5432
+DB_DATABASE=postgres
+DB_USERNAME=postgres
+DB_PASSWORD=your_supabase_password
+DB_SSLMODE=require
+```
+
+> `config/database.php` already has `'sslmode' => env('DB_SSLMODE', 'prefer')` — no PHP changes needed.
+
+### Notes
+- Local dev: keep `MEDIA_DISK=public` and local PostgreSQL — no R2/Supabase credentials needed.
+- Production: set all env vars in Docker Compose `.env` or hosting environment.
+- `@inertiajs/vue3` must NOT be removed — it is the entire admin panel framework.

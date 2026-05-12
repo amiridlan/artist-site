@@ -17,6 +17,11 @@ class EventController extends Controller
 
     private array $translatableFields = ['title', 'description', 'venue', 'location'];
 
+    private function mediaDisk(): string
+    {
+        return config('filesystems.media_disk');
+    }
+
     public function index(): Response
     {
         return Inertia::render('Admin/Events/Index', [
@@ -47,8 +52,10 @@ class EventController extends Controller
             'image'       => ['nullable', 'image', 'max:4096'],
         ]);
 
+        $disk = $this->mediaDisk();
+
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('events', 'public');
+            $data['image'] = $request->file('image')->store('events', $disk);
         }
 
         $event = Event::create($data);
@@ -59,10 +66,12 @@ class EventController extends Controller
 
     public function edit(Event $event): Response
     {
+        $disk = $this->mediaDisk();
+
         return Inertia::render('Admin/Events/Edit', [
             'event'        => $event,
             'translations' => $this->loadTranslations($event, $this->translatableFields),
-            'imageUrl'     => $event->image ? Storage::url($event->image) : null,
+            'imageUrl'     => $event->image ? Storage::disk($disk)->url($event->image) : null,
         ]);
     }
 
@@ -82,9 +91,11 @@ class EventController extends Controller
             'image'       => ['nullable', 'image', 'max:4096'],
         ]);
 
+        $disk = $this->mediaDisk();
+
         if ($request->hasFile('image')) {
-            if ($event->image) Storage::disk('public')->delete($event->image);
-            $data['image'] = $request->file('image')->store('events', 'public');
+            if ($event->image) Storage::disk($disk)->delete($event->image);
+            $data['image'] = $request->file('image')->store('events', $disk);
         } else {
             unset($data['image']);
         }
@@ -97,7 +108,8 @@ class EventController extends Controller
 
     public function destroy(Event $event): RedirectResponse
     {
-        if ($event->image) Storage::disk('public')->delete($event->image);
+        $disk = $this->mediaDisk();
+        if ($event->image) Storage::disk($disk)->delete($event->image);
         $event->delete();
 
         return redirect()->route('admin.events.index')->with('success', 'Event deleted.');
