@@ -7,17 +7,27 @@ use App\Http\Resources\ReleaseResource;
 use App\Models\Release;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class ReleaseController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $query = Release::orderByDesc('release_date');
+        $lang = $request->query('lang', 'en');
+        $type = $request->query('type', 'all');
 
-        if ($request->has('type') && $request->type !== 'all') {
-            $query->type($request->type);
-        }
+        $cacheKey = "releases:{$lang}:{$type}";
 
-        return ReleaseResource::collection($query->get());
+        $releases = Cache::remember($cacheKey, 300, function () use ($request) {
+            $query = Release::orderByDesc('release_date');
+
+            if ($request->has('type') && $request->type !== 'all') {
+                $query->type($request->type);
+            }
+
+            return $query->get();
+        });
+
+        return ReleaseResource::collection($releases);
     }
 }

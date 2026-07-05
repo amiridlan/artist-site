@@ -14,13 +14,16 @@ class VideoResource extends JsonResource
             ? $this->getTranslationsForLocale($locale)
             : [];
 
+        $thumbnailUrls = media_urls($this->thumbnail);
+
         return [
             'id' => 'video-' . str_pad((string) $this->id, 3, '0', STR_PAD_LEFT),
             'slug' => $this->slug,
             'title' => $translations['title'] ?? $this->title,
             'type' => $this->type,
             'youtubeId' => $this->youtube_id,
-            'thumbnail' => $this->thumbnail,
+            'thumbnail' => $thumbnailUrls['webp']['medium'] ?? $thumbnailUrls['webp']['original'],
+            'thumbnailSizes' => $thumbnailUrls,
             'date' => $this->date->toDateString(),
             'duration' => $this->duration,
             'description' => $translations['description'] ?? $this->description,

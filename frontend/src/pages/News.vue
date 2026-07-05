@@ -40,8 +40,13 @@
         </router-link>
       </div>
 
+      <!-- Loading state -->
+      <div v-if="loading" class="text-center py-20">
+        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      </div>
+
       <!-- Empty state -->
-      <div v-if="filteredNews.length === 0" class="text-center py-20">
+      <div v-else-if="filteredNews.length === 0" class="text-center py-20">
         <p class="text-charcoal-400 text-lg">{{ $t('news.empty') }}</p>
       </div>
     </div>
@@ -57,6 +62,7 @@ import { formatDate, getCategoryColor } from '@/utils/helpers'
 import type { NewsArticle, NewsCategory } from '@/types/news'
 
 const news = ref<NewsArticle[]>([])
+const loading = ref(true)
 const selectedCategory = ref<NewsCategory>('all')
 const headerRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
@@ -67,7 +73,11 @@ const filteredNews = computed(() => {
 })
 
 onMounted(async () => {
-  news.value = await apiFetch<NewsArticle[]>('/news')
+  try {
+    news.value = await apiFetch<NewsArticle[]>('/news')
+  } finally {
+    loading.value = false
+  }
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {

@@ -16,6 +16,8 @@ return [
     'default' => env('FILESYSTEM_DISK', 'local'),
 
     'media_disk' => env('MEDIA_DISK', 'public'),
+    'media_fallback_disk' => env('MEDIA_FALLBACK_DISK'),
+    'media_mirror' => env('MEDIA_MIRROR', false),
 
     /*
     |--------------------------------------------------------------------------

@@ -7,27 +7,44 @@ use App\Http\Resources\MemberResource;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class MemberController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $query = Member::ordered();
+        $lang = $request->query('lang', 'en');
+        $generation = $request->query('generation', 'all');
+        $status = $request->query('status', 'all');
 
-        if ($request->has('generation') && $request->generation !== 'all') {
-            $query->generation($request->generation);
-        }
+        $cacheKey = "members:{$lang}:{$generation}:{$status}";
 
-        if ($request->has('status') && $request->status !== 'all') {
-            $query->where('status', $request->status);
-        }
+        $members = Cache::remember($cacheKey, 300, function () use ($request) {
+            $query = Member::ordered();
 
-        return MemberResource::collection($query->get());
+            if ($request->has('generation') && $request->generation !== 'all') {
+                $query->generation($request->generation);
+            }
+
+            if ($request->has('status') && $request->status !== 'all') {
+                $query->where('status', $request->status);
+            }
+
+            return $query->get();
+        });
+
+        return MemberResource::collection($members);
     }
 
-    public function show(string $slug): MemberResource
+    public function show(Request $request, string $slug): MemberResource
     {
-        $member = Member::where('slug', $slug)->firstOrFail();
+        $lang = $request->query('lang', 'en');
+        $cacheKey = "member:{$slug}:{$lang}";
+
+        $member = Cache::remember($cacheKey, 300, function () use ($slug) {
+            return Member::where('slug', $slug)->firstOrFail();
+        });
+
         return new MemberResource($member);
     }
 }

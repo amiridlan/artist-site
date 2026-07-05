@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import i18n from '@/i18n'
 import { LANGUAGES, type Language } from '@/utils/constants'
+import { clearApiCache } from '@/composables/useApi'
 
 export const useLanguageStore = defineStore('language', () => {
   const currentLang = ref<Language>(
@@ -18,6 +19,7 @@ export const useLanguageStore = defineStore('language', () => {
     localStorage.setItem('klp48-lang', lang)
     document.documentElement.lang = lang
     i18n.global.locale.value = lang
+    clearApiCache() // Clear cached API responses for new language
   }
 
   watch(currentLang, (newLang) => {

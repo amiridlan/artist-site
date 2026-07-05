@@ -98,8 +98,13 @@
         </div>
       </div>
 
+      <!-- Loading state -->
+      <div v-if="loading" class="text-center py-12">
+        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      </div>
+
       <!-- Empty state -->
-      <div v-if="eventsThisMonth.length === 0" class="text-center py-12">
+      <div v-else-if="eventsThisMonth.length === 0" class="text-center py-12">
         <p class="text-charcoal-400">{{ $t('schedule.empty') }}</p>
       </div>
 
@@ -210,6 +215,7 @@ import type { Event, EventType } from '@/types/event'
 const { t, locale } = useI18n()
 
 const events       = ref<Event[]>([])
+const loading      = ref(true)
 const selectedType = ref<EventType>('all')
 const headerRef    = ref<HTMLElement | null>(null)
 
@@ -356,8 +362,12 @@ function jumpToRelevantMonth() {
 }
 
 onMounted(async () => {
-  events.value = await apiFetch<Event[]>('/events')
-  jumpToRelevantMonth()
+  try {
+    events.value = await apiFetch<Event[]>('/events')
+    jumpToRelevantMonth()
+  } finally {
+    loading.value = false
+  }
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, { y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' })

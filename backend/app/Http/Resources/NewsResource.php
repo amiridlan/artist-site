@@ -14,6 +14,8 @@ class NewsResource extends JsonResource
             ? $this->getTranslationsForLocale($locale)
             : [];
 
+        $imageUrls = media_urls($this->image);
+
         return [
             'id' => 'news-' . str_pad((string) $this->id, 3, '0', STR_PAD_LEFT),
             'slug' => $this->slug,
@@ -22,7 +24,8 @@ class NewsResource extends JsonResource
             'content' => $this->when($request->routeIs('api.news.show'), $translations['content'] ?? $this->content),
             'category' => $this->category,
             'date' => $this->date->toDateString(),
-            'image' => $this->image,
+            'image' => $imageUrls['webp']['medium'] ?? $imageUrls['webp']['original'],
+            'imageSizes' => $imageUrls,
             'featured' => $this->featured,
         ];
     }

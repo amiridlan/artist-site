@@ -77,8 +77,13 @@
         </router-link>
       </div>
 
+      <!-- Loading state -->
+      <div v-if="loading" class="text-center py-20">
+        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      </div>
+
       <!-- Empty state -->
-      <div v-if="filteredMembers.length === 0" class="text-center py-20">
+      <div v-else-if="filteredMembers.length === 0" class="text-center py-20">
         <p class="text-charcoal-400 text-lg">{{ $t('members.empty') }}</p>
       </div>
     </div>
@@ -92,6 +97,7 @@ import { apiFetch } from '@/composables/useApi'
 import type { Member, MemberGeneration, MemberStatus } from '@/types/member'
 
 const members = ref<Member[]>([])
+const loading = ref(true)
 const headerRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
 
@@ -119,7 +125,11 @@ const filteredMembers = computed(() => {
 })
 
 onMounted(async () => {
-  members.value = await apiFetch<Member[]>('/members')
+  try {
+    members.value = await apiFetch<Member[]>('/members')
+  } finally {
+    loading.value = false
+  }
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {

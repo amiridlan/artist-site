@@ -7,27 +7,44 @@ use App\Http\Resources\NewsResource;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class NewsController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $query = News::published()->orderByDesc('date');
+        $lang = $request->query('lang', 'en');
+        $category = $request->query('category', 'all');
+        $featured = $request->boolean('featured') ? '1' : '0';
 
-        if ($request->has('category') && $request->category !== 'all') {
-            $query->category($request->category);
-        }
+        $cacheKey = "news:{$lang}:{$category}:{$featured}";
 
-        if ($request->boolean('featured')) {
-            $query->featured();
-        }
+        $articles = Cache::remember($cacheKey, 300, function () use ($request) {
+            $query = News::published()->orderByDesc('date');
 
-        return NewsResource::collection($query->get());
+            if ($request->has('category') && $request->category !== 'all') {
+                $query->category($request->category);
+            }
+
+            if ($request->boolean('featured')) {
+                $query->featured();
+            }
+
+            return $query->get();
+        });
+
+        return NewsResource::collection($articles);
     }
 
-    public function show(string $slug): NewsResource
+    public function show(Request $request, string $slug): NewsResource
     {
-        $article = News::published()->where('slug', $slug)->firstOrFail();
+        $lang = $request->query('lang', 'en');
+        $cacheKey = "news:{$slug}:{$lang}";
+
+        $article = Cache::remember($cacheKey, 300, function () use ($slug) {
+            return News::published()->where('slug', $slug)->firstOrFail();
+        });
+
         return new NewsResource($article);
     }
 }

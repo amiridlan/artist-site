@@ -58,7 +58,13 @@
         </div>
       </div>
 
-      <div v-if="filteredVideos.length === 0" class="text-center py-20">
+      <!-- Loading state -->
+      <div v-if="loading" class="text-center py-20">
+        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      </div>
+
+      <!-- Empty state -->
+      <div v-else-if="filteredVideos.length === 0" class="text-center py-20">
         <p class="text-charcoal-400 text-lg">{{ $t('videos.empty') }}</p>
       </div>
     </div>
@@ -98,6 +104,7 @@ import type { Video, VideoType } from '@/types/video'
 const { t } = useI18n()
 
 const videos = ref<Video[]>([])
+const loading = ref(true)
 const selectedType = ref<VideoType>('all')
 const activeVideo = ref<Video | null>(null)
 const headerRef = ref<HTMLElement | null>(null)
@@ -129,7 +136,11 @@ function openVideo(video: Video) {
 }
 
 onMounted(async () => {
-  videos.value = await apiFetch<Video[]>('/videos')
+  try {
+    videos.value = await apiFetch<Video[]>('/videos')
+  } finally {
+    loading.value = false
+  }
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {

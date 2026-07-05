@@ -14,6 +14,8 @@ class EventResource extends JsonResource
             ? $this->getTranslationsForLocale($locale)
             : [];
 
+        $imageUrls = media_urls($this->image);
+
         return [
             'id' => 'event-' . str_pad((string) $this->id, 3, '0', STR_PAD_LEFT),
             'slug' => $this->slug,
@@ -26,7 +28,8 @@ class EventResource extends JsonResource
             'location' => $translations['location'] ?? $this->location,
             'description' => $translations['description'] ?? $this->description,
             'ticketUrl' => $this->ticket_url,
-            'image' => $this->image,
+            'image' => $imageUrls['webp']['medium'] ?? $imageUrls['webp']['original'],
+            'imageSizes' => $imageUrls,
         ];
     }
 }

@@ -71,7 +71,13 @@
         </div>
       </div>
 
-      <div v-if="filteredReleases.length === 0" class="text-center py-20">
+      <!-- Loading state -->
+      <div v-if="loading" class="text-center py-20">
+        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      </div>
+
+      <!-- Empty state -->
+      <div v-else-if="filteredReleases.length === 0" class="text-center py-20">
         <p class="text-charcoal-400 text-lg">{{ $t('releases.empty') }}</p>
       </div>
     </div>
@@ -87,6 +93,7 @@ import { formatDate } from '@/utils/helpers'
 import type { Release, ReleaseType } from '@/types/release'
 
 const releases = ref<Release[]>([])
+const loading = ref(true)
 const selectedType = ref<ReleaseType>('all')
 const headerRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
@@ -97,7 +104,11 @@ const filteredReleases = computed(() => {
 })
 
 onMounted(async () => {
-  releases.value = await apiFetch<Release[]>('/releases')
+  try {
+    releases.value = await apiFetch<Release[]>('/releases')
+  } finally {
+    loading.value = false
+  }
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {

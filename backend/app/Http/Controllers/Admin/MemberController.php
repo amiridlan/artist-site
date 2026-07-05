@@ -2,36 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\HandlesMediaUploads;
 use App\Http\Controllers\Admin\Concerns\SavesTranslations;
 use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class MemberController extends Controller
 {
-    use SavesTranslations;
+    use SavesTranslations, HandlesMediaUploads;
 
     private array $translatableFields = ['bio', 'hometown'];
 
-    private function mediaDisk(): string
-    {
-        return config('filesystems.media_disk');
-    }
-
     public function index(): Response
     {
-        $disk = $this->mediaDisk();
-
         return Inertia::render('Admin/Members/Index', [
             'members' => Member::orderBy('sort_order')->orderBy('name_english')
                 ->get(['id', 'slug', 'name_english', 'name_native', 'photo', 'generation', 'status', 'sort_order'])
                 ->map(fn ($m) => array_merge($m->toArray(), [
-                    'photo_url' => $m->photo ? Storage::disk($disk)->url($m->photo) : null,
+                    'photo_url' => $this->mediaUrl($m->photo),
                 ])),
         ]);
     }
@@ -65,13 +57,11 @@ class MemberController extends Controller
             'cover_image'  => ['nullable', 'image', 'max:4096'],
         ]);
 
-        $disk = $this->mediaDisk();
-
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('members', $disk);
+            $data['photo'] = $this->storeMedia($request->file('photo'), 'members');
         }
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('members/covers', $disk);
+            $data['cover_image'] = $this->storeMedia($request->file('cover_image'), 'members/covers');
         }
 
         $member = Member::create($data);
@@ -82,13 +72,11 @@ class MemberController extends Controller
 
     public function edit(Member $member): Response
     {
-        $disk = $this->mediaDisk();
-
         return Inertia::render('Admin/Members/Edit', [
             'member'       => $member,
             'translations' => $this->loadTranslations($member, $this->translatableFields),
-            'photoUrl'     => $member->photo ? Storage::disk($disk)->url($member->photo) : null,
-            'coverUrl'     => $member->cover_image ? Storage::disk($disk)->url($member->cover_image) : null,
+            'photoUrl'     => $this->mediaUrl($member->photo),
+            'coverUrl'     => $this->mediaUrl($member->cover_image),
         ]);
     }
 
@@ -116,18 +104,16 @@ class MemberController extends Controller
             'cover_image'  => ['nullable', 'image', 'max:4096'],
         ]);
 
-        $disk = $this->mediaDisk();
-
         if ($request->hasFile('photo')) {
-            if ($member->photo) Storage::disk($disk)->delete($member->photo);
-            $data['photo'] = $request->file('photo')->store('members', $disk);
+            $this->deleteMedia($member->photo);
+            $data['photo'] = $this->storeMedia($request->file('photo'), 'members');
         } else {
             unset($data['photo']);
         }
 
         if ($request->hasFile('cover_image')) {
-            if ($member->cover_image) Storage::disk($disk)->delete($member->cover_image);
-            $data['cover_image'] = $request->file('cover_image')->store('members/covers', $disk);
+            $this->deleteMedia($member->cover_image);
+            $data['cover_image'] = $this->storeMedia($request->file('cover_image'), 'members/covers');
         } else {
             unset($data['cover_image']);
         }
@@ -140,9 +126,8 @@ class MemberController extends Controller
 
     public function destroy(Member $member): RedirectResponse
     {
-        $disk = $this->mediaDisk();
-        if ($member->photo) Storage::disk($disk)->delete($member->photo);
-        if ($member->cover_image) Storage::disk($disk)->delete($member->cover_image);
+        $this->deleteMedia($member->photo);
+        $this->deleteMedia($member->cover_image);
         $member->delete();
 
         return redirect()->route('admin.members.index')->with('success', 'Member deleted.');

@@ -26,6 +26,11 @@
         </article>
       </template>
 
+      <!-- Loading state -->
+      <div v-else-if="loading" class="text-center py-20">
+        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      </div>
+
       <!-- Not found -->
       <div v-else class="text-center py-20">
         <h2 class="text-2xl font-heading font-bold text-charcoal-800 mb-2">{{ $t('news.notFound') }}</h2>
@@ -48,14 +53,18 @@ import type { NewsArticle } from '@/types/news'
 
 const route = useRoute()
 const article = ref<NewsArticle | null>(null)
+const loading = ref(true)
 const articleRef = ref<HTMLElement | null>(null)
 
 async function fetchArticle() {
+  loading.value = true
   const slug = route.params.slug as string
   try {
     article.value = await apiFetch<NewsArticle>(`/news/${slug}`)
   } catch {
     article.value = null
+  } finally {
+    loading.value = false
   }
 }
 

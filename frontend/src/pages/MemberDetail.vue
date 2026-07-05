@@ -88,6 +88,11 @@
         </div>
       </template>
 
+      <!-- Loading state -->
+      <div v-else-if="loading" class="text-center py-20">
+        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      </div>
+
       <!-- Not found -->
       <div v-else class="text-center py-20">
         <h2 class="text-2xl font-heading font-bold text-charcoal-800 mb-2">{{ $t('members.notFound') }}</h2>
@@ -100,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
@@ -108,6 +113,7 @@ import type { Member } from '@/types/member'
 
 const route = useRoute()
 const member = ref<Member | null>(null)
+const loading = ref(true)
 const profileRef = ref<HTMLElement | null>(null)
 
 const activeSocials = computed(() => {
@@ -118,11 +124,14 @@ const activeSocials = computed(() => {
 })
 
 async function fetchMember() {
+  loading.value = true
   const id = route.params.id as string
   try {
     member.value = await apiFetch<Member>(`/members/${id}`)
   } catch {
     member.value = null
+  } finally {
+    loading.value = false
   }
 }
 
