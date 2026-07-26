@@ -233,6 +233,91 @@ vue-draggable-plus
 spatie/laravel-permission
 ```
 
+## Admin Panel UI/UX Features
+
+### Sidebar Layout (v2.0 - 2026-07-26)
+
+Modern, compact sidebar design with enhanced user experience:
+
+**Key Features:**
+- **Independent Height**: Sidebar uses `h-screen` + `sticky` positioning, not coupled to dashboard content height
+- **User Dropdown Menu**: Click user section to access dark mode toggle and logout
+- **Compact Navigation**: 33% more items visible without scrolling (reduced spacing)
+- **Scroll Isolation**: Navigation and dashboard scroll independently (CSS `overscroll-behavior: contain`)
+- **Full Accessibility**: WCAG 2.2 AA compliant with keyboard navigation and screen reader support
+
+**User Menu:**
+- Opens upward above user info
+- Contains: Dark/Light mode toggle (amber sun ☀️ / indigo moon 🌙) + "Log Out" button
+- Click outside or press Escape to close
+- Smooth slide-up animation (200ms)
+
+**Navigation Spacing:**
+- Container: `space-y-3` (12px) instead of `space-y-6` (24px) - **50% reduction**
+- Items: `space-y-0.5` (2px) instead of `space-y-1` (4px) - **50% reduction**
+- Headers: `py-1.5` (6px) instead of `py-2` (8px) - **25% reduction**
+
+**Files:**
+- `backend/resources/js/Layouts/AdminLayout.vue` - Main implementation
+- `backend/resources/js/Components/Admin/NavItem.vue` - Nav item component
+- `ADMIN_SIDEBAR_UX_IMPROVEMENTS_2026.md` - Full documentation
+
+### Date & Time Components
+
+Enhanced date/time pickers with comprehensive improvements:
+
+**Components:**
+- `DateInput.vue`: Standalone date picker with timezone handling
+- `TimeInput.vue`: Standalone time picker with validation
+- `DateTimeInput.vue`: Combined date+time picker (legacy, still available)
+
+**Features:**
+- Timezone-aware data handling (prevents UTC conversion bugs)
+- Quick select shortcuts (Today, Tomorrow, Now, +1hr, etc.)
+- Dark mode support with theme-aware colors
+- Loading and disabled states
+- Inline validation with error messages
+- Min/max date constraints
+- Helper text support
+- WCAG 2.2 AA accessible
+
+**Usage Pattern:**
+```vue
+<!-- Separate inputs for better UX -->
+<DateInput v-model="form.start_date" :minDate="new Date()" required />
+<TimeInput v-model="form.start_time" required />
+
+<!-- Watchers combine for backend -->
+watch([() => form.start_date, () => form.start_time], () => {
+  if (form.start_date && form.start_time) {
+    form.start_datetime = `${form.start_date}T${form.start_time}`
+  }
+})
+```
+
+**Files:**
+- `backend/resources/js/Components/Admin/DateInput.vue`
+- `backend/resources/js/Components/Admin/TimeInput.vue`
+- `backend/resources/js/Components/Admin/DateTimeInput.vue`
+- `backend/DATE_PICKER_IMPROVEMENTS_SUMMARY.md` - Component documentation
+
+### Dark Mode
+
+Comprehensive dark mode implementation across all admin pages:
+
+**Features:**
+- System preference detection on first load
+- Manual toggle via user dropdown menu
+- Persisted to localStorage (`dark-mode` key)
+- Smooth transitions (300ms) with reduced motion support
+- Theme-aware components and icons
+
+**Implementation:**
+- `backend/resources/js/composables/useDarkMode.js` - Core composable
+- Uses Tailwind's `dark:` variant classes
+- HTML `<html class="dark">` toggle pattern
+- All admin components support both themes
+
 ## Testing
 
 ```bash
