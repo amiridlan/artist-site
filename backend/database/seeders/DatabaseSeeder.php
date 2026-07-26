@@ -30,6 +30,13 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             FanclubSeeder::class,
             SocialMediaSeeder::class,
+
+            // Calendar & Kanban System
+            RolePermissionSeeder::class,
+            DemoUserSeeder::class,
+            ResourceSeeder::class,
+            ScheduleEventSeeder::class,
+            KanbanCardSeeder::class,
         ]);
     }
 }

@@ -13,37 +13,25 @@ class NewsController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $lang = $request->query('lang', 'en');
-        $category = $request->query('category', 'all');
-        $featured = $request->boolean('featured') ? '1' : '0';
+        // Build query
+        $query = News::published()->orderByDesc('date');
 
-        $cacheKey = "news:{$lang}:{$category}:{$featured}";
+        if ($request->has('category') && $request->category !== 'all') {
+            $query->category($request->category);
+        }
 
-        $articles = Cache::remember($cacheKey, 300, function () use ($request) {
-            $query = News::published()->orderByDesc('date');
+        if ($request->boolean('featured')) {
+            $query->featured();
+        }
 
-            if ($request->has('category') && $request->category !== 'all') {
-                $query->category($request->category);
-            }
-
-            if ($request->boolean('featured')) {
-                $query->featured();
-            }
-
-            return $query->get();
-        });
+        $articles = $query->get();
 
         return NewsResource::collection($articles);
     }
 
     public function show(Request $request, string $slug): NewsResource
     {
-        $lang = $request->query('lang', 'en');
-        $cacheKey = "news:{$slug}:{$lang}";
-
-        $article = Cache::remember($cacheKey, 300, function () use ($slug) {
-            return News::published()->where('slug', $slug)->firstOrFail();
-        });
+        $article = News::published()->where('slug', $slug)->firstOrFail();
 
         return new NewsResource($article);
     }

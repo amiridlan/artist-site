@@ -53,7 +53,7 @@
             <TextInput v-model="form.sort_order" type="number" :error="form.errors.sort_order" />
           </FormField>
           <FormField label="Join Date" :error="form.errors.join_date">
-            <TextInput v-model="form.join_date" type="date" :error="form.errors.join_date" />
+            <DateInput v-model="form.join_date" :error="form.errors.join_date" />
           </FormField>
         </div>
       </Section>
@@ -103,6 +103,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link, useForm } from '@inertiajs/vue3'
 import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
+import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
 import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'

@@ -15,7 +15,12 @@ return [
 
     'default' => env('FILESYSTEM_DISK', 'local'),
 
+    // Public media (member photos, news images, etc.)
     'media_disk' => env('MEDIA_DISK', 'public'),
+
+    // Fan club protected content (behind paywall)
+    'fanclub_disk' => env('FANCLUB_DISK', 'public'),
+
     'media_fallback_disk' => env('MEDIA_FALLBACK_DISK'),
     'media_mirror' => env('MEDIA_MIRROR', false),
 
@@ -64,14 +69,43 @@ return [
             'report' => false,
         ],
 
+        // Cloudflare R2 - Public Media (CDN-enabled)
+        'r2-public' => [
+            'driver'                  => 's3',
+            'key'                     => env('R2_PUBLIC_ACCESS_KEY_ID'),
+            'secret'                  => env('R2_PUBLIC_SECRET_ACCESS_KEY'),
+            'region'                  => 'auto',
+            'bucket'                  => env('R2_PUBLIC_BUCKET', 'klp48-media-public'),
+            'url'                     => env('R2_PUBLIC_URL'), // Custom domain like https://media.klp48.com
+            'endpoint'                => env('R2_PUBLIC_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+            'throw'                   => false,
+            'report'                  => false,
+        ],
+
+        // Cloudflare R2 - Fan Club Protected Content
+        'r2-fanclub' => [
+            'driver'                  => 's3',
+            'key'                     => env('R2_FANCLUB_ACCESS_KEY_ID'),
+            'secret'                  => env('R2_FANCLUB_SECRET_ACCESS_KEY'),
+            'region'                  => 'auto',
+            'bucket'                  => env('R2_FANCLUB_BUCKET', 'klp48-media-fanclub'),
+            'url'                     => null, // No public URL - access controlled via signed URLs
+            'endpoint'                => env('R2_FANCLUB_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+            'throw'                   => false,
+            'report'                  => false,
+        ],
+
+        // Legacy R2 config (for backward compatibility)
         'r2' => [
             'driver'                  => 's3',
-            'key'                     => env('R2_ACCESS_KEY_ID'),
-            'secret'                  => env('R2_SECRET_ACCESS_KEY'),
+            'key'                     => env('R2_ACCESS_KEY_ID', env('R2_PUBLIC_ACCESS_KEY_ID')),
+            'secret'                  => env('R2_SECRET_ACCESS_KEY', env('R2_PUBLIC_SECRET_ACCESS_KEY')),
             'region'                  => 'auto',
-            'bucket'                  => env('R2_BUCKET'),
+            'bucket'                  => env('R2_BUCKET', env('R2_PUBLIC_BUCKET')),
             'url'                     => env('R2_PUBLIC_URL'),
-            'endpoint'                => env('R2_ENDPOINT'),
+            'endpoint'                => env('R2_ENDPOINT', env('R2_PUBLIC_ENDPOINT')),
             'use_path_style_endpoint' => true,
             'throw'                   => false,
             'report'                  => false,

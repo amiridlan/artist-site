@@ -13,7 +13,7 @@
             <SelectInput v-model="form.type" :options="typeOptions" :error="form.errors.type" />
           </FormField>
           <FormField label="Release Date" required :error="form.errors.release_date">
-            <TextInput v-model="form.release_date" type="date" :error="form.errors.release_date" />
+            <DateInput v-model="form.release_date" :error="form.errors.release_date" />
           </FormField>
         </div>
       </Section>
@@ -53,6 +53,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link, useForm } from '@inertiajs/vue3'
 import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
+import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
 import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'

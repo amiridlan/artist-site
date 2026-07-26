@@ -13,7 +13,7 @@
             <SelectInput v-model="form.type" :options="typeOptions" placeholder="Select…" :error="form.errors.type" />
           </FormField>
           <FormField label="Date" required :error="form.errors.date">
-            <TextInput v-model="form.date" type="date" :error="form.errors.date" />
+            <DateInput v-model="form.date" :error="form.errors.date" />
           </FormField>
           <FormField label="YouTube ID" :error="form.errors.youtube_id">
             <TextInput v-model="form.youtube_id" placeholder="e.g. dQw4w9WgXcQ" :error="form.errors.youtube_id" />
@@ -53,6 +53,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link, useForm } from '@inertiajs/vue3'
 import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
+import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
 import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'

@@ -13,7 +13,7 @@
             <SelectInput v-model="form.category" :options="categoryOptions" placeholder="Select…" :error="form.errors.category" />
           </FormField>
           <FormField label="Date" required :error="form.errors.date">
-            <TextInput v-model="form.date" type="date" :error="form.errors.date" />
+            <DateInput v-model="form.date" :error="form.errors.date" />
           </FormField>
           <FormField label="Featured">
             <label class="flex items-center gap-2 cursor-pointer">
@@ -62,6 +62,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link, useForm } from '@inertiajs/vue3'
 import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
+import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
 import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'

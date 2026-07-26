@@ -14,7 +14,20 @@ class NewsResource extends JsonResource
             ? $this->getTranslationsForLocale($locale)
             : [];
 
-        $imageUrls = media_urls($this->image);
+        // Safely get image URLs with error handling
+        try {
+            $imageUrls = media_urls($this->image);
+        } catch (\Exception $e) {
+            \Log::error('Failed to get media URLs for news article', [
+                'article_id' => $this->id,
+                'image_path' => $this->image,
+                'error' => $e->getMessage()
+            ]);
+            $imageUrls = [
+                'webp' => ['original' => null, 'medium' => null],
+                'avif' => ['original' => null, 'medium' => null]
+            ];
+        }
 
         return [
             'id' => 'news-' . str_pad((string) $this->id, 3, '0', STR_PAD_LEFT),

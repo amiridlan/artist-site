@@ -19,10 +19,10 @@
             <SelectInput v-model="form.status" :options="statusOptions" :error="form.errors.status" />
           </FormField>
           <FormField label="Joined Date" required :error="form.errors.joined_at">
-            <TextInput v-model="form.joined_at" type="date" :error="form.errors.joined_at" />
+            <DateInput v-model="form.joined_at" :error="form.errors.joined_at" />
           </FormField>
           <FormField label="Expires Date" :error="form.errors.expires_at">
-            <TextInput v-model="form.expires_at" type="date" :error="form.errors.expires_at" />
+            <DateInput v-model="form.expires_at" :error="form.errors.expires_at" />
           </FormField>
         </div>
       </Section>
@@ -51,6 +51,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link, useForm } from '@inertiajs/vue3'
 import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
+import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
 import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import TagsInput from '@/Components/Admin/TagsInput.vue'

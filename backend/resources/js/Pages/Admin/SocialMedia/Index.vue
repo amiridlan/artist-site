@@ -23,7 +23,7 @@
       <div
         v-for="p in platforms"
         :key="p.id"
-        class="bg-white rounded-xl border border-gray-200 p-5 flex flex-col gap-3"
+        class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 flex flex-col gap-3"
       >
         <!-- Header -->
         <div class="flex items-center justify-between">
@@ -32,13 +32,13 @@
               <component :is="platformIcon(p.platform)" class="w-4 h-4 text-white" />
             </div>
             <div>
-              <p class="text-sm font-semibold text-gray-800">{{ p.display_name }}</p>
-              <p class="text-xs text-gray-400">{{ p.handle }}</p>
+              <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">{{ p.display_name }}</p>
+              <p class="text-xs text-gray-400 dark:text-gray-500">{{ p.handle }}</p>
             </div>
           </div>
           <span
             class="text-xs px-1.5 py-0.5 rounded-full font-medium"
-            :class="p.delta.followers >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+            :class="p.delta.followers >= 0 ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'"
           >
             {{ p.delta.followers >= 0 ? '↑' : '↓' }} {{ Math.abs(p.delta.followers_pct) }}%
           </span>
@@ -46,20 +46,20 @@
 
         <!-- Main metric -->
         <div>
-          <p class="text-2xl font-bold text-gray-900">{{ formatNumber(p.current?.followers) }}</p>
-          <p class="text-xs text-gray-400 mt-0.5">{{ followerLabel(p.platform) }}</p>
+          <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ formatNumber(p.current?.followers) }}</p>
+          <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{{ followerLabel(p.platform) }}</p>
         </div>
 
         <!-- Sub-metrics -->
-        <div class="flex gap-3 text-xs text-gray-500">
+        <div class="flex gap-3 text-xs text-gray-500 dark:text-gray-400">
           <span v-if="p.current?.views">
-            <span class="font-medium text-gray-700">{{ formatNumber(p.current.views) }}</span> views
+            <span class="font-medium text-gray-700 dark:text-gray-300">{{ formatNumber(p.current.views) }}</span> views
           </span>
           <span v-if="p.current?.posts">
-            <span class="font-medium text-gray-700">{{ formatNumber(p.current.posts) }}</span> {{ p.platform === 'twitter' ? 'tweets' : 'posts' }}
+            <span class="font-medium text-gray-700 dark:text-gray-300">{{ formatNumber(p.current.posts) }}</span> {{ p.platform === 'twitter' ? 'tweets' : 'posts' }}
           </span>
           <span v-if="p.current?.likes && !p.current?.views && !p.current?.posts">
-            <span class="font-medium text-gray-700">{{ formatNumber(p.current.likes) }}</span> likes
+            <span class="font-medium text-gray-700 dark:text-gray-300">{{ formatNumber(p.current.likes) }}</span> likes
           </span>
         </div>
 
@@ -70,12 +70,12 @@
 
         <!-- Delta + details button -->
         <div class="flex items-center justify-between">
-          <p class="text-xs" :class="p.delta.followers >= 0 ? 'text-green-600' : 'text-red-500'">
+          <p class="text-xs" :class="p.delta.followers >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'">
             {{ p.delta.followers >= 0 ? '+' : '' }}{{ formatNumber(p.delta.followers) }} in last 30 days
           </p>
           <Link
             :href="route('admin.social-media.show', p.platform)"
-            class="text-xs font-medium text-teal-600 hover:text-teal-800 transition-colors"
+            class="text-xs font-medium text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors"
           >
             View Details →
           </Link>
@@ -84,16 +84,16 @@
     </div>
 
     <!-- Combined trend chart -->
-    <div class="bg-white rounded-xl border border-gray-200 mb-8">
-      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 mb-8">
+      <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
         <div>
-          <h3 class="font-semibold text-gray-800">Follower Growth — Last 30 Days</h3>
-          <p class="text-xs text-gray-400 mt-0.5">All platforms combined view</p>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Follower Growth — Last 30 Days</h3>
+          <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">All platforms combined view</p>
         </div>
         <div class="flex flex-wrap gap-3">
           <div v-for="p in platforms" :key="p.id" class="flex items-center gap-1.5">
             <span class="w-2.5 h-2.5 rounded-full inline-block" :style="{ background: platformColor(p.platform) }"></span>
-            <span class="text-xs text-gray-500">{{ p.display_name }}</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">{{ p.display_name }}</span>
           </div>
         </div>
       </div>
@@ -103,51 +103,51 @@
     </div>
 
     <!-- Platform details table -->
-    <div class="bg-white rounded-xl border border-gray-200">
-      <div class="px-6 py-4 border-b border-gray-100">
-        <h3 class="font-semibold text-gray-800">Platform Overview</h3>
+    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
+      <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+        <h3 class="font-semibold text-gray-800 dark:text-gray-100">Platform Overview</h3>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
-            <tr class="border-b border-gray-100">
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Platform</th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Followers</th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">30d Change</th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Views / Likes</th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Posts</th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Last Synced</th>
+            <tr class="border-b border-gray-100 dark:border-gray-800">
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Platform</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Followers</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">30d Change</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Views / Likes</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Posts</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Last Synced</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-100">
-            <tr v-for="p in platforms" :key="p.id" class="hover:bg-gray-50 transition-colors">
+          <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+            <tr v-for="p in platforms" :key="p.id" class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
               <td class="px-6 py-4">
                 <div class="flex items-center gap-2.5">
                   <div class="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0" :style="{ background: platformColor(p.platform) }">
                     <component :is="platformIcon(p.platform)" class="w-3.5 h-3.5 text-white" />
                   </div>
                   <div>
-                    <p class="font-medium text-gray-800">{{ p.display_name }}</p>
-                    <p class="text-xs text-gray-400">{{ p.handle }}</p>
+                    <p class="font-medium text-gray-800 dark:text-gray-100">{{ p.display_name }}</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500">{{ p.handle }}</p>
                   </div>
                 </div>
               </td>
-              <td class="px-6 py-4 text-right font-semibold text-gray-800">{{ formatNumber(p.current?.followers) }}</td>
+              <td class="px-6 py-4 text-right font-semibold text-gray-800 dark:text-gray-100">{{ formatNumber(p.current?.followers) }}</td>
               <td class="px-6 py-4 text-right">
                 <span
                   class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
-                  :class="p.delta.followers >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-500'"
+                  :class="p.delta.followers >= 0 ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400'"
                 >
                   {{ p.delta.followers >= 0 ? '↑' : '↓' }}
                   {{ formatNumber(Math.abs(p.delta.followers)) }}
                   ({{ Math.abs(p.delta.followers_pct) }}%)
                 </span>
               </td>
-              <td class="px-6 py-4 text-right text-gray-600">
+              <td class="px-6 py-4 text-right text-gray-600 dark:text-gray-400">
                 {{ formatNumber(p.current?.views ?? p.current?.likes) || '—' }}
               </td>
-              <td class="px-6 py-4 text-right text-gray-600">{{ formatNumber(p.current?.posts) || '—' }}</td>
-              <td class="px-6 py-4 text-right text-gray-400 text-xs">{{ formatDateTime(p.current?.fetched_at) }}</td>
+              <td class="px-6 py-4 text-right text-gray-600 dark:text-gray-400">{{ formatNumber(p.current?.posts) || '—' }}</td>
+              <td class="px-6 py-4 text-right text-gray-400 dark:text-gray-500 text-xs">{{ formatDateTime(p.current?.fetched_at) }}</td>
             </tr>
           </tbody>
         </table>

@@ -84,6 +84,155 @@ Terminal 2: `cd frontend && npm run dev` (runs frontend Vite on port 3000)
 | `GET /api/events` | Events/concerts |
 | `POST /api/fan/login` | Fan authentication |
 
+## Calendar & Kanban System
+
+### Overview
+Comprehensive schedule management system with RBAC, conflict detection, and kanban workflow.
+
+### Features
+- **Unified Calendar**: 7 event types (performance, appearance, filming, practice, day-off, staff, social media)
+- **Kanban Board**: 4-stage workflow (backlog → planning → confirmed → completed)
+- **Conflict Detection**: Automatic detection of artist double-booking, day-off conflicts, staff/resource availability
+- **Role-Based Access**: 4 roles with granular permissions (Super Admin, Marketing Dept, Events Dept, Artist)
+- **Cross-Visibility**: All users see all calendars, but edit permissions are department-specific
+
+### Database Tables
+- `schedule_events`: All schedule events with polymorphic relationships
+- `kanban_cards`: Kanban workflow cards
+- `resources`: Venues, equipment, vehicles
+- `conflict_logs`: Audit trail of scheduling conflicts
+- `model_has_roles`, `model_has_permissions`: Spatie Permission RBAC
+- Pivot tables: `member_schedule_event`, `schedule_event_user`, `kanban_card_member`, etc.
+
+### User Roles & Permissions
+
+**Super Admin** (`admin@klp48.com` / `password`)
+- Full access to everything
+- Can override conflicts
+- View all conflict logs
+
+**Marketing Department** (`marketing1@klp48.com`, `marketing2@klp48.com` / `password`)
+- Full CRUD: Social media posts, content filming, practice days
+- View-only: Performances, appearances, day-offs, staff events
+- Access: Kanban board, conflict logs
+
+**Events Department** (`events1@klp48.com`, `events2@klp48.com` / `password`)
+- Full CRUD: Performances, appearances, staff events
+- View-only: Social media, content, practice, day-offs
+- Access: Kanban board, resources, conflict logs
+
+**Artist** (`yishyan@klp48.com`, `tiffany@klp48.com`, `salwa@klp48.com` / `password`)
+- View: Own schedule only (filtered automatically)
+- Full CRUD: Own day-offs
+- No access: Kanban board, resources
+
+### Admin Routes
+
+| Route | Description |
+|-------|-------------|
+| `GET /admin/calendar` | FullCalendar view with filters |
+| `GET /admin/calendar/events` | JSON endpoint for FullCalendar |
+| `GET /admin/schedule-events` | List view with pagination |
+| `GET /admin/schedule-events/create?type=X` | Create event form |
+| `POST /admin/schedule-events` | Store event (with conflict check) |
+| `GET /admin/schedule-events/{id}/edit` | Edit event form |
+| `PUT /admin/schedule-events/{id}` | Update event (with conflict check) |
+| `DELETE /admin/schedule-events/{id}` | Delete event |
+| `GET /admin/kanban` | Kanban board with drag-drop |
+| `POST /admin/kanban` | Create kanban card |
+| `PATCH /admin/kanban/{id}/move` | Move card between stages |
+| `POST /admin/kanban/{id}/confirm` | Confirm card → create schedule event |
+| `GET /admin/resources` | List resources |
+| `GET /admin/conflict-logs` | View conflict audit trail |
+
+### Key Components
+
+**Backend Services**
+- `App\Services\ConflictDetectionService`: Centralized conflict detection logic
+  - `checkScheduleEventConflicts()`: Orchestrates all checks
+  - `checkArtistDoubleBooking()`: Detects overlapping artist schedules
+  - `checkArtistDayOffConflict()`: Checks day-off violations
+  - `checkStaffAvailability()`: Staff scheduling conflicts
+  - `checkResourceAvailability()`: Resource booking conflicts
+
+**Backend Models** (all in `app/Models/`)
+- `ScheduleEvent`: With scopes `confirmed()`, `forMember()`, `forStaff()`, `overlapping()`
+- `KanbanCard`: With scope `inStage()`
+- `Resource`: With scope `active()`
+- `ConflictLog`: Polymorphic conflict tracking
+
+**Frontend Components** (all in `resources/js/Pages/Admin/`)
+- `Calendar/Index.vue`: FullCalendar integration
+- `ScheduleEvents/Index.vue`: List view with filters
+- `ScheduleEvents/Create.vue`: Event creation with conflict warnings
+- `ScheduleEvents/Edit.vue`: Event editing with conflict display
+- `Kanban/Index.vue`: Drag-drop kanban board
+- `Resources/Index.vue`, `Create.vue`, `Edit.vue`: Resource management
+- `Components/Admin/ConflictWarning.vue`: Reusable conflict alert
+- `Components/Admin/ConfirmKanbanModal.vue`: Kanban → Calendar confirmation
+
+### Workflow Examples
+
+**Creating a Performance Event**
+1. User navigates to Schedule Events → "New Event" → "Artist Performance"
+2. Fills form: title, date/time, venue, members, staff, resources
+3. On submit, `ConflictDetectionService` checks for conflicts
+4. If conflicts found: Show warning with details
+5. Super Admin can override; others must resolve
+6. Event saved with conflict notes if overridden
+
+**Kanban to Calendar**
+1. Create card in "Backlog" stage
+2. Drag to "Planning" stage (assign details)
+3. Click "Confirm" button
+4. Fill schedule details modal (date, time, venue, resources)
+5. Conflict check runs automatically
+6. On confirm: Card moves to "Confirmed", schedule event created
+
+**Conflict Detection**
+- Runs on: Event create, event update, kanban confirm
+- Checks: Artist double-booking, day-off violations, staff conflicts, resource conflicts
+- Severity levels: `error` (blocks save), `warning` (allows with override)
+- All conflicts logged to `conflict_logs` table
+
+### Demo Data
+
+**9 Resources**
+- 3 Venues: KL Live Hall, Studio A, Outdoor Space
+- 3 Equipment: Camera, Microphones, Stage Lights
+- 3 Vehicles: Tour Bus, Equipment Van, Staff MPV
+
+**7 Schedule Events** (includes 2 conflict scenarios)
+- Event 1: Summer Concert (next week)
+- Event 2: Music Video Shoot (tomorrow 9am-5pm)
+- Event 3: Magazine Photo Shoot (tomorrow 2pm-6pm) ⚠️ **CONFLICTS with Event 2** (Yi Shyan double-booked)
+- Event 4: Tiffany Day-Off (day after tomorrow)
+- Event 5: Dance Practice (day after tomorrow 10am-4pm) ⚠️ **CONFLICTS with Event 4** (Tiffany on day-off)
+- Event 6: Instagram Live Stream (next month)
+- Event 7: Monthly Planning Meeting (3 days from now)
+
+**6 Kanban Cards**
+- 2 in Backlog: Autumn Fan Meeting, Behind-the-Scenes Vlog
+- 2 in Planning: Radio Interview, TikTok Dance Challenge
+- 1 in Confirmed: Summer Concert
+- 1 in Completed: Spring Showcase
+
+### NPM Dependencies (Calendar/Kanban)
+```bash
+@fullcalendar/vue3
+@fullcalendar/core
+@fullcalendar/daygrid
+@fullcalendar/timegrid
+@fullcalendar/interaction
+@fullcalendar/list
+vue-draggable-plus
+```
+
+### Composer Dependencies (RBAC)
+```bash
+spatie/laravel-permission
+```
+
 ## Testing
 
 ```bash
