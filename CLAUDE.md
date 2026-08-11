@@ -260,7 +260,6 @@ Modern, compact sidebar design with enhanced user experience:
 **Files:**
 - `backend/resources/js/Layouts/AdminLayout.vue` - Main implementation
 - `backend/resources/js/Components/Admin/NavItem.vue` - Nav item component
-- `ADMIN_SIDEBAR_UX_IMPROVEMENTS_2026.md` - Full documentation
 
 ### Date & Time Components
 
@@ -299,7 +298,6 @@ watch([() => form.start_date, () => form.start_time], () => {
 - `backend/resources/js/Components/Admin/DateInput.vue`
 - `backend/resources/js/Components/Admin/TimeInput.vue`
 - `backend/resources/js/Components/Admin/DateTimeInput.vue`
-- `backend/DATE_PICKER_IMPROVEMENTS_SUMMARY.md` - Component documentation
 
 ### Dark Mode
 
