@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -66,6 +67,7 @@ class MemberController extends Controller
 
         $member = Member::create($data);
         $this->saveTranslations($member, $request->all(), $this->translatableFields);
+        Cache::flush();
 
         return redirect()->route('admin.members.index')->with('success', 'Member created.');
     }
@@ -120,6 +122,7 @@ class MemberController extends Controller
 
         $member->update($data);
         $this->saveTranslations($member, $request->all(), $this->translatableFields);
+        Cache::flush();
 
         return redirect()->route('admin.members.index')->with('success', 'Member updated.');
     }
@@ -129,6 +132,7 @@ class MemberController extends Controller
         $this->deleteMedia($member->photo);
         $this->deleteMedia($member->cover_image);
         $member->delete();
+        Cache::flush();
 
         return redirect()->route('admin.members.index')->with('success', 'Member deleted.');
     }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -53,6 +54,7 @@ class EventController extends Controller
 
         $event = Event::create($data);
         $this->saveTranslations($event, $request->all(), $this->translatableFields);
+        Cache::flush();
 
         return redirect()->route('admin.events.index')->with('success', 'Event created.');
     }
@@ -91,6 +93,7 @@ class EventController extends Controller
 
         $event->update($data);
         $this->saveTranslations($event, $request->all(), $this->translatableFields);
+        Cache::flush();
 
         return redirect()->route('admin.events.index')->with('success', 'Event updated.');
     }
@@ -99,6 +102,7 @@ class EventController extends Controller
     {
         $this->deleteMedia($event->image);
         $event->delete();
+        Cache::flush();
 
         return redirect()->route('admin.events.index')->with('success', 'Event deleted.');
     }

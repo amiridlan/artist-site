@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Release;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -54,6 +55,7 @@ class ReleaseController extends Controller
 
         $release = Release::create($data);
         $this->saveTranslations($release, $request->all(), $this->translatableFields);
+        Cache::flush();
 
         return redirect()->route('admin.releases.index')->with('success', 'Release created.');
     }
@@ -91,6 +93,7 @@ class ReleaseController extends Controller
 
         $release->update($data);
         $this->saveTranslations($release, $request->all(), $this->translatableFields);
+        Cache::flush();
 
         return redirect()->route('admin.releases.index')->with('success', 'Release updated.');
     }
@@ -99,6 +102,7 @@ class ReleaseController extends Controller
     {
         $this->deleteMedia($release->cover_image);
         $release->delete();
+        Cache::flush();
 
         return redirect()->route('admin.releases.index')->with('success', 'Release deleted.');
     }

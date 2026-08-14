@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Video;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -51,6 +52,7 @@ class VideoController extends Controller
 
         $video = Video::create($data);
         $this->saveTranslations($video, $request->all(), $this->translatableFields);
+        Cache::flush();
 
         return redirect()->route('admin.videos.index')->with('success', 'Video created.');
     }
@@ -87,6 +89,7 @@ class VideoController extends Controller
 
         $video->update($data);
         $this->saveTranslations($video, $request->all(), $this->translatableFields);
+        Cache::flush();
 
         return redirect()->route('admin.videos.index')->with('success', 'Video updated.');
     }
@@ -95,6 +98,7 @@ class VideoController extends Controller
     {
         $this->deleteMedia($video->thumbnail);
         $video->delete();
+        Cache::flush();
 
         return redirect()->route('admin.videos.index')->with('success', 'Video deleted.');
     }
