@@ -24,12 +24,26 @@ echo "   Imagick: " . (extension_loaded('imagick') ? "✅ Enabled" : "❌ Disabl
 
 // Check Intervention Image
 echo "2. Intervention Image:\n";
+$testPngPath = sys_get_temp_dir() . '/klp48_test.png';
+$gdImage = imagecreatetruecolor(800, 600);
+imagefill($gdImage, 0, 0, imagecolorallocate($gdImage, 100, 150, 200));
+imagepng($gdImage, $testPngPath);
+imagedestroy($gdImage);
+
 try {
-    $image = \Intervention\Image\Laravel\Facades\Image::read(__DIR__ . '/public/favicon.ico');
-    echo "   ✅ Intervention Image works!\n";
-    echo "   Image size: {$image->width()}x{$image->height()}\n\n";
-} catch (\Exception $e) {
-    echo "   ❌ Error: " . $e->getMessage() . "\n\n";
+    $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+    $image = $manager->decode($testPngPath);
+    echo "   ✅ Decode works! Image size: {$image->width()}x{$image->height()}\n";
+
+    $webp = $image->encode(new \Intervention\Image\Encoders\WebpEncoder(80));
+    echo "   ✅ WebP encode works! (" . strlen((string) $webp) . " bytes)\n";
+
+    $avif = $image->encode(new \Intervention\Image\Encoders\AvifEncoder(65));
+    echo "   ✅ AVIF encode works! (" . strlen((string) $avif) . " bytes)\n\n";
+} catch (\Throwable $e) {
+    echo "   ❌ Error: " . get_class($e) . ": " . $e->getMessage() . "\n\n";
+} finally {
+    @unlink($testPngPath);
 }
 
 // Check storage disk

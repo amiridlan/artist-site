@@ -6,7 +6,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Encoders\AvifEncoder;
+use Intervention\Image\Encoders\WebpEncoder;
+use Intervention\Image\ImageManager;
 use Intervention\Image\Interfaces\ImageInterface;
 
 class ImageProcessingService
@@ -22,10 +25,12 @@ class ImageProcessingService
     private int $quality = 80;
     private int $avifQuality = 65; // AVIF can use lower quality for same visual result
     private string $disk;
+    private ImageManager $manager;
 
     public function __construct()
     {
         $this->disk = config('filesystems.media_disk', 'public');
+        $this->manager = new ImageManager(new Driver());
     }
 
     /**
@@ -45,7 +50,7 @@ class ImageProcessingService
         $paths = [];
 
         try {
-            $image = Image::read($file->getRealPath());
+            $image = $this->manager->decode($file->getRealPath());
 
             // Store original in both formats
             $paths['original'] = $this->storeAsWebP($image, $directory, $baseName, 'original');
@@ -128,7 +133,7 @@ class ImageProcessingService
         $filename = "{$baseName}_{$suffix}.webp";
         $path = "{$directory}/{$filename}";
 
-        $encoded = $image->toWebp($this->quality);
+        $encoded = $image->encode(new WebpEncoder($this->quality));
         Storage::disk($this->disk)->put($path, (string) $encoded);
 
         return $path;
@@ -146,7 +151,7 @@ class ImageProcessingService
         $filename = "{$baseName}_{$suffix}.avif";
         $path = "{$directory}/{$filename}";
 
-        $encoded = $image->toAvif($this->avifQuality);
+        $encoded = $image->encode(new AvifEncoder($this->avifQuality));
         Storage::disk($this->disk)->put($path, (string) $encoded);
 
         return $path;
