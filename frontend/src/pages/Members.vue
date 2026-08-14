@@ -44,8 +44,15 @@
             class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden mb-3 shadow-card group-hover:shadow-card-hover transition-all duration-300 transform group-hover:-translate-y-1"
             :style="{ borderColor: member.color || '#00B4A0', borderWidth: '2px', borderStyle: 'solid' }"
           >
-            <!-- Placeholder with member initial -->
-            <div class="absolute inset-0 flex items-center justify-center"
+            <!-- Photo, or placeholder with member initial if none uploaded -->
+            <img
+              v-if="member.photo"
+              :src="member.photo"
+              :alt="member.name.english"
+              loading="lazy"
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+            <div v-else class="absolute inset-0 flex items-center justify-center"
                  :style="{ backgroundColor: (member.color || '#00B4A0') + '15' }">
               <span class="text-5xl font-heading font-bold" :style="{ color: member.color || '#00B4A0' }">
                 {{ member.name.english.charAt(0) }}

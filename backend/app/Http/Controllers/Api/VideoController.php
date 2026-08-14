@@ -25,9 +25,9 @@ class VideoController extends Controller
                 $query->type($request->type);
             }
 
-            return $query->get();
+            return $query->get()->map->getAttributes()->all();
         });
 
-        return VideoResource::collection($videos);
+        return VideoResource::collection(Video::hydrate($videos));
     }
 }

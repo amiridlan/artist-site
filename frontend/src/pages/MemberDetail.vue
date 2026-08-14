@@ -15,7 +15,13 @@
               class="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg"
               :style="{ borderColor: member.color || '#00B4A0', borderWidth: '3px', borderStyle: 'solid' }"
             >
-              <div class="w-full h-full flex items-center justify-center"
+              <img
+                v-if="member.photo"
+                :src="member.photo"
+                :alt="member.name.english"
+                class="w-full h-full object-cover"
+              />
+              <div v-else class="w-full h-full flex items-center justify-center"
                    :style="{ backgroundColor: (member.color || '#00B4A0') + '15' }">
                 <span class="text-8xl font-heading font-bold" :style="{ color: member.color || '#00B4A0' }">
                   {{ member.name.english.charAt(0) }}

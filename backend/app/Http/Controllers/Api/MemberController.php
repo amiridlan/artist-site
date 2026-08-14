@@ -30,10 +30,10 @@ class MemberController extends Controller
                 $query->where('status', $request->status);
             }
 
-            return $query->get();
+            return $query->get()->map->getAttributes()->all();
         });
 
-        return MemberResource::collection($members);
+        return MemberResource::collection(Member::hydrate($members));
     }
 
     public function show(Request $request, string $slug): MemberResource
@@ -42,9 +42,9 @@ class MemberController extends Controller
         $cacheKey = "member:{$slug}:{$lang}";
 
         $member = Cache::remember($cacheKey, 300, function () use ($slug) {
-            return Member::where('slug', $slug)->firstOrFail();
+            return Member::where('slug', $slug)->firstOrFail()->getAttributes();
         });
 
-        return new MemberResource($member);
+        return new MemberResource(Member::hydrate([$member])->first());
     }
 }

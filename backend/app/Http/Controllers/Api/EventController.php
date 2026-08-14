@@ -30,9 +30,9 @@ class EventController extends Controller
                 $query->where('status', $request->status);
             }
 
-            return $query->get();
+            return $query->get()->map->getAttributes()->all();
         });
 
-        return EventResource::collection($events);
+        return EventResource::collection(Event::hydrate($events));
     }
 }
