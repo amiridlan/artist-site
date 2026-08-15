@@ -46,13 +46,16 @@ class VideoController extends Controller
             'thumbnail'   => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $this->storeMedia($request->file('thumbnail'), 'videos');
-        }
+        $thumbnailFile = $request->file('thumbnail');
+        unset($data['thumbnail']);
 
         $video = Video::create($data);
         $this->saveTranslations($video, $request->all(), $this->translatableFields);
         Cache::flush();
+
+        if ($thumbnailFile) {
+            $this->queueImageUpload($video, 'thumbnail', $thumbnailFile, 'videos');
+        }
 
         return redirect()->route('admin.videos.index')->with('success', 'Video created.');
     }
@@ -80,16 +83,17 @@ class VideoController extends Controller
             'thumbnail'   => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('thumbnail')) {
-            $this->deleteMedia($video->thumbnail);
-            $data['thumbnail'] = $this->storeMedia($request->file('thumbnail'), 'videos');
-        } else {
-            unset($data['thumbnail']);
-        }
+        $thumbnailFile = $request->file('thumbnail');
+        $previousThumbnail = $video->thumbnail;
+        unset($data['thumbnail']);
 
         $video->update($data);
         $this->saveTranslations($video, $request->all(), $this->translatableFields);
         Cache::flush();
+
+        if ($thumbnailFile) {
+            $this->queueImageUpload($video, 'thumbnail', $thumbnailFile, 'videos', $previousThumbnail);
+        }
 
         return redirect()->route('admin.videos.index')->with('success', 'Video updated.');
     }

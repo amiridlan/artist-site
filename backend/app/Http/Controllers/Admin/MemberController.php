@@ -60,16 +60,20 @@ class MemberController extends Controller
             'cover_image'  => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('photo')) {
-            $data['photo'] = $this->storeMedia($request->file('photo'), 'members');
-        }
-        if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $this->storeMedia($request->file('cover_image'), 'members/covers');
-        }
+        $photoFile = $request->file('photo');
+        $coverFile = $request->file('cover_image');
+        unset($data['photo'], $data['cover_image']);
 
         $member = Member::create($data);
         $this->saveTranslations($member, $request->all(), $this->translatableFields);
         Cache::flush();
+
+        if ($photoFile) {
+            $this->queueImageUpload($member, 'photo', $photoFile, 'members');
+        }
+        if ($coverFile) {
+            $this->queueImageUpload($member, 'cover_image', $coverFile, 'members/covers');
+        }
 
         return redirect()->route('admin.members.index')->with('success', 'Member created.');
     }
@@ -119,23 +123,22 @@ class MemberController extends Controller
             'cover_image'  => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('photo')) {
-            $this->deleteMedia($member->photo);
-            $data['photo'] = $this->storeMedia($request->file('photo'), 'members');
-        } else {
-            unset($data['photo']);
-        }
-
-        if ($request->hasFile('cover_image')) {
-            $this->deleteMedia($member->cover_image);
-            $data['cover_image'] = $this->storeMedia($request->file('cover_image'), 'members/covers');
-        } else {
-            unset($data['cover_image']);
-        }
+        $photoFile = $request->file('photo');
+        $coverFile = $request->file('cover_image');
+        $previousPhoto = $member->photo;
+        $previousCover = $member->cover_image;
+        unset($data['photo'], $data['cover_image']);
 
         $member->update($data);
         $this->saveTranslations($member, $request->all(), $this->translatableFields);
         Cache::flush();
+
+        if ($photoFile) {
+            $this->queueImageUpload($member, 'photo', $photoFile, 'members', $previousPhoto);
+        }
+        if ($coverFile) {
+            $this->queueImageUpload($member, 'cover_image', $coverFile, 'members/covers', $previousCover);
+        }
 
         return redirect()->route('admin.members.index')->with('success', 'Member updated.');
     }

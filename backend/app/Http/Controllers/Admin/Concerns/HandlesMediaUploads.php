@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
+use App\Jobs\ProcessImageUpload;
 use App\Services\ImageProcessingService;
 use App\Services\MediaStorageService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
 trait HandlesMediaUploads
@@ -39,6 +41,34 @@ trait HandlesMediaUploads
 
         // For non-images, use regular storage
         return $this->mediaStorage()->store($file, $directory);
+    }
+
+    /**
+     * Queue image resizing/encoding + upload instead of doing it inline.
+     * Stores the raw upload to fast local disk now (so the request isn't
+     * blocked), then a background job produces the WebP/AVIF variants,
+     * writes the resulting path onto $model->$field, and cleans up the
+     * previous image once the new one is in place.
+     */
+    protected function queueImageUpload(
+        Model $model,
+        string $field,
+        UploadedFile $file,
+        string $directory,
+        ?string $previousPath = null,
+        array $sizes = ['thumbnail', 'medium'],
+    ): void {
+        $tempDiskPath = $file->store('pending-uploads', 'local');
+
+        ProcessImageUpload::dispatch(
+            $model::class,
+            $model->getKey(),
+            $field,
+            $tempDiskPath,
+            $directory,
+            $sizes,
+            $previousPath,
+        );
     }
 
     /**

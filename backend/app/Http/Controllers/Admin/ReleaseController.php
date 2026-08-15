@@ -49,13 +49,16 @@ class ReleaseController extends Controller
             'cover_image'     => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $this->storeMedia($request->file('cover_image'), 'releases');
-        }
+        $coverFile = $request->file('cover_image');
+        unset($data['cover_image']);
 
         $release = Release::create($data);
         $this->saveTranslations($release, $request->all(), $this->translatableFields);
         Cache::flush();
+
+        if ($coverFile) {
+            $this->queueImageUpload($release, 'cover_image', $coverFile, 'releases');
+        }
 
         return redirect()->route('admin.releases.index')->with('success', 'Release created.');
     }
@@ -84,16 +87,17 @@ class ReleaseController extends Controller
             'cover_image'     => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('cover_image')) {
-            $this->deleteMedia($release->cover_image);
-            $data['cover_image'] = $this->storeMedia($request->file('cover_image'), 'releases');
-        } else {
-            unset($data['cover_image']);
-        }
+        $coverFile = $request->file('cover_image');
+        $previousCover = $release->cover_image;
+        unset($data['cover_image']);
 
         $release->update($data);
         $this->saveTranslations($release, $request->all(), $this->translatableFields);
         Cache::flush();
+
+        if ($coverFile) {
+            $this->queueImageUpload($release, 'cover_image', $coverFile, 'releases', $previousCover);
+        }
 
         return redirect()->route('admin.releases.index')->with('success', 'Release updated.');
     }

@@ -45,12 +45,15 @@ class NewsController extends Controller
             'image'     => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $this->storeMedia($request->file('image'), 'news');
-        }
+        $imageFile = $request->file('image');
+        unset($data['image']);
 
         $article = News::create($data);
         $this->saveTranslations($article, $request->all(), $this->translatableFields);
+
+        if ($imageFile) {
+            $this->queueImageUpload($article, 'image', $imageFile, 'news');
+        }
 
         return redirect()->route('admin.news.index')->with('success', 'Article created.');
     }
@@ -78,15 +81,16 @@ class NewsController extends Controller
             'image'     => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('image')) {
-            $this->deleteMedia($news->image);
-            $data['image'] = $this->storeMedia($request->file('image'), 'news');
-        } else {
-            unset($data['image']);
-        }
+        $imageFile = $request->file('image');
+        $previousImage = $news->image;
+        unset($data['image']);
 
         $news->update($data);
         $this->saveTranslations($news, $request->all(), $this->translatableFields);
+
+        if ($imageFile) {
+            $this->queueImageUpload($news, 'image', $imageFile, 'news', $previousImage);
+        }
 
         return redirect()->route('admin.news.index')->with('success', 'Article updated.');
     }

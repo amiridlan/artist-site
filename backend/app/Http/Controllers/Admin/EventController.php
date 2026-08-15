@@ -48,13 +48,16 @@ class EventController extends Controller
             'image'       => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $this->storeMedia($request->file('image'), 'events');
-        }
+        $imageFile = $request->file('image');
+        unset($data['image']);
 
         $event = Event::create($data);
         $this->saveTranslations($event, $request->all(), $this->translatableFields);
         Cache::flush();
+
+        if ($imageFile) {
+            $this->queueImageUpload($event, 'image', $imageFile, 'events');
+        }
 
         return redirect()->route('admin.events.index')->with('success', 'Event created.');
     }
@@ -84,16 +87,17 @@ class EventController extends Controller
             'image'       => ['nullable', 'image', 'max:4096'],
         ]);
 
-        if ($request->hasFile('image')) {
-            $this->deleteMedia($event->image);
-            $data['image'] = $this->storeMedia($request->file('image'), 'events');
-        } else {
-            unset($data['image']);
-        }
+        $imageFile = $request->file('image');
+        $previousImage = $event->image;
+        unset($data['image']);
 
         $event->update($data);
         $this->saveTranslations($event, $request->all(), $this->translatableFields);
         Cache::flush();
+
+        if ($imageFile) {
+            $this->queueImageUpload($event, 'image', $imageFile, 'events', $previousImage);
+        }
 
         return redirect()->route('admin.events.index')->with('success', 'Event updated.');
     }

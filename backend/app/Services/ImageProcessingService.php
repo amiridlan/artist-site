@@ -46,11 +46,30 @@ class ImageProcessingService
         string $directory,
         array $generateSizes = ['thumbnail', 'small', 'medium', 'large']
     ): array {
+        return $this->processFromPath($file->getRealPath(), $directory, $generateSizes);
+    }
+
+    /**
+     * Process and upload an image with multiple sizes in WebP and AVIF formats,
+     * reading the source from a local file path rather than an UploadedFile —
+     * used by ProcessImageUpload so encoding/uploading can run in a queued job
+     * instead of blocking the admin request.
+     *
+     * @param string $absolutePath Local filesystem path to the source image
+     * @param string $directory The storage directory (e.g., 'members', 'news')
+     * @param array $generateSizes Which sizes to generate (default: all)
+     * @return array Paths to all generated images
+     */
+    public function processFromPath(
+        string $absolutePath,
+        string $directory,
+        array $generateSizes = ['thumbnail', 'small', 'medium', 'large']
+    ): array {
         $baseName = Str::uuid();
         $paths = [];
 
         try {
-            $image = $this->manager->decode($file->getRealPath());
+            $image = $this->manager->decode($absolutePath);
 
             // Store original in both formats
             $paths['original'] = $this->storeAsWebP($image, $directory, $baseName, 'original');
@@ -80,8 +99,10 @@ class ImageProcessingService
         } catch (\Exception $e) {
             Log::error("Image processing failed: " . $e->getMessage());
 
-            // Fallback: store original file without processing
-            $fallbackPath = $file->store($directory, $this->disk);
+            // Fallback: store the original file as-is, without resizing/re-encoding
+            $extension = pathinfo($absolutePath, PATHINFO_EXTENSION) ?: 'jpg';
+            $fallbackPath = "{$directory}/{$baseName}.{$extension}";
+            Storage::disk($this->disk)->put($fallbackPath, file_get_contents($absolutePath));
             return ['original' => $fallbackPath];
         }
     }
