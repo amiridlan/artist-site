@@ -31,7 +31,9 @@ class MemberController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('Admin/Members/Create');
+        return Inertia::render('Admin/Members/Create', [
+            'generationOptions' => $this->generationOptions(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -41,7 +43,7 @@ class MemberController extends Controller
             'name_native'  => ['nullable', 'string', 'max:255'],
             'nickname'     => ['nullable', 'string', 'max:255'],
             'slug'         => ['required', 'string', 'max:255', 'unique:members,slug'],
-            'generation'   => ['required', 'in:1st,2nd'],
+            'generation'   => ['required', 'string', 'max:20', 'regex:/^[A-Za-z0-9 ]+$/'],
             'status'       => ['required', 'in:active,graduated,concluded'],
             'birthdate'    => ['nullable', 'string', 'max:100'],
             'age'          => ['nullable', 'integer'],
@@ -72,13 +74,24 @@ class MemberController extends Controller
         return redirect()->route('admin.members.index')->with('success', 'Member created.');
     }
 
-    public function edit(Member $member): Response
+    public function show(Member $member): Response
     {
-        return Inertia::render('Admin/Members/Edit', [
+        return Inertia::render('Admin/Members/Show', [
             'member'       => $member,
             'translations' => $this->loadTranslations($member, $this->translatableFields),
             'photoUrl'     => $this->mediaUrl($member->photo),
             'coverUrl'     => $this->mediaUrl($member->cover_image),
+        ]);
+    }
+
+    public function edit(Member $member): Response
+    {
+        return Inertia::render('Admin/Members/Edit', [
+            'member'            => $member,
+            'translations'      => $this->loadTranslations($member, $this->translatableFields),
+            'photoUrl'          => $this->mediaUrl($member->photo),
+            'coverUrl'          => $this->mediaUrl($member->cover_image),
+            'generationOptions' => $this->generationOptions(),
         ]);
     }
 
@@ -89,7 +102,7 @@ class MemberController extends Controller
             'name_native'  => ['nullable', 'string', 'max:255'],
             'nickname'     => ['nullable', 'string', 'max:255'],
             'slug'         => ['required', 'string', 'max:255', "unique:members,slug,{$member->id}"],
-            'generation'   => ['required', 'in:1st,2nd'],
+            'generation'   => ['required', 'string', 'max:20', 'regex:/^[A-Za-z0-9 ]+$/'],
             'status'       => ['required', 'in:active,graduated,concluded'],
             'birthdate'    => ['nullable', 'string', 'max:100'],
             'age'          => ['nullable', 'integer'],
@@ -135,5 +148,27 @@ class MemberController extends Controller
         Cache::flush();
 
         return redirect()->route('admin.members.index')->with('success', 'Member deleted.');
+    }
+
+    /**
+     * Distinct generation values already in use, so staff can pick an existing
+     * one or add a new one from the admin form instead of a hardcoded list.
+     */
+    private function generationOptions(): array
+    {
+        $generations = Member::query()
+            ->whereNotNull('generation')
+            ->distinct()
+            ->orderBy('generation')
+            ->pluck('generation');
+
+        if ($generations->isEmpty()) {
+            $generations = collect(['1st', '2nd']);
+        }
+
+        return $generations
+            ->map(fn (string $g) => ['value' => $g, 'label' => "{$g} Generation"])
+            ->values()
+            ->all();
     }
 }

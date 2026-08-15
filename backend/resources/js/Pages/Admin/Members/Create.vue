@@ -17,7 +17,7 @@
             <TextInput v-model="form.slug" :error="form.errors.slug" />
           </FormField>
           <FormField label="Generation" required :error="form.errors.generation">
-            <SelectInput v-model="form.generation" :options="genOptions" placeholder="Select…" :error="form.errors.generation" />
+            <CreatableSelectInput v-model="form.generation" :options="generationOptions" placeholder="Select…" :error="form.errors.generation" />
           </FormField>
           <FormField label="Status" required :error="form.errors.status">
             <SelectInput v-model="form.status" :options="statusOptions" :error="form.errors.status" />
@@ -99,11 +99,14 @@ import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
 import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
+import CreatableSelectInput from '@/Components/Admin/CreatableSelectInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'
 import TagsInput from '@/Components/Admin/TagsInput.vue'
 import KeyValueInput from '@/Components/Admin/KeyValueInput.vue'
 import TranslatableFieldGroup from '@/Components/Admin/TranslatableFieldGroup.vue'
 import Section from '@/Components/Admin/SectionCard.vue'
+
+const props = defineProps({ generationOptions: { type: Array, default: () => [] } })
 
 const form = useForm({
   name_english: '', name_native: '', nickname: '', slug: '',
@@ -116,7 +119,7 @@ const form = useForm({
   trans_ja_bio: '', trans_ja_hometown: '',
 })
 
-const genOptions    = [{ value: '1st', label: '1st Generation' }, { value: '2nd', label: '2nd Generation' }]
+const generationOptions = props.generationOptions
 const statusOptions = [{ value: 'active', label: 'Active' }, { value: 'graduated', label: 'Graduated' }, { value: 'concluded', label: 'Concluded' }]
 const transFields   = [{ key: 'bio', label: 'Bio', type: 'textarea' }, { key: 'hometown', label: 'Hometown', type: 'text' }]
 

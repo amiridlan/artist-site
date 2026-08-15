@@ -11,7 +11,6 @@
             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Member</th>
             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Generation</th>
             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order</th>
             <th class="px-6 py-3" />
           </tr>
         </thead>
@@ -37,8 +36,8 @@
                 {{ member.status }}
               </span>
             </td>
-            <td class="px-6 py-3 text-gray-500 dark:text-gray-400">{{ member.sort_order }}</td>
             <td class="px-6 py-3 text-right">
+              <Link :href="route('admin.members.show', member.id)" class="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-sm font-medium mr-4">View</Link>
               <Link :href="route('admin.members.edit', member.id)" class="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 text-sm font-medium mr-4">Edit</Link>
               <button @click="destroy(member)" class="text-red-400 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 text-sm font-medium">Delete</button>
             </td>

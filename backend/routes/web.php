@@ -28,7 +28,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::resource('members', MemberController::class)->except(['show']);
+        Route::resource('members', MemberController::class);
         Route::resource('news', NewsController::class)->except(['show']);
         Route::resource('releases', ReleaseController::class)->except(['show']);
         Route::resource('videos', VideoController::class)->except(['show']);

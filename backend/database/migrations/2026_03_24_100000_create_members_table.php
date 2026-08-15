@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nickname')->nullable();
             $table->string('photo')->nullable();
             $table->string('cover_image')->nullable();
-            $table->enum('generation', ['1st', '2nd']);
+            $table->string('generation');
             $table->string('birthdate')->nullable();
             $table->integer('age')->nullable();
             $table->integer('height')->nullable();
