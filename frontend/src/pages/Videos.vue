@@ -20,8 +20,19 @@
         </button>
       </div>
 
+      <!-- Skeleton loading state -->
+      <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" aria-hidden="true">
+        <div v-for="i in 6" :key="i" class="bg-white rounded-xl shadow-card overflow-hidden animate-pulse">
+          <div class="aspect-video bg-charcoal-100"></div>
+          <div class="p-4">
+            <div class="h-4 w-5/6 rounded bg-charcoal-100 mb-2"></div>
+            <div class="h-3 w-1/3 rounded bg-charcoal-100"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- Video grid -->
-      <div ref="gridRef" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-else-if="!error" ref="gridRef" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="video in filteredVideos"
           :key="video.id"
@@ -58,24 +69,39 @@
         </div>
       </div>
 
-      <!-- Loading state -->
-      <div v-if="loading" class="text-center py-20">
-        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      <!-- Error state -->
+      <div v-if="!loading && error" role="alert" class="text-center py-20">
+        <p class="text-charcoal-400 text-lg mb-4">{{ $t('common.loadError') }}</p>
+        <button @click="fetchVideos" class="pill-toggle pill-toggle-active">{{ $t('common.retry') }}</button>
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="filteredVideos.length === 0" class="text-center py-20">
+      <div v-else-if="!loading && filteredVideos.length === 0" class="text-center py-20">
         <p class="text-charcoal-400 text-lg">{{ $t('videos.empty') }}</p>
       </div>
     </div>
 
     <!-- Video modal -->
     <Teleport to="body">
-      <transition name="fade">
-        <div v-if="activeVideo" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-900/90 backdrop-blur-sm" @click.self="activeVideo = null">
+      <transition name="fade" @after-enter="onModalAfterEnter" @after-leave="onModalAfterLeave">
+        <div
+          v-if="activeVideo"
+          role="dialog"
+          aria-modal="true"
+          :aria-label="activeVideo.title"
+          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal-900/90 backdrop-blur-sm"
+          @click.self="closeVideo"
+          @keydown="onModalKeydown"
+        >
           <div class="relative w-full max-w-4xl bg-charcoal-800 rounded-xl overflow-hidden shadow-2xl">
-            <button @click="activeVideo = null" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-charcoal-700 text-white flex items-center justify-center hover:bg-charcoal-600 transition-colors">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button
+              ref="modalCloseButtonRef"
+              type="button"
+              @click="closeVideo"
+              :aria-label="$t('common.close')"
+              class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-charcoal-700 text-white flex items-center justify-center hover:bg-charcoal-600 transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
               </svg>
             </button>
@@ -98,6 +124,7 @@ import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
 import { useLanguageStore } from '@/stores/language'
+import { prefersReducedMotion } from '@/utils/motion'
 import { VIDEO_TYPES } from '@/utils/constants'
 import { formatDate } from '@/utils/helpers'
 import type { Video, VideoType } from '@/types/video'
@@ -107,10 +134,13 @@ const languageStore = useLanguageStore()
 
 const videos = ref<Video[]>([])
 const loading = ref(true)
+const error = ref(false)
 const selectedType = ref<VideoType>('all')
 const activeVideo = ref<Video | null>(null)
 const headerRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
+const modalCloseButtonRef = ref<HTMLButtonElement | null>(null)
+let lastFocusedEl: HTMLElement | null = null
 
 const filteredVideos = computed(() => {
   if (selectedType.value === 'all') return videos.value
@@ -134,13 +164,47 @@ function getVideoTypeLabel(type: string): string {
 }
 
 function openVideo(video: Video) {
+  lastFocusedEl = document.activeElement as HTMLElement | null
   activeVideo.value = video
+}
+
+function closeVideo() {
+  activeVideo.value = null
+}
+
+function onModalKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') {
+    e.preventDefault()
+    closeVideo()
+    return
+  }
+  if (e.key === 'Tab') {
+    const modal = modalCloseButtonRef.value
+    if (modal) {
+      e.preventDefault()
+      modal.focus()
+    }
+  }
+}
+
+function onModalAfterEnter() {
+  document.body.style.overflow = 'hidden'
+  modalCloseButtonRef.value?.focus()
+}
+
+function onModalAfterLeave() {
+  document.body.style.overflow = ''
+  lastFocusedEl?.focus()
+  lastFocusedEl = null
 }
 
 async function fetchVideos() {
   loading.value = true
+  error.value = false
   try {
     videos.value = await apiFetch<Video[]>('/videos')
+  } catch {
+    error.value = true
   } finally {
     loading.value = false
   }
@@ -149,7 +213,7 @@ async function fetchVideos() {
 onMounted(async () => {
   await fetchVideos()
 
-  if (headerRef.value) {
+  if (headerRef.value && !prefersReducedMotion()) {
     gsap.from(headerRef.value.children, {
       y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
     })

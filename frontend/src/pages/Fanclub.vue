@@ -22,17 +22,17 @@
             <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full text-sm font-medium"
                  :class="fan.user?.tier === 'gold' ? 'bg-amber-100 text-amber-800' : 'bg-jade-50 text-jade-700'">
               <span>{{ fan.user?.tier === 'gold' ? '⭐' : '♡' }}</span>
-              {{ fan.user?.tier === 'gold' ? 'Gold' : 'Basic' }} Member
+              {{ fan.user?.tier === 'gold' ? $t('fanclub.tiers.gold') : $t('fanclub.tiers.basic') }} {{ $t('fanclub.status.member') }}
             </div>
             <h2 class="text-2xl md:text-3xl font-heading font-bold text-charcoal-800 mb-2">
-              Welcome back, {{ fan.user?.name?.split(' ')[0] }}!
+              {{ $t('fanclub.status.welcomeBack', { name: fan.user?.name?.split(' ')[0] }) }}
             </h2>
             <p class="text-charcoal-500 max-w-xl mx-auto mb-6">
               <template v-if="fan.user?.status === 'cancelled'">
-                Membership cancelled — access remains until <strong>{{ formatDate(fan.user?.expires_at) }}</strong>.
+                {{ $t('fanclub.status.cancelledAccessUntil', { date: formatDate(fan.user?.expires_at) }) }}
               </template>
               <template v-else>
-                Your membership is active until {{ formatDate(fan.user?.expires_at) }}.
+                {{ $t('fanclub.status.activeUntil', { date: formatDate(fan.user?.expires_at) }) }}
               </template>
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -40,14 +40,14 @@
                 to="/fanclub/portal"
                 class="px-8 py-3 bg-jade-gradient text-white font-semibold rounded-full hover:shadow-jade-glow transition-all duration-300 inline-block"
               >
-                Go to My Portal
+                {{ $t('fanclub.status.goToPortal') }}
               </RouterLink>
               <RouterLink
                 v-if="fan.user?.status === 'cancelled'"
                 to="/fanclub/subscribe"
                 class="px-8 py-3 border-2 border-charcoal-200 text-charcoal-700 font-semibold rounded-full hover:border-jade-300 hover:text-jade-700 transition-all duration-300"
               >
-                Renew Membership
+                {{ $t('fanclub.status.renewMembership') }}
               </RouterLink>
             </div>
           </template>
@@ -55,23 +55,23 @@
           <!-- LOGGED IN + NOT ACTIVE (expired / cancelled) -->
           <template v-else-if="fan.isLoggedIn">
             <h2 class="text-2xl md:text-3xl font-heading font-bold text-charcoal-800 mb-4">
-              {{ fan.user?.status === 'expired' ? 'Membership Expired' : 'Membership Inactive' }}
+              {{ fan.user?.status === 'expired' ? $t('fanclub.status.membershipExpired') : $t('fanclub.status.membershipInactive') }}
             </h2>
             <p class="text-charcoal-500 max-w-xl mx-auto mb-8">
-              Renew your membership to restore access to all exclusive content and benefits.
+              {{ $t('fanclub.status.renewToRestore') }}
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
               <RouterLink
                 to="/fanclub/subscribe"
                 class="px-8 py-3 bg-jade-gradient text-white font-semibold rounded-full hover:shadow-jade-glow transition-all duration-300"
               >
-                Renew Membership
+                {{ $t('fanclub.status.renewMembership') }}
               </RouterLink>
               <button
                 @click="fan.logout()"
                 class="text-charcoal-400 text-sm hover:text-charcoal-600 transition-colors"
               >
-                Sign out
+                {{ $t('common.signOut') }}
               </button>
             </div>
           </template>
@@ -95,7 +95,7 @@
                 to="/fanclub/login"
                 class="px-8 py-3 border-2 border-charcoal-200 text-charcoal-700 font-semibold rounded-full hover:border-jade-300 hover:text-jade-700 transition-all duration-300"
               >
-                Sign In
+                {{ $t('common.signIn') }}
               </RouterLink>
             </div>
           </template>
@@ -125,6 +125,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
+import { prefersReducedMotion } from '@/utils/motion'
 import { useFanStore } from '@/stores/fan'
 
 const { t }  = useI18n()
@@ -151,6 +152,8 @@ onMounted(async () => {
   if (fan.isLoggedIn && !fan.user) {
     await fan.fetchMe()
   }
+
+  if (prefersReducedMotion()) return
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {

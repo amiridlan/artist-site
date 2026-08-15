@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { useFanStore } from '@/stores/fan'
+import { isRouteLoading } from '@/composables/useRouteLoading'
 
 const routeOrder: Record<string, number> = {
   '/': 0,
@@ -129,6 +130,8 @@ const getBasePath = (path: string): string => {
 }
 
 router.beforeEach((to, from, next) => {
+  if (to.path !== from.path) isRouteLoading.value = true
+
   const title = to.meta?.title as string | undefined
   if (title) document.title = title
 
@@ -163,6 +166,14 @@ router.beforeEach((to, from, next) => {
   else to.meta.transition = 'fade'
 
   next()
+})
+
+router.afterEach(() => {
+  isRouteLoading.value = false
+})
+
+router.onError(() => {
+  isRouteLoading.value = false
 })
 
 export default router

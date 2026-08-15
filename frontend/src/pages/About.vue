@@ -69,6 +69,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { prefersReducedMotion } from '@/utils/motion'
 
 const { t } = useI18n()
 
@@ -92,6 +93,7 @@ const sisterGroups = [
 ]
 
 onMounted(() => {
+  if (prefersReducedMotion()) return
   const sections = [storyRef, milestonesRef, connectionRef]
   sections.forEach(sectionRef => {
     if (!sectionRef.value) return

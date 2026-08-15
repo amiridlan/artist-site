@@ -98,7 +98,8 @@ function flyLogoToHeader() {
   const from = fromEl.getBoundingClientRect()
   const to = toEl.getBoundingClientRect()
 
-  // Place flying clone exactly over the loading screen logo (no transition yet)
+  // Fix the clone's box at the start rect once — from here on, only `transform`
+  // moves it, so the browser can animate on the compositor instead of re-laying-out every frame.
   flyingStyle.value = {
     position: 'fixed',
     top: `${from.top}px`,
@@ -106,6 +107,8 @@ function flyLogoToHeader() {
     width: `${from.width}px`,
     height: `${from.height}px`,
     zIndex: '300',
+    transform: 'translate(0, 0) scale(1)',
+    transformOrigin: 'top left',
     transition: 'none',
   }
   isFlying.value = true
@@ -113,18 +116,25 @@ function flyLogoToHeader() {
   // Hide real header logo while the clone is flying
   toEl.style.opacity = '0'
 
+  const dx = to.left - from.left
+  const dy = to.top - from.top
+  const sx = to.width / from.width
+  const sy = to.height / from.height
+
   // Two rAFs: ensure first paint of flying clone at start position before animating
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      // Animate clone to header position
+      // Animate clone to header position via transform only
       flyingStyle.value = {
         position: 'fixed',
-        top: `${to.top}px`,
-        left: `${to.left}px`,
-        width: `${to.width}px`,
-        height: `${to.height}px`,
+        top: `${from.top}px`,
+        left: `${from.left}px`,
+        width: `${from.width}px`,
+        height: `${from.height}px`,
         zIndex: '300',
-        transition: 'top 0.75s cubic-bezier(0.4, 0, 0.2, 1), left 0.75s cubic-bezier(0.4, 0, 0.2, 1), width 0.75s cubic-bezier(0.4, 0, 0.2, 1), height 0.75s cubic-bezier(0.4, 0, 0.2, 1)',
+        transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`,
+        transformOrigin: 'top left',
+        transition: 'transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)',
       }
 
       // Fade out the overlay at the same time
@@ -144,6 +154,17 @@ function flyLogoToHeader() {
 }
 
 onMounted(() => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  if (prefersReducedMotion) {
+    borderOffset.value = 0
+    logoClip.value = 'inset(0 0 0% 0)'
+    progress.value = 100
+    isDone.value = true
+    setTimeout(() => emit('done'), 300)
+    return
+  }
+
   setTimeout(() => { borderOffset.value = 0 }, 150)
   setTimeout(() => { logoClip.value = 'inset(0 0 0% 0)' }, 950)
 

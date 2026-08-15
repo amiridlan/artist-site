@@ -75,14 +75,14 @@ export const SPONSORS = [
 ] as const
 
 export const NAV_ITEMS = [
-  { path: '/', label: 'Home' },
-  { path: '/news', label: 'News' },
-  { path: '/members', label: 'Member' },
-  { path: '/releases', label: 'Release' },
-  { path: '/videos', label: 'Movie' },
-  { path: '/about', label: 'About' },
-  { path: '/schedule', label: 'Schedule' },
-  { path: '/fanclub', label: 'Fanclub' },
+  { path: '/', label: 'Home', key: 'home' },
+  { path: '/news', label: 'News', key: 'news' },
+  { path: '/members', label: 'Member', key: 'members' },
+  { path: '/releases', label: 'Release', key: 'releases' },
+  { path: '/videos', label: 'Movie', key: 'videos' },
+  { path: '/about', label: 'About', key: 'about' },
+  { path: '/schedule', label: 'Schedule', key: 'schedule' },
+  { path: '/fanclub', label: 'Fanclub', key: 'fanclub' },
 ] as const
 
 export const API_CONFIG = {

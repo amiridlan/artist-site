@@ -20,6 +20,13 @@
   ::selection {
     @apply bg-jade-500/20 text-charcoal-900;
   }
+
+  /* Themed focus ring — visible only for keyboard/AT focus, not mouse clicks */
+  :focus-visible {
+    outline: 2px solid #00B4A0;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 }
 
 @layer components {

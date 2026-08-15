@@ -139,13 +139,24 @@
               class="relative w-full aspect-square rounded-2xl overflow-hidden mb-3 bg-cream-200 shadow-card group-hover:shadow-card-hover transition-all duration-300"
               :style="{ borderColor: member.color, borderWidth: '2px', borderStyle: 'solid' }"
             >
-              <!-- Placeholder avatar -->
+              <!-- Placeholder avatar, always present behind the photo -->
               <div class="absolute inset-0 flex items-center justify-center"
                    :style="{ backgroundColor: member.color + '20' }">
                 <span class="text-4xl font-heading font-bold" :style="{ color: member.color }">
                   {{ member.name.english.charAt(0) }}
                 </span>
               </div>
+
+              <!-- Photo fades in over the placeholder once loaded -->
+              <img
+                v-if="member.photo"
+                :src="member.photo"
+                :alt="member.name.english"
+                loading="lazy"
+                class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+                :class="loadedPhotos.has(member.id) ? 'opacity-100' : 'opacity-0'"
+                @load="loadedPhotos.add(member.id)"
+              />
             </div>
             <p class="font-medium text-charcoal-800 text-sm group-hover:text-jade-600 transition-colors">
               {{ member.name.english }}
@@ -178,17 +189,7 @@
             class="flex-shrink-0 w-56 group"
           >
             <div class="w-56 h-56 rounded-xl overflow-hidden mb-3 bg-charcoal-700 shadow-lg group-hover:shadow-jade-glow transition-all duration-300">
-              <img
-                v-if="release.coverImage"
-                :src="release.coverImage"
-                :alt="release.title"
-                class="w-full h-full object-cover"
-              />
-              <div v-else class="w-full h-full flex items-center justify-center bg-jade-gradient opacity-60 group-hover:opacity-80 transition-opacity">
-                <svg class="w-16 h-16 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/>
-                </svg>
-              </div>
+              <ReleaseCoverArt :cover-image="release.coverImage" :title="release.title" />
             </div>
             <h3 class="font-heading font-semibold text-white group-hover:text-jade-400 transition-colors">
               {{ release.title }}
@@ -207,7 +208,7 @@
           <p class="text-charcoal-500 mt-2">{{ $t('home.sponsorsSubtitle') }}</p>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           <div
             v-for="sponsor in SPONSORS"
             :key="sponsor"
@@ -231,7 +232,7 @@
         <div class="text-center mb-10">
           <p class="text-white/40">{{ $t('footer.sisterGroups') }}</p>
         </div>
-        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           <a
             v-for="group in SISTER_GROUPS"
             :key="group.name"
@@ -259,6 +260,8 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { apiFetch } from '@/composables/useApi'
 import { useLanguageStore } from '@/stores/language'
+import { prefersReducedMotion } from '@/utils/motion'
+import ReleaseCoverArt from '@/components/ui/ReleaseCoverArt.vue'
 import { formatDate, getCategoryColor } from '@/utils/helpers'
 import { SPONSORS, SISTER_GROUPS } from '@/utils/constants'
 import type { NewsArticle } from '@/types/news'
@@ -269,6 +272,7 @@ const languageStore = useLanguageStore()
 const news = ref<NewsArticle[]>([])
 const members = ref<Member[]>([])
 const releases = ref<Release[]>([])
+const loadedPhotos = ref<Set<number>>(new Set())
 
 const heroContentRef = ref<HTMLElement | null>(null)
 const newsSectionRef = ref<HTMLElement | null>(null)
@@ -296,6 +300,8 @@ watch(() => languageStore.currentLang, fetchHomeData)
 
 onMounted(async () => {
   await fetchHomeData()
+
+  if (prefersReducedMotion()) return
 
   // Hero content animation
   if (heroContentRef.value) {

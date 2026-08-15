@@ -6,32 +6,32 @@
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-jade-500 text-white text-2xl mb-4">
           ♡
         </div>
-        <h1 class="text-2xl font-heading font-bold text-charcoal-800">Fanclub Login</h1>
-        <p class="text-charcoal-500 mt-1 text-sm">Sign in to access your member portal.</p>
+        <h1 class="text-2xl font-heading font-bold text-charcoal-800">{{ $t('fanclub.login.heading') }}</h1>
+        <p class="text-charcoal-500 mt-1 text-sm">{{ $t('fanclub.login.subtitle') }}</p>
       </div>
 
       <!-- Card -->
       <div class="bg-white rounded-2xl shadow-card p-8">
         <form @submit.prevent="submit" class="space-y-5">
           <!-- Error banner -->
-          <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+          <div v-if="error" role="alert" class="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
             {{ error }}
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-charcoal-700 mb-1.5">Email</label>
+            <label class="block text-sm font-medium text-charcoal-700 mb-1.5">{{ $t('common.email') }}</label>
             <input
               v-model="form.email"
               type="email"
               required
               autocomplete="email"
               class="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-jade-500 focus:ring-1 focus:ring-jade-500 transition-colors"
-              placeholder="your@email.com"
+              :placeholder="$t('fanclub.register.emailPlaceholder')"
             />
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-charcoal-700 mb-1.5">Password</label>
+            <label class="block text-sm font-medium text-charcoal-700 mb-1.5">{{ $t('common.password') }}</label>
             <input
               v-model="form.password"
               type="password"
@@ -47,20 +47,20 @@
             :disabled="loading"
             class="w-full py-3 bg-jade-gradient text-white font-semibold rounded-full hover:shadow-jade-glow transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {{ loading ? 'Signing in…' : 'Sign In' }}
+            {{ loading ? $t('fanclub.login.submitting') : $t('common.signIn') }}
           </button>
         </form>
 
         <p class="text-center text-sm text-charcoal-500 mt-6">
-          Not a member yet?
+          {{ $t('fanclub.login.noAccount') }}
           <RouterLink to="/fanclub/register" class="text-jade-600 font-medium hover:text-jade-700">
-            Register here
+            {{ $t('fanclub.login.registerHere') }}
           </RouterLink>
         </p>
       </div>
 
       <p class="text-center text-xs text-charcoal-400 mt-4">
-        <RouterLink to="/fanclub" class="hover:text-jade-600">← Back to Fanclub</RouterLink>
+        <RouterLink to="/fanclub" class="hover:text-jade-600">{{ $t('fanclub.backToFanclub') }}</RouterLink>
       </p>
     </div>
   </div>
@@ -69,11 +69,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useFanStore } from '@/stores/fan'
 
 const router = useRouter()
 const route  = useRoute()
 const fan    = useFanStore()
+const { t }  = useI18n()
 
 const form    = ref({ email: '', password: '' })
 const error   = ref<string | null>(null)
@@ -93,7 +95,7 @@ async function submit() {
     } else if (err?.body?.message) {
       error.value = err.body.message
     } else {
-      error.value = 'Login failed. Please check your email and password.'
+      error.value = t('fanclub.login.defaultError')
     }
   } finally {
     loading.value = false

@@ -49,6 +49,7 @@ import { useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
 import { useLanguageStore } from '@/stores/language'
+import { prefersReducedMotion } from '@/utils/motion'
 import { formatDate, getCategoryColor } from '@/utils/helpers'
 import type { NewsArticle } from '@/types/news'
 
@@ -73,7 +74,7 @@ async function fetchArticle() {
 onMounted(async () => {
   await fetchArticle()
 
-  if (articleRef.value) {
+  if (articleRef.value && !prefersReducedMotion()) {
     gsap.from(articleRef.value.children, {
       y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
     })

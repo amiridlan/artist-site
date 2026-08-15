@@ -1,5 +1,6 @@
 <template>
   <LoadingScreen v-if="showLoading" @done="onLoadingDone" />
+  <div v-if="isRouteLoading" class="route-progress-bar" aria-hidden="true"></div>
   <div
     id="klp48-app"
     class="min-h-screen flex flex-col bg-cream-50"
@@ -24,15 +25,34 @@ import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
 import MobileMenu from '@/components/layout/MobileMenu.vue'
 import LoadingScreen from '@/components/ui/LoadingScreen.vue'
+import { isRouteLoading } from '@/composables/useRouteLoading'
 
-const showLoading = ref(true)
+const SPLASH_SESSION_KEY = 'klp48-splash-shown'
+const showLoading = ref(!sessionStorage.getItem(SPLASH_SESSION_KEY))
 
 function onLoadingDone() {
   showLoading.value = false
+  sessionStorage.setItem(SPLASH_SESSION_KEY, '1')
 }
 </script>
 
 <style>
+.route-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 30%;
+  z-index: 999;
+  background: linear-gradient(90deg, transparent, #00B4A0, transparent);
+  animation: route-progress-slide 0.9s ease-in-out infinite;
+}
+
+@keyframes route-progress-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;

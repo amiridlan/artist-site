@@ -1,7 +1,12 @@
 <template>
-  <div class="relative" ref="dropdownRef">
+  <div class="relative" ref="dropdownRef" @keydown="onKeydown">
     <button
+      :id="buttonId"
+      type="button"
       @click="isOpen = !isOpen"
+      aria-haspopup="listbox"
+      :aria-expanded="isOpen"
+      :aria-label="$t('common.selectLanguage')"
       class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200"
       :class="variant === 'light'
         ? 'bg-white/10 backdrop-blur-sm text-white hover:bg-white/20'
@@ -9,7 +14,7 @@
     >
       <span :class="`fi fi-${currentFlagCode} rounded-sm`" style="width:1.25rem;height:0.9rem;"></span>
       <span>{{ currentLangLabel }}</span>
-      <svg class="w-3.5 h-3.5 transition-transform" :class="isOpen && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-3.5 h-3.5 transition-transform" :class="isOpen && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
     </button>
@@ -23,10 +28,16 @@
       leave-to-class="opacity-0 scale-95 -translate-y-1"
     >
       <div v-if="isOpen"
+           role="listbox"
+           :aria-label="$t('common.selectLanguage')"
+           :aria-labelledby="buttonId"
            class="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-charcoal-100 overflow-hidden z-50">
         <button
           v-for="lang in languages"
           :key="lang.code"
+          type="button"
+          role="option"
+          :aria-selected="currentLang === lang.code"
           @click="selectLanguage(lang.code)"
           class="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-jade-50"
           :class="currentLang === lang.code ? 'bg-jade-50 text-jade-700 font-medium' : 'text-charcoal-700'"
@@ -55,6 +66,7 @@ const languageStore = useLanguageStore()
 const { currentLang } = storeToRefs(languageStore)
 const { setLanguage } = languageStore
 
+const buttonId = `language-selector-button-${Math.random().toString(36).slice(2)}`
 const isOpen = ref(false)
 const dropdownRef = ref<HTMLElement | null>(null)
 
@@ -75,6 +87,13 @@ function selectLanguage(code: Language) {
 function handleClickOutside(e: MouseEvent) {
   if (dropdownRef.value && !dropdownRef.value.contains(e.target as Node)) {
     isOpen.value = false
+  }
+}
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape' && isOpen.value) {
+    isOpen.value = false
+    dropdownRef.value?.querySelector<HTMLButtonElement>('#language-selector-button')?.focus()
   }
 }
 

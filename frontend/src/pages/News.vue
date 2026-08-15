@@ -20,8 +20,18 @@
         </button>
       </div>
 
+      <!-- Skeleton loading state -->
+      <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" aria-hidden="true">
+        <div v-for="i in 6" :key="i" class="card-jade p-6 animate-pulse">
+          <div class="h-5 w-16 rounded-full bg-charcoal-100 mb-3"></div>
+          <div class="h-4 w-5/6 rounded bg-charcoal-100 mb-2"></div>
+          <div class="h-4 w-2/3 rounded bg-charcoal-100 mb-3"></div>
+          <div class="h-3 w-1/3 rounded bg-charcoal-100"></div>
+        </div>
+      </div>
+
       <!-- News grid -->
-      <div ref="gridRef" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-else-if="!error" ref="gridRef" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <router-link
           v-for="article in filteredNews"
           :key="article.id"
@@ -40,13 +50,14 @@
         </router-link>
       </div>
 
-      <!-- Loading state -->
-      <div v-if="loading" class="text-center py-20">
-        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      <!-- Error state -->
+      <div v-if="!loading && error" role="alert" class="text-center py-20">
+        <p class="text-charcoal-400 text-lg mb-4">{{ $t('common.loadError') }}</p>
+        <button @click="fetchNews" class="pill-toggle pill-toggle-active">{{ $t('common.retry') }}</button>
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="filteredNews.length === 0" class="text-center py-20">
+      <div v-else-if="!loading && filteredNews.length === 0" class="text-center py-20">
         <p class="text-charcoal-400 text-lg">{{ $t('news.empty') }}</p>
       </div>
     </div>
@@ -58,6 +69,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
 import { useLanguageStore } from '@/stores/language'
+import { prefersReducedMotion } from '@/utils/motion'
 import { NEWS_CATEGORIES } from '@/utils/constants'
 import { formatDate, getCategoryColor } from '@/utils/helpers'
 import type { NewsArticle, NewsCategory } from '@/types/news'
@@ -65,6 +77,7 @@ import type { NewsArticle, NewsCategory } from '@/types/news'
 const languageStore = useLanguageStore()
 const news = ref<NewsArticle[]>([])
 const loading = ref(true)
+const error = ref(false)
 const selectedCategory = ref<NewsCategory>('all')
 const headerRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
@@ -76,8 +89,11 @@ const filteredNews = computed(() => {
 
 async function fetchNews() {
   loading.value = true
+  error.value = false
   try {
     news.value = await apiFetch<NewsArticle[]>('/news')
+  } catch {
+    error.value = true
   } finally {
     loading.value = false
   }
@@ -86,7 +102,7 @@ async function fetchNews() {
 onMounted(async () => {
   await fetchNews()
 
-  if (headerRef.value) {
+  if (headerRef.value && !prefersReducedMotion()) {
     gsap.from(headerRef.value.children, {
       y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
     })

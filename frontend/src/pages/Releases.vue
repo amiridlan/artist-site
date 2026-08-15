@@ -20,8 +20,19 @@
         </button>
       </div>
 
+      <!-- Skeleton loading state -->
+      <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" aria-hidden="true">
+        <div v-for="i in 6" :key="i" class="bg-white rounded-xl shadow-card overflow-hidden animate-pulse">
+          <div class="aspect-square bg-charcoal-100"></div>
+          <div class="p-5">
+            <div class="h-5 w-2/3 rounded bg-charcoal-100 mb-2"></div>
+            <div class="h-3 w-1/3 rounded bg-charcoal-100"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- Releases grid -->
-      <div ref="gridRef" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div v-else-if="!error" ref="gridRef" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div
           v-for="release in filteredReleases"
           :key="release.id"
@@ -29,17 +40,7 @@
         >
           <!-- Cover art -->
           <div class="relative aspect-square bg-charcoal-800 overflow-hidden">
-            <img
-              v-if="release.coverImage"
-              :src="release.coverImage"
-              :alt="release.title"
-              class="w-full h-full object-cover"
-            />
-            <div v-else class="absolute inset-0 bg-jade-gradient flex items-center justify-center">
-              <svg class="w-20 h-20 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/>
-              </svg>
-            </div>
+            <ReleaseCoverArt :cover-image="release.coverImage" :title="release.title" />
             <!-- Hover overlay: track list -->
             <div class="absolute inset-0 bg-charcoal-800/80 translate-y-full group-hover:translate-y-0 transition-transform duration-500 flex items-center justify-center">
               <div class="text-center px-6">
@@ -71,13 +72,14 @@
         </div>
       </div>
 
-      <!-- Loading state -->
-      <div v-if="loading" class="text-center py-20">
-        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      <!-- Error state -->
+      <div v-if="!loading && error" role="alert" class="text-center py-20">
+        <p class="text-charcoal-400 text-lg mb-4">{{ $t('common.loadError') }}</p>
+        <button @click="fetchReleases" class="pill-toggle pill-toggle-active">{{ $t('common.retry') }}</button>
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="filteredReleases.length === 0" class="text-center py-20">
+      <div v-else-if="!loading && filteredReleases.length === 0" class="text-center py-20">
         <p class="text-charcoal-400 text-lg">{{ $t('releases.empty') }}</p>
       </div>
     </div>
@@ -89,6 +91,8 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
 import { useLanguageStore } from '@/stores/language'
+import { prefersReducedMotion } from '@/utils/motion'
+import ReleaseCoverArt from '@/components/ui/ReleaseCoverArt.vue'
 import { RELEASE_TYPES } from '@/utils/constants'
 import { formatDate } from '@/utils/helpers'
 import type { Release, ReleaseType } from '@/types/release'
@@ -96,6 +100,7 @@ import type { Release, ReleaseType } from '@/types/release'
 const languageStore = useLanguageStore()
 const releases = ref<Release[]>([])
 const loading = ref(true)
+const error = ref(false)
 const selectedType = ref<ReleaseType>('all')
 const headerRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
@@ -107,8 +112,11 @@ const filteredReleases = computed(() => {
 
 async function fetchReleases() {
   loading.value = true
+  error.value = false
   try {
     releases.value = await apiFetch<Release[]>('/releases')
+  } catch {
+    error.value = true
   } finally {
     loading.value = false
   }
@@ -117,7 +125,7 @@ async function fetchReleases() {
 onMounted(async () => {
   await fetchReleases()
 
-  if (headerRef.value) {
+  if (headerRef.value && !prefersReducedMotion()) {
     gsap.from(headerRef.value.children, {
       y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
     })

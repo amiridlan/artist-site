@@ -32,8 +32,17 @@
         </button>
       </div>
 
+      <!-- Skeleton loading state -->
+      <div v-if="loading" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5" aria-hidden="true">
+        <div v-for="i in 12" :key="i" class="animate-pulse">
+          <div class="w-full aspect-[3/4] rounded-2xl bg-charcoal-100 mb-3"></div>
+          <div class="h-4 w-3/4 mx-auto rounded bg-charcoal-100 mb-2"></div>
+          <div class="h-3 w-1/2 mx-auto rounded bg-charcoal-100"></div>
+        </div>
+      </div>
+
       <!-- Members grid -->
-      <div ref="gridRef" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
+      <div v-else-if="!error" ref="gridRef" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
         <router-link
           v-for="member in filteredMembers"
           :key="member.id"
@@ -44,20 +53,24 @@
             class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden mb-3 shadow-card group-hover:shadow-card-hover transition-all duration-300 transform group-hover:-translate-y-1"
             :style="{ borderColor: member.color || '#00B4A0', borderWidth: '2px', borderStyle: 'solid' }"
           >
-            <!-- Photo, or placeholder with member initial if none uploaded -->
-            <img
-              v-if="member.photo"
-              :src="member.photo"
-              :alt="member.name.english"
-              loading="lazy"
-              class="absolute inset-0 w-full h-full object-cover"
-            />
-            <div v-else class="absolute inset-0 flex items-center justify-center"
+            <!-- Placeholder with member initial, always present behind the photo -->
+            <div class="absolute inset-0 flex items-center justify-center"
                  :style="{ backgroundColor: (member.color || '#00B4A0') + '15' }">
               <span class="text-5xl font-heading font-bold" :style="{ color: member.color || '#00B4A0' }">
                 {{ member.name.english.charAt(0) }}
               </span>
             </div>
+
+            <!-- Photo fades in over the placeholder once loaded -->
+            <img
+              v-if="member.photo"
+              :src="member.photo"
+              :alt="member.name.english"
+              loading="lazy"
+              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+              :class="loadedPhotos.has(member.id) ? 'opacity-100' : 'opacity-0'"
+              @load="onPhotoLoad(member.id)"
+            />
 
             <!-- Hover overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-charcoal-800/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -84,13 +97,14 @@
         </router-link>
       </div>
 
-      <!-- Loading state -->
-      <div v-if="loading" class="text-center py-20">
-        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      <!-- Error state -->
+      <div v-if="!loading && error" role="alert" class="text-center py-20">
+        <p class="text-charcoal-400 text-lg mb-4">{{ $t('common.loadError') }}</p>
+        <button @click="fetchMembers" class="pill-toggle pill-toggle-active">{{ $t('common.retry') }}</button>
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="filteredMembers.length === 0" class="text-center py-20">
+      <div v-else-if="!loading && filteredMembers.length === 0" class="text-center py-20">
         <p class="text-charcoal-400 text-lg">{{ $t('members.empty') }}</p>
       </div>
     </div>
@@ -102,16 +116,23 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
 import { useLanguageStore } from '@/stores/language'
+import { prefersReducedMotion } from '@/utils/motion'
 import type { Member, MemberGeneration, MemberStatus } from '@/types/member'
 
 const languageStore = useLanguageStore()
 const members = ref<Member[]>([])
 const loading = ref(true)
+const error = ref(false)
 const headerRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
 
 const selectedGeneration = ref<MemberGeneration | 'all'>('all')
 const selectedStatus = ref<MemberStatus | 'all'>('all')
+const loadedPhotos = ref<Set<number>>(new Set())
+
+function onPhotoLoad(id: number) {
+  loadedPhotos.value.add(id)
+}
 
 const generationFilters = [
   { value: 'all' as const, labelKey: 'members.allGenerations' },
@@ -135,8 +156,11 @@ const filteredMembers = computed(() => {
 
 async function fetchMembers() {
   loading.value = true
+  error.value = false
   try {
     members.value = await apiFetch<Member[]>('/members')
+  } catch {
+    error.value = true
   } finally {
     loading.value = false
   }
@@ -145,7 +169,7 @@ async function fetchMembers() {
 onMounted(async () => {
   await fetchMembers()
 
-  if (headerRef.value) {
+  if (headerRef.value && !prefersReducedMotion()) {
     gsap.from(headerRef.value.children, {
       y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
     })

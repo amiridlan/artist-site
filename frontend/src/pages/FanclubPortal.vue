@@ -23,17 +23,17 @@
               <span
                 v-if="user?.status === 'cancelled'"
                 class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white"
-              >Cancelled</span>
+              >{{ $t('fanclub.portal.cancelledBadge') }}</span>
             </div>
           </div>
           <div class="flex items-end justify-between">
             <div>
-              <p class="text-white/60 text-xs uppercase tracking-wider">Member since</p>
+              <p class="text-white/60 text-xs uppercase tracking-wider">{{ $t('fanclub.portal.memberSince') }}</p>
               <p class="text-white font-medium">{{ formatDate(user?.joined_at) }}</p>
             </div>
             <div class="text-right">
               <p class="text-white/60 text-xs uppercase tracking-wider">
-                {{ user?.status === 'cancelled' ? 'Access until' : 'Valid until' }}
+                {{ user?.status === 'cancelled' ? $t('fanclub.portal.accessUntil') : $t('fanclub.portal.validUntil') }}
               </p>
               <p class="text-white font-medium">{{ formatDate(user?.expires_at) }}</p>
             </div>
@@ -44,11 +44,11 @@
       <!-- Cancelled banner -->
       <div v-if="user?.status === 'cancelled'" class="bg-amber-50 border border-amber-200 rounded-xl px-5 py-4 mb-6 flex items-center justify-between gap-4">
         <p class="text-amber-800 text-sm">
-          <strong>Membership cancelled.</strong>
-          You still have full access until <strong>{{ formatDate(user?.expires_at) }}</strong>, after which your account will no longer be active.
+          <strong>{{ $t('fanclub.portal.cancelledBannerTitle') }}</strong>
+          {{ $t('fanclub.portal.cancelledBannerDesc', { date: formatDate(user?.expires_at) }) }}
         </p>
         <RouterLink to="/fanclub/subscribe" class="flex-shrink-0 text-sm font-semibold text-amber-700 hover:text-amber-900 underline">
-          Renew
+          {{ $t('fanclub.portal.renew') }}
         </RouterLink>
       </div>
 
@@ -58,16 +58,16 @@
         class="bg-amber-50 border border-amber-200 rounded-xl px-5 py-4 mb-6 flex items-center justify-between"
       >
         <p class="text-amber-800 text-sm font-medium">
-          ⚠️ Your membership expires in <strong>{{ expiresInDays }} days</strong>.
+          {{ $t('fanclub.portal.expiresWarning', { days: expiresInDays }) }}
         </p>
         <RouterLink to="/fanclub/subscribe" class="text-sm font-semibold text-amber-700 hover:text-amber-900 underline">
-          Renew now
+          {{ $t('fanclub.portal.renewNow') }}
         </RouterLink>
       </div>
 
       <!-- Benefits -->
       <div class="bg-white rounded-2xl border border-gray-100 shadow-card p-6 mb-6">
-        <h3 class="font-heading font-semibold text-charcoal-800 mb-4">Your Benefits</h3>
+        <h3 class="font-heading font-semibold text-charcoal-800 mb-4">{{ $t('fanclub.portal.yourBenefits') }}</h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
           <div
             v-for="benefit in user?.benefits"
@@ -81,7 +81,7 @@
       </div>
 
       <!-- Exclusive content grid -->
-      <h3 class="font-heading font-semibold text-charcoal-800 text-lg mb-4">Members-Only Content</h3>
+      <h3 class="font-heading font-semibold text-charcoal-800 text-lg mb-4">{{ $t('fanclub.portal.membersOnlyContent') }}</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <div
           v-for="content in exclusiveContent"
@@ -96,7 +96,7 @@
             <h4 class="font-medium text-charcoal-800 text-sm mt-1">{{ content.title }}</h4>
             <p class="text-xs text-charcoal-500 mt-1">{{ content.desc }}</p>
             <p v-if="content.goldOnly && user?.tier !== 'gold'" class="text-xs text-amber-600 font-medium mt-2">
-              ⭐ Gold tier only
+              {{ $t('fanclub.portal.goldTierOnly') }}
             </p>
           </div>
         </div>
@@ -105,7 +105,7 @@
       <!-- Account actions -->
       <div class="flex items-center justify-between">
         <button @click="handleLogout" class="text-sm text-charcoal-400 hover:text-charcoal-600 transition-colors">
-          Sign out
+          {{ $t('common.signOut') }}
         </button>
         <!-- Cancel button — only shown to active (not yet cancelled) members -->
         <button
@@ -113,7 +113,7 @@
           @click="showCancelModal = true"
           class="text-sm text-red-400 hover:text-red-600 transition-colors"
         >
-          Cancel membership
+          {{ $t('fanclub.portal.cancelMembership') }}
         </button>
       </div>
     </div>
@@ -134,15 +134,13 @@
             <div class="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
               <span class="text-2xl">⚠️</span>
             </div>
-            <h3 class="text-lg font-heading font-bold text-charcoal-800 mb-2">Cancel Membership?</h3>
+            <h3 class="text-lg font-heading font-bold text-charcoal-800 mb-2">{{ $t('fanclub.portal.cancelModalTitle') }}</h3>
             <p class="text-charcoal-500 text-sm leading-relaxed">
-              You won't be charged again, but you'll keep full access to the fanclub until
-              <strong>{{ formatDate(user?.expires_at) }}</strong>.
-              After that date, your membership will no longer be active.
+              {{ $t('fanclub.portal.cancelModalDesc', { date: formatDate(user?.expires_at) }) }}
             </p>
           </div>
 
-          <div v-if="cancelError" class="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm mb-4">
+          <div v-if="cancelError" role="alert" class="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm mb-4">
             {{ cancelError }}
           </div>
 
@@ -151,14 +149,14 @@
               @click="showCancelModal = false"
               class="flex-1 py-2.5 border-2 border-gray-200 text-charcoal-600 font-semibold rounded-full hover:border-gray-300 transition-colors text-sm"
             >
-              Keep Membership
+              {{ $t('fanclub.portal.keepMembership') }}
             </button>
             <button
               @click="handleCancel"
               :disabled="cancelling"
               class="flex-1 py-2.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-full transition-colors text-sm disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {{ cancelling ? 'Cancelling…' : 'Yes, Cancel' }}
+              {{ cancelling ? $t('fanclub.portal.cancelling') : $t('fanclub.portal.yesCancel') }}
             </button>
           </div>
         </div>
@@ -170,11 +168,13 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useFanStore } from '@/stores/fan'
 
 const router = useRouter()
 const fan    = useFanStore()
 const user   = computed(() => fan.user)
+const { t }  = useI18n()
 
 onMounted(() => fan.fetchMe())
 
@@ -214,7 +214,7 @@ async function handleCancel() {
     await fan.cancelMembership()
     showCancelModal.value = false
   } catch {
-    cancelError.value = 'Something went wrong. Please try again.'
+    cancelError.value = t('common.loadError')
   } finally {
     cancelling.value = false
   }
@@ -225,14 +225,14 @@ async function handleLogout() {
   router.push('/fanclub')
 }
 
-const exclusiveContent = [
-  { icon: '📸', tag: 'Photo',      title: 'Behind-the-Scenes Gallery',  desc: 'Exclusive backstage photos from rehearsals and events.', bg: '#f0fdf4', goldOnly: false },
-  { icon: '📰', tag: 'Newsletter', title: 'Monthly Member Newsletter',   desc: 'Updates, member messages, and upcoming event previews.',  bg: '#eff6ff', goldOnly: false },
-  { icon: '🖼️', tag: 'Wallpaper',  title: 'Digital Wallpaper Pack',      desc: 'Download exclusive member wallpapers for your phone & desktop.', bg: '#fdf4ff', goldOnly: false },
-  { icon: '🎫', tag: 'Tickets',    title: 'Priority Ticket Access',      desc: 'Early access to purchase tickets for concerts and events.', bg: '#fff7ed', goldOnly: true },
-  { icon: '🛍️', tag: 'Merch',      title: 'Exclusive Merch Discount',    desc: '10% off on all official KLP48 merchandise.', bg: '#fefce8', goldOnly: true },
-  { icon: '🎙️', tag: 'Discord',    title: 'Monthly Radio Talk',          desc: 'Live monthly Discord session — chat with the members directly.', bg: '#f5f3ff', goldOnly: true },
-]
+const exclusiveContent = computed(() => [
+  { icon: '📸', tag: t('fanclub.portal.content.galleryTag'),    title: t('fanclub.portal.content.galleryTitle'),    desc: t('fanclub.portal.content.galleryDesc'),    bg: '#f0fdf4', goldOnly: false },
+  { icon: '📰', tag: t('fanclub.portal.content.newsletterTag'), title: t('fanclub.portal.content.newsletterTitle'), desc: t('fanclub.portal.content.newsletterDesc'), bg: '#eff6ff', goldOnly: false },
+  { icon: '🖼️', tag: t('fanclub.portal.content.wallpaperTag'),  title: t('fanclub.portal.content.wallpaperTitle'),  desc: t('fanclub.portal.content.wallpaperDesc'),  bg: '#fdf4ff', goldOnly: false },
+  { icon: '🎫', tag: t('fanclub.portal.content.ticketsTag'),    title: t('fanclub.portal.content.ticketsTitle'),    desc: t('fanclub.portal.content.ticketsDesc'),    bg: '#fff7ed', goldOnly: true },
+  { icon: '🛍️', tag: t('fanclub.portal.content.merchTag'),      title: t('fanclub.portal.content.merchTitle'),      desc: t('fanclub.portal.content.merchDesc'),      bg: '#fefce8', goldOnly: true },
+  { icon: '🎙️', tag: t('fanclub.portal.content.discordTag'),    title: t('fanclub.portal.content.discordTitle'),    desc: t('fanclub.portal.content.discordDesc'),    bg: '#f5f3ff', goldOnly: true },
+])
 </script>
 
 <style scoped>

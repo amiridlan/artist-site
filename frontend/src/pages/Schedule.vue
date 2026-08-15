@@ -34,7 +34,10 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
           </button>
-          <h2 class="font-heading font-bold text-charcoal-800 text-lg">{{ monthLabel }}</h2>
+          <h2 class="font-heading font-bold text-charcoal-800 text-lg flex items-center gap-2">
+            {{ monthLabel }}
+            <span v-if="loading" class="text-xs font-normal text-charcoal-400 animate-pulse">{{ $t('common.loading') }}</span>
+          </h2>
           <button
             @click="nextMonth"
             class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-charcoal-50 text-charcoal-500 hover:text-charcoal-800 transition-colors"
@@ -80,8 +83,14 @@
               </span>
             </div>
 
+            <!-- Skeleton chips while loading -->
+            <div v-if="cell.day && loading" class="space-y-1" aria-hidden="true">
+              <div v-if="idx % 5 === 0" class="h-2.5 rounded bg-charcoal-100 animate-pulse"></div>
+              <div v-if="idx % 7 === 3" class="h-2.5 rounded bg-charcoal-100 animate-pulse"></div>
+            </div>
+
             <!-- Event chips -->
-            <div v-if="cell.day" class="space-y-0.5">
+            <div v-else-if="cell.day" class="space-y-0.5">
               <div
                 v-for="event in cell.events.slice(0, 3)"
                 :key="event.id"
@@ -98,13 +107,14 @@
         </div>
       </div>
 
-      <!-- Loading state -->
-      <div v-if="loading" class="text-center py-12">
-        <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
+      <!-- Error state -->
+      <div v-if="!loading && error" role="alert" class="text-center py-12">
+        <p class="text-charcoal-400 mb-4">{{ $t('common.loadError') }}</p>
+        <button @click="fetchEvents" class="pill-toggle pill-toggle-active">{{ $t('common.retry') }}</button>
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="eventsThisMonth.length === 0" class="text-center py-12">
+      <div v-else-if="!loading && eventsThisMonth.length === 0" class="text-center py-12">
         <p class="text-charcoal-400">{{ $t('schedule.empty') }}</p>
       </div>
 
@@ -209,6 +219,7 @@ import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
 import { useLanguageStore } from '@/stores/language'
+import { prefersReducedMotion } from '@/utils/motion'
 import { EVENT_TYPES } from '@/utils/constants'
 import { formatDate } from '@/utils/helpers'
 import type { Event, EventType } from '@/types/event'
@@ -218,6 +229,7 @@ const languageStore = useLanguageStore()
 
 const events       = ref<Event[]>([])
 const loading      = ref(true)
+const error        = ref(false)
 const selectedType = ref<EventType>('all')
 const headerRef    = ref<HTMLElement | null>(null)
 
@@ -365,8 +377,11 @@ function jumpToRelevantMonth() {
 
 async function fetchEvents() {
   loading.value = true
+  error.value = false
   try {
     events.value = await apiFetch<Event[]>('/events')
+  } catch {
+    error.value = true
   } finally {
     loading.value = false
   }
@@ -376,7 +391,7 @@ onMounted(async () => {
   await fetchEvents()
   jumpToRelevantMonth()
 
-  if (headerRef.value) {
+  if (headerRef.value && !prefersReducedMotion()) {
     gsap.from(headerRef.value.children, { y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' })
   }
 })

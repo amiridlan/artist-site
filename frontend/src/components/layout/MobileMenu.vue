@@ -1,9 +1,15 @@
 <template>
   <Teleport to="body">
-    <transition name="mobile-menu">
+    <transition name="mobile-menu" @after-enter="onAfterEnter" @after-leave="onAfterLeave">
       <div
         v-if="isMobileMenuOpen"
+        id="mobile-menu"
+        ref="panelRef"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="$t('common.menu')"
         class="fixed inset-0 z-40 lg:hidden"
+        @keydown="onKeydown"
       >
         <!-- Backdrop with batik pattern -->
         <div class="absolute inset-0 bg-charcoal-800/95 backdrop-blur-md">
@@ -12,6 +18,19 @@
                style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300B4A0' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;)">
           </div>
         </div>
+
+        <!-- Close button -->
+        <button
+          ref="closeButtonRef"
+          type="button"
+          @click="closeMobileMenu"
+          :aria-label="$t('common.closeMenu')"
+          class="absolute top-5 right-5 w-10 h-10 rounded-lg flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
 
         <!-- Menu content -->
         <div class="relative h-full flex flex-col items-center justify-center px-8">
@@ -31,7 +50,7 @@
               :class="isActive(item.path) ? 'text-jade-400' : 'text-white/80 hover:text-jade-300'"
               :style="{ transitionDelay: `${index * 50}ms` }"
             >
-              {{ $t(`nav.${navKeyMap[item.path] || item.label.toLowerCase()}`) }}
+              {{ $t(`nav.${item.key}`) }}
             </router-link>
           </nav>
 
@@ -55,22 +74,55 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useNavigationStore } from '@/stores/navigation'
 import { NAV_ITEMS, SOCIAL_LINKS } from '@/utils/constants'
 import { storeToRefs } from 'pinia'
 import LanguageSelector from '@/components/ui/LanguageSelector.vue'
 
-const navKeyMap: Record<string, string> = {
-  '/': 'home',
-  '/news': 'news',
-  '/members': 'members',
-  '/releases': 'releases',
-  '/videos': 'videos',
-  '/about': 'about',
-  '/schedule': 'schedule',
-  '/fanclub': 'fanclub',
+const panelRef = ref<HTMLElement | null>(null)
+const closeButtonRef = ref<HTMLButtonElement | null>(null)
+let lastFocusedEl: HTMLElement | null = null
+
+function getFocusable(): HTMLElement[] {
+  if (!panelRef.value) return []
+  return Array.from(
+    panelRef.value.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )
+  )
+}
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') {
+    e.preventDefault()
+    closeMobileMenu()
+    return
+  }
+  if (e.key === 'Tab') {
+    const focusable = getFocusable()
+    if (focusable.length === 0) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
+}
+
+function onAfterEnter() {
+  lastFocusedEl = document.activeElement as HTMLElement | null
+  closeButtonRef.value?.focus()
+}
+
+function onAfterLeave() {
+  lastFocusedEl?.focus()
+  lastFocusedEl = null
 }
 
 const route = useRoute()

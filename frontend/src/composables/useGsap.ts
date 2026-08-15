@@ -1,6 +1,7 @@
 import { onMounted, onUnmounted, ref, type Ref } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { prefersReducedMotion } from '@/utils/motion'
 
 export function useScrollReveal(
   elementRef: Ref<HTMLElement | null>,
@@ -26,7 +27,7 @@ export function useScrollReveal(
   } = options
 
   onMounted(() => {
-    if (!elementRef.value) return
+    if (!elementRef.value || prefersReducedMotion()) return
 
     gsap.from(elementRef.value, {
       y,
@@ -70,7 +71,7 @@ export function useStaggerReveal(
   } = options
 
   onMounted(() => {
-    if (!containerRef.value) return
+    if (!containerRef.value || prefersReducedMotion()) return
 
     const children = containerRef.value.querySelectorAll(childSelector)
     if (!children.length) return
@@ -100,7 +101,7 @@ export function useParallax(
   speed: number = 0.3
 ) {
   onMounted(() => {
-    if (!elementRef.value) return
+    if (!elementRef.value || prefersReducedMotion()) return
 
     gsap.to(elementRef.value, {
       yPercent: -speed * 100,
@@ -125,7 +126,7 @@ export function useMemberCardTilt(cardRef: Ref<HTMLElement | null>) {
   const isHovering = ref(false)
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (!cardRef.value) return
+    if (!cardRef.value || prefersReducedMotion()) return
     const rect = cardRef.value.getBoundingClientRect()
     const x = (e.clientX - rect.left) / rect.width - 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5
@@ -173,7 +174,7 @@ export function useMemberCardTilt(cardRef: Ref<HTMLElement | null>) {
 
 export function useTextReveal(elementRef: Ref<HTMLElement | null>) {
   onMounted(() => {
-    if (!elementRef.value) return
+    if (!elementRef.value || prefersReducedMotion()) return
 
     gsap.from(elementRef.value, {
       clipPath: 'inset(0 100% 0 0)',

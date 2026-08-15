@@ -39,7 +39,7 @@
                 :to="item.path"
                 class="text-sm text-white/50 hover:text-jade-400 transition-colors"
               >
-                {{ $t(`nav.${navKeyMap[item.path] || item.label.toLowerCase()}`) }}
+                {{ $t(`nav.${item.key}`) }}
               </router-link>
             </div>
           </div>
@@ -62,9 +62,9 @@
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30">
           <p>{{ $t('footer.copyright', { year: currentYear }) }}</p>
           <div class="flex items-center gap-4">
-            <a href="#" class="hover:text-white/60 transition-colors">{{ $t('footer.faq') }}</a>
-            <a href="#" class="hover:text-white/60 transition-colors">{{ $t('footer.privacy') }}</a>
-            <a href="#" class="hover:text-white/60 transition-colors">{{ $t('footer.terms') }}</a>
+            <span class="cursor-default">{{ $t('footer.faq') }}</span>
+            <span class="cursor-default">{{ $t('footer.privacy') }}</span>
+            <span class="cursor-default">{{ $t('footer.terms') }}</span>
           </div>
         </div>
       </div>
@@ -78,17 +78,6 @@ import { useI18n } from 'vue-i18n'
 import { NAV_ITEMS, SOCIAL_LINKS, SUPPORT_EMAIL } from '@/utils/constants'
 
 useI18n()
-
-const navKeyMap: Record<string, string> = {
-  '/': 'home',
-  '/news': 'news',
-  '/members': 'members',
-  '/releases': 'releases',
-  '/videos': 'videos',
-  '/about': 'about',
-  '/schedule': 'schedule',
-  '/fanclub': 'fanclub',
-}
 
 const currentYear = new Date().getFullYear()
 

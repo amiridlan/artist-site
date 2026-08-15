@@ -15,17 +15,24 @@
               class="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg"
               :style="{ borderColor: member.color || '#00B4A0', borderWidth: '3px', borderStyle: 'solid' }"
             >
-              <img
-                v-if="member.photo"
-                :src="member.photo"
-                :alt="member.name.english"
-                class="w-full h-full object-cover"
-              />
-              <div v-else class="w-full h-full flex items-center justify-center"
-                   :style="{ backgroundColor: (member.color || '#00B4A0') + '15' }">
-                <span class="text-8xl font-heading font-bold" :style="{ color: member.color || '#00B4A0' }">
-                  {{ member.name.english.charAt(0) }}
-                </span>
+              <div class="relative w-full h-full">
+                <!-- Placeholder with member initial, always present behind the photo -->
+                <div class="absolute inset-0 flex items-center justify-center"
+                     :style="{ backgroundColor: (member.color || '#00B4A0') + '15' }">
+                  <span class="text-8xl font-heading font-bold" :style="{ color: member.color || '#00B4A0' }">
+                    {{ member.name.english.charAt(0) }}
+                  </span>
+                </div>
+
+                <!-- Photo fades in over the placeholder once loaded -->
+                <img
+                  v-if="member.photo"
+                  :src="member.photo"
+                  :alt="member.name.english"
+                  class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+                  :class="photoLoaded ? 'opacity-100' : 'opacity-0'"
+                  @load="photoLoaded = true"
+                />
               </div>
             </div>
           </div>
@@ -99,6 +106,12 @@
         <div class="inline-block w-8 h-8 border-4 border-jade-200 border-t-jade-600 rounded-full animate-spin"></div>
       </div>
 
+      <!-- Error state (network/server failure — distinct from a real 404) -->
+      <div v-else-if="error" role="alert" class="text-center py-20">
+        <p class="text-charcoal-400 text-lg mb-4">{{ $t('common.loadError') }}</p>
+        <button @click="fetchMember" class="pill-toggle pill-toggle-active">{{ $t('common.retry') }}</button>
+      </div>
+
       <!-- Not found -->
       <div v-else class="text-center py-20">
         <h2 class="text-2xl font-heading font-bold text-charcoal-800 mb-2">{{ $t('members.notFound') }}</h2>
@@ -116,13 +129,16 @@ import { useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
 import { useLanguageStore } from '@/stores/language'
+import { prefersReducedMotion } from '@/utils/motion'
 import type { Member } from '@/types/member'
 
 const route = useRoute()
 const languageStore = useLanguageStore()
 const member = ref<Member | null>(null)
 const loading = ref(true)
+const error = ref(false)
 const profileRef = ref<HTMLElement | null>(null)
+const photoLoaded = ref(false)
 
 const activeSocials = computed(() => {
   if (!member.value?.social) return {}
@@ -133,11 +149,15 @@ const activeSocials = computed(() => {
 
 async function fetchMember() {
   loading.value = true
+  photoLoaded.value = false
+  error.value = false
   const id = route.params.id as string
   try {
     member.value = await apiFetch<Member>(`/members/${id}`)
-  } catch {
+  } catch (e) {
     member.value = null
+    // A 404 means the member genuinely doesn't exist; anything else is a network/server failure.
+    error.value = !(e instanceof Error && e.message.includes('404'))
   } finally {
     loading.value = false
   }
@@ -146,7 +166,7 @@ async function fetchMember() {
 onMounted(async () => {
   await fetchMember()
 
-  if (profileRef.value) {
+  if (profileRef.value && !prefersReducedMotion()) {
     gsap.from(profileRef.value.children, {
       y: 30, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power2.out',
     })

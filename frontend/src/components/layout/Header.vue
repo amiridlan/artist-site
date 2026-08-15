@@ -24,7 +24,7 @@
                 : 'text-charcoal-600 hover:text-forest-500 hover:bg-forest-500/10'
             ]"
           >
-            {{ $t(`nav.${navKeyMap[item.path] || item.label.toLowerCase()}`) }}
+            {{ $t(`nav.${item.key}`) }}
           </router-link>
         </nav>
 
@@ -58,12 +58,16 @@
           <!-- Mobile menu toggle -->
           <button
             @click="toggleMobileMenu"
+            type="button"
+            :aria-label="isMobileMenuOpen ? $t('common.closeMenu') : $t('common.openMenu')"
+            aria-controls="mobile-menu"
+            :aria-expanded="isMobileMenuOpen"
             class="lg:hidden w-10 h-10 rounded-lg flex items-center justify-center text-charcoal-700 hover:bg-forest-500/10 transition-colors duration-200"
           >
-            <svg v-if="!isMobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg v-if="!isMobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
-            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
@@ -79,17 +83,6 @@ import { useNavigationStore } from '@/stores/navigation'
 import { NAV_ITEMS, SOCIAL_LINKS } from '@/utils/constants'
 import { storeToRefs } from 'pinia'
 import LanguageSelector from '@/components/ui/LanguageSelector.vue'
-
-const navKeyMap: Record<string, string> = {
-  '/': 'home',
-  '/news': 'news',
-  '/members': 'members',
-  '/releases': 'releases',
-  '/videos': 'videos',
-  '/about': 'about',
-  '/schedule': 'schedule',
-  '/fanclub': 'fanclub',
-}
 
 const route = useRoute()
 const navStore = useNavigationStore()
