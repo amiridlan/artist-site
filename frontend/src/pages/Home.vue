@@ -254,16 +254,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { apiFetch } from '@/composables/useApi'
+import { useLanguageStore } from '@/stores/language'
 import { formatDate, getCategoryColor } from '@/utils/helpers'
 import { SPONSORS, SISTER_GROUPS } from '@/utils/constants'
 import type { NewsArticle } from '@/types/news'
 import type { Member } from '@/types/member'
 import type { Release } from '@/types/release'
 
+const languageStore = useLanguageStore()
 const news = ref<NewsArticle[]>([])
 const members = ref<Member[]>([])
 const releases = ref<Release[]>([])
@@ -279,8 +281,7 @@ const latestNews = computed(() => news.value.slice(0, 3))
 const featuredNews = computed(() => news.value.filter(n => n.featured))
 const activeMembers = computed(() => members.value.filter(m => m.status === 'active'))
 
-onMounted(async () => {
-  // Fetch data from API
+async function fetchHomeData() {
   const [newsRes, membersRes, releasesRes] = await Promise.all([
     apiFetch<NewsArticle[]>('/news'),
     apiFetch<Member[]>('/members'),
@@ -289,6 +290,12 @@ onMounted(async () => {
   news.value = newsRes
   members.value = membersRes
   releases.value = releasesRes
+}
+
+watch(() => languageStore.currentLang, fetchHomeData)
+
+onMounted(async () => {
+  await fetchHomeData()
 
   // Hero content animation
   if (heroContentRef.value) {

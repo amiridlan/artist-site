@@ -204,15 +204,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
+import { useLanguageStore } from '@/stores/language'
 import { EVENT_TYPES } from '@/utils/constants'
 import { formatDate } from '@/utils/helpers'
 import type { Event, EventType } from '@/types/event'
 
 const { t, locale } = useI18n()
+const languageStore = useLanguageStore()
 
 const events       = ref<Event[]>([])
 const loading      = ref(true)
@@ -361,18 +363,25 @@ function jumpToRelevantMonth() {
   }
 }
 
-onMounted(async () => {
+async function fetchEvents() {
+  loading.value = true
   try {
     events.value = await apiFetch<Event[]>('/events')
-    jumpToRelevantMonth()
   } finally {
     loading.value = false
   }
+}
+
+onMounted(async () => {
+  await fetchEvents()
+  jumpToRelevantMonth()
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, { y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' })
   }
 })
+
+watch(() => languageStore.currentLang, fetchEvents)
 </script>
 
 <style scoped>

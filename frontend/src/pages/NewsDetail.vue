@@ -48,10 +48,12 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
+import { useLanguageStore } from '@/stores/language'
 import { formatDate, getCategoryColor } from '@/utils/helpers'
 import type { NewsArticle } from '@/types/news'
 
 const route = useRoute()
+const languageStore = useLanguageStore()
 const article = ref<NewsArticle | null>(null)
 const loading = ref(true)
 const articleRef = ref<HTMLElement | null>(null)
@@ -78,5 +80,5 @@ onMounted(async () => {
   }
 })
 
-watch(() => route.params.slug, fetchArticle)
+watch([() => route.params.slug, () => languageStore.currentLang], fetchArticle)
 </script>

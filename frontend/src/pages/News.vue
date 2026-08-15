@@ -57,10 +57,12 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
+import { useLanguageStore } from '@/stores/language'
 import { NEWS_CATEGORIES } from '@/utils/constants'
 import { formatDate, getCategoryColor } from '@/utils/helpers'
 import type { NewsArticle, NewsCategory } from '@/types/news'
 
+const languageStore = useLanguageStore()
 const news = ref<NewsArticle[]>([])
 const loading = ref(true)
 const selectedCategory = ref<NewsCategory>('all')
@@ -72,12 +74,17 @@ const filteredNews = computed(() => {
   return news.value.filter(a => a.category === selectedCategory.value)
 })
 
-onMounted(async () => {
+async function fetchNews() {
+  loading.value = true
   try {
     news.value = await apiFetch<NewsArticle[]>('/news')
   } finally {
     loading.value = false
   }
+}
+
+onMounted(async () => {
+  await fetchNews()
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {
@@ -85,6 +92,8 @@ onMounted(async () => {
     })
   }
 })
+
+watch(() => languageStore.currentLang, fetchNews)
 </script>
 
 <style scoped>

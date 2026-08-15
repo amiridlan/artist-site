@@ -3,9 +3,6 @@
     <form @submit.prevent="submit" class="space-y-6 max-w-4xl">
       <Section title="Release Info">
         <div class="grid grid-cols-2 gap-4">
-          <FormField label="Title" required :error="form.errors.title" class="col-span-2">
-            <TextInput v-model="form.title" :error="form.errors.title" />
-          </FormField>
           <FormField label="Slug" required :error="form.errors.slug" class="col-span-2">
             <TextInput v-model="form.slug" :error="form.errors.slug" />
           </FormField>
@@ -22,9 +19,6 @@
         <FormField label="Cover Image" :error="form.errors.cover_image">
           <ImageUpload :current-url="coverUrl" @change="f => form.cover_image = f" :error="form.errors.cover_image" />
         </FormField>
-        <FormField label="Description" class="mt-4" :error="form.errors.description">
-          <TextareaInput v-model="form.description" :rows="3" :error="form.errors.description" />
-        </FormField>
       </Section>
 
       <Section title="Tracks">
@@ -36,7 +30,7 @@
         <KeyValueInput v-model="form.streaming_links" />
       </Section>
 
-      <TranslationsSection :form="form" :fields="transFields" />
+      <TranslatableFieldGroup :form="form" :fields="transFields" title="Content" />
 
       <div class="flex gap-3">
         <button type="submit" :disabled="form.processing" class="btn-primary">
@@ -55,11 +49,10 @@ import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
 import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
-import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'
 import TrackList from '@/Components/Admin/TrackList.vue'
 import KeyValueInput from '@/Components/Admin/KeyValueInput.vue'
-import TranslationsSection from '@/Components/Admin/TranslationsSection.vue'
+import TranslatableFieldGroup from '@/Components/Admin/TranslatableFieldGroup.vue'
 import Section from '@/Components/Admin/SectionCard.vue'
 
 const props = defineProps({ release: Object, translations: Object, coverUrl: String })
@@ -83,7 +76,7 @@ const typeOptions = [
   { value: 'digital-single', label: 'Digital Single'  },
 ]
 const transFields = [
-  { key: 'title',       label: 'Title',       type: 'text'     },
+  { key: 'title',       label: 'Title',       type: 'text', required: true },
   { key: 'description', label: 'Description', type: 'textarea' },
 ]
 

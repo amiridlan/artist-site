@@ -3,9 +3,6 @@
     <form @submit.prevent="submit" class="space-y-6 max-w-4xl">
       <Section title="Event Info">
         <div class="grid grid-cols-2 gap-4">
-          <FormField label="Title" required :error="form.errors.title" class="col-span-2">
-            <TextInput v-model="form.title" :error="form.errors.title" />
-          </FormField>
           <FormField label="Slug" required :error="form.errors.slug" class="col-span-2">
             <TextInput v-model="form.slug" :error="form.errors.slug" />
           </FormField>
@@ -25,29 +22,18 @@
       </Section>
 
       <Section title="Location">
-        <div class="grid grid-cols-2 gap-4">
-          <FormField label="Venue" :error="form.errors.venue">
-            <TextInput v-model="form.venue" :error="form.errors.venue" />
-          </FormField>
-          <FormField label="Location" :error="form.errors.location">
-            <TextInput v-model="form.location" :error="form.errors.location" />
-          </FormField>
-          <FormField label="Ticket URL" :error="form.errors.ticket_url" class="col-span-2">
-            <TextInput v-model="form.ticket_url" type="url" :error="form.errors.ticket_url" />
-          </FormField>
-        </div>
+        <FormField label="Ticket URL" :error="form.errors.ticket_url">
+          <TextInput v-model="form.ticket_url" type="url" :error="form.errors.ticket_url" />
+        </FormField>
       </Section>
 
-      <Section title="Details">
-        <FormField label="Description" :error="form.errors.description">
-          <TextareaInput v-model="form.description" :rows="4" :error="form.errors.description" />
-        </FormField>
-        <FormField label="Image" class="mt-4" :error="form.errors.image">
+      <Section title="Media">
+        <FormField label="Image" :error="form.errors.image">
           <ImageUpload :current-url="imageUrl" @change="f => form.image = f" :error="form.errors.image" />
         </FormField>
       </Section>
 
-      <TranslationsSection :form="form" :fields="transFields" />
+      <TranslatableFieldGroup :form="form" :fields="transFields" title="Content" />
 
       <div class="flex gap-3">
         <button type="submit" :disabled="form.processing" class="btn-primary">
@@ -66,9 +52,8 @@ import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
 import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
-import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'
-import TranslationsSection from '@/Components/Admin/TranslationsSection.vue'
+import TranslatableFieldGroup from '@/Components/Admin/TranslatableFieldGroup.vue'
 import Section from '@/Components/Admin/SectionCard.vue'
 
 const props = defineProps({ event: Object, translations: Object, imageUrl: String })
@@ -102,7 +87,7 @@ const statusOptions = [
   { value: 'cancelled', label: 'Cancelled' },
 ]
 const transFields = [
-  { key: 'title',       label: 'Title',       type: 'text'     },
+  { key: 'title',       label: 'Title',       type: 'text',     required: true },
   { key: 'description', label: 'Description', type: 'textarea' },
   { key: 'venue',       label: 'Venue',       type: 'text'     },
   { key: 'location',    label: 'Location',    type: 'text'     },

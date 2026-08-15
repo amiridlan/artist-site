@@ -3,9 +3,6 @@
     <form @submit.prevent="submit" class="space-y-6 max-w-4xl">
       <Section title="Article Info">
         <div class="grid grid-cols-2 gap-4">
-          <FormField label="Title" required :error="form.errors.title" class="col-span-2">
-            <TextInput v-model="form.title" :error="form.errors.title" />
-          </FormField>
           <FormField label="Slug" required :error="form.errors.slug" class="col-span-2">
             <TextInput v-model="form.slug" :error="form.errors.slug" />
           </FormField>
@@ -30,22 +27,13 @@
         </div>
       </Section>
 
-      <Section title="Content">
-        <FormField label="Excerpt" required :error="form.errors.excerpt">
-          <TextareaInput v-model="form.excerpt" :rows="3" :error="form.errors.excerpt" />
-        </FormField>
-        <FormField label="Full Content" class="mt-4" :error="form.errors.content">
-          <TextareaInput v-model="form.content" :rows="10" :error="form.errors.content" />
-        </FormField>
-      </Section>
-
       <Section title="Media">
         <FormField label="Image" :error="form.errors.image">
           <ImageUpload :current-url="imageUrl" @change="f => form.image = f" :error="form.errors.image" />
         </FormField>
       </Section>
 
-      <TranslationsSection :form="form" :fields="transFields" />
+      <TranslatableFieldGroup :form="form" :fields="transFields" title="Content" />
 
       <div class="flex gap-3">
         <button type="submit" :disabled="form.processing" class="btn-primary">
@@ -64,9 +52,8 @@ import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
 import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
-import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'
-import TranslationsSection from '@/Components/Admin/TranslationsSection.vue'
+import TranslatableFieldGroup from '@/Components/Admin/TranslatableFieldGroup.vue'
 import Section from '@/Components/Admin/SectionCard.vue'
 
 const props = defineProps({ article: Object, translations: Object, imageUrl: String })
@@ -92,8 +79,8 @@ const categoryOptions = [
   { value: 'release', label: 'Release' },
 ]
 const transFields = [
-  { key: 'title',   label: 'Title',   type: 'text'     },
-  { key: 'excerpt', label: 'Excerpt', type: 'textarea' },
+  { key: 'title',   label: 'Title',   type: 'text',     required: true },
+  { key: 'excerpt', label: 'Excerpt', type: 'textarea', required: true },
   { key: 'content', label: 'Content', type: 'textarea' },
 ]
 

@@ -93,15 +93,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
+import { useLanguageStore } from '@/stores/language'
 import { VIDEO_TYPES } from '@/utils/constants'
 import { formatDate } from '@/utils/helpers'
 import type { Video, VideoType } from '@/types/video'
 
 const { t } = useI18n()
+const languageStore = useLanguageStore()
 
 const videos = ref<Video[]>([])
 const loading = ref(true)
@@ -135,12 +137,17 @@ function openVideo(video: Video) {
   activeVideo.value = video
 }
 
-onMounted(async () => {
+async function fetchVideos() {
+  loading.value = true
   try {
     videos.value = await apiFetch<Video[]>('/videos')
   } finally {
     loading.value = false
   }
+}
+
+onMounted(async () => {
+  await fetchVideos()
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {
@@ -148,6 +155,8 @@ onMounted(async () => {
     })
   }
 })
+
+watch(() => languageStore.currentLang, fetchVideos)
 </script>
 
 <style scoped>

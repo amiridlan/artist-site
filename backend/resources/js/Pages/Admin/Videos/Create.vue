@@ -3,9 +3,6 @@
     <form @submit.prevent="submit" class="space-y-6 max-w-4xl">
       <Section title="Video Info">
         <div class="grid grid-cols-2 gap-4">
-          <FormField label="Title" required :error="form.errors.title" class="col-span-2">
-            <TextInput v-model="form.title" @input="autoSlug" :error="form.errors.title" />
-          </FormField>
           <FormField label="Slug" required :error="form.errors.slug" class="col-span-2">
             <TextInput v-model="form.slug" :error="form.errors.slug" />
           </FormField>
@@ -31,12 +28,9 @@
         <FormField label="Thumbnail" :error="form.errors.thumbnail">
           <ImageUpload @change="f => form.thumbnail = f" :error="form.errors.thumbnail" />
         </FormField>
-        <FormField label="Description" class="mt-4" :error="form.errors.description">
-          <TextareaInput v-model="form.description" :rows="3" :error="form.errors.description" />
-        </FormField>
       </Section>
 
-      <TranslationsSection :form="form" :fields="transFields" />
+      <TranslatableFieldGroup :form="form" :fields="transFields" title="Content" />
 
       <div class="flex gap-3">
         <button type="submit" :disabled="form.processing" class="btn-primary">
@@ -50,14 +44,14 @@
 
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue'
+import { watch } from 'vue'
 import { Link, useForm } from '@inertiajs/vue3'
 import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
 import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
-import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'
-import TranslationsSection from '@/Components/Admin/TranslationsSection.vue'
+import TranslatableFieldGroup from '@/Components/Admin/TranslatableFieldGroup.vue'
 import Section from '@/Components/Admin/SectionCard.vue'
 
 const form = useForm({
@@ -75,13 +69,13 @@ const typeOptions = [
   { value: 'behind-the-scenes', label: 'Behind the Scenes' },
 ]
 const transFields = [
-  { key: 'title',       label: 'Title',       type: 'text'     },
+  { key: 'title',       label: 'Title',       type: 'text', required: true },
   { key: 'description', label: 'Description', type: 'textarea' },
 ]
 
-const autoSlug = () => {
-  form.slug = form.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-}
+watch(() => form.title, title => {
+  form.slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+})
 
 const submit = () => form.post(route('admin.videos.store'), { forceFormData: true })
 </script>

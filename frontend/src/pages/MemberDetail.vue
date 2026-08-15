@@ -115,9 +115,11 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
+import { useLanguageStore } from '@/stores/language'
 import type { Member } from '@/types/member'
 
 const route = useRoute()
+const languageStore = useLanguageStore()
 const member = ref<Member | null>(null)
 const loading = ref(true)
 const profileRef = ref<HTMLElement | null>(null)
@@ -151,5 +153,5 @@ onMounted(async () => {
   }
 })
 
-watch(() => route.params.id, fetchMember)
+watch([() => route.params.id, () => languageStore.currentLang], fetchMember)
 </script>

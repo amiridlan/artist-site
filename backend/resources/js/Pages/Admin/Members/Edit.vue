@@ -40,9 +40,6 @@
           <FormField label="Blood Type" :error="form.errors.blood_type">
             <TextInput v-model="form.blood_type" :error="form.errors.blood_type" />
           </FormField>
-          <FormField label="Hometown" :error="form.errors.hometown">
-            <TextInput v-model="form.hometown" :error="form.errors.hometown" />
-          </FormField>
           <FormField label="Member Color" :error="form.errors.color">
             <div class="flex gap-2 items-center">
               <input type="color" v-model="form.color" class="h-10 w-16 rounded border border-gray-300 cursor-pointer" />
@@ -70,12 +67,9 @@
         </div>
       </Section>
 
-      <!-- Bio & Hobbies -->
-      <Section title="Bio & Hobbies">
-        <FormField label="Bio" :error="form.errors.bio">
-          <TextareaInput v-model="form.bio" :rows="5" :error="form.errors.bio" />
-        </FormField>
-        <FormField label="Hobbies" class="mt-4" :error="form.errors.hobbies">
+      <!-- Hobbies -->
+      <Section title="Hobbies">
+        <FormField label="Hobbies" :error="form.errors.hobbies">
           <TagsInput v-model="form.hobbies" />
         </FormField>
       </Section>
@@ -85,8 +79,8 @@
         <KeyValueInput v-model="form.social" />
       </Section>
 
-      <!-- Translations -->
-      <TranslationsSection :form="form" :fields="transFields" />
+      <!-- Bio & Hometown -->
+      <TranslatableFieldGroup :form="form" :fields="transFields" title="Bio & Hometown" />
 
       <div class="flex gap-3">
         <button type="submit" :disabled="form.processing" class="btn-primary">
@@ -105,11 +99,10 @@ import FormField from '@/Components/Admin/FormField.vue'
 import TextInput from '@/Components/Admin/TextInput.vue'
 import DateInput from '@/Components/Admin/DateInput.vue'
 import SelectInput from '@/Components/Admin/SelectInput.vue'
-import TextareaInput from '@/Components/Admin/TextareaInput.vue'
 import ImageUpload from '@/Components/Admin/ImageUpload.vue'
 import TagsInput from '@/Components/Admin/TagsInput.vue'
 import KeyValueInput from '@/Components/Admin/KeyValueInput.vue'
-import TranslationsSection from '@/Components/Admin/TranslationsSection.vue'
+import TranslatableFieldGroup from '@/Components/Admin/TranslatableFieldGroup.vue'
 import Section from '@/Components/Admin/SectionCard.vue'
 
 const props = defineProps({ member: Object, translations: Object, photoUrl: String, coverUrl: String })

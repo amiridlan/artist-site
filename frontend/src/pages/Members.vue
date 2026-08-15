@@ -98,11 +98,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
+import { useLanguageStore } from '@/stores/language'
 import type { Member, MemberGeneration, MemberStatus } from '@/types/member'
 
+const languageStore = useLanguageStore()
 const members = ref<Member[]>([])
 const loading = ref(true)
 const headerRef = ref<HTMLElement | null>(null)
@@ -131,12 +133,17 @@ const filteredMembers = computed(() => {
   })
 })
 
-onMounted(async () => {
+async function fetchMembers() {
+  loading.value = true
   try {
     members.value = await apiFetch<Member[]>('/members')
   } finally {
     loading.value = false
   }
+}
+
+onMounted(async () => {
+  await fetchMembers()
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {
@@ -144,4 +151,6 @@ onMounted(async () => {
     })
   }
 })
+
+watch(() => languageStore.currentLang, fetchMembers)
 </script>

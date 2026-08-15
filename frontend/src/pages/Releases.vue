@@ -85,13 +85,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { gsap } from 'gsap'
 import { apiFetch } from '@/composables/useApi'
+import { useLanguageStore } from '@/stores/language'
 import { RELEASE_TYPES } from '@/utils/constants'
 import { formatDate } from '@/utils/helpers'
 import type { Release, ReleaseType } from '@/types/release'
 
+const languageStore = useLanguageStore()
 const releases = ref<Release[]>([])
 const loading = ref(true)
 const selectedType = ref<ReleaseType>('all')
@@ -103,12 +105,17 @@ const filteredReleases = computed(() => {
   return releases.value.filter(r => r.type === selectedType.value)
 })
 
-onMounted(async () => {
+async function fetchReleases() {
+  loading.value = true
   try {
     releases.value = await apiFetch<Release[]>('/releases')
   } finally {
     loading.value = false
   }
+}
+
+onMounted(async () => {
+  await fetchReleases()
 
   if (headerRef.value) {
     gsap.from(headerRef.value.children, {
@@ -116,6 +123,8 @@ onMounted(async () => {
     })
   }
 })
+
+watch(() => languageStore.currentLang, fetchReleases)
 </script>
 
 <style scoped>
