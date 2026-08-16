@@ -206,7 +206,7 @@
       "step2Label": "Choose Tier & Pay",
       "nameLabel": "Full Name",
       "namePlaceholder": "Your full name",
-      "emailPlaceholder": "your@email.com",
+      "emailPlaceholder": "your{'@'}email.com",
       "phoneLabel": "Phone",
       "phonePlaceholder": "+60 12-345 6789",
       "passwordPlaceholder": "At least 8 characters",

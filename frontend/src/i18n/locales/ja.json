@@ -206,7 +206,7 @@
       "step2Label": "プラン選択とお支払い",
       "nameLabel": "氏名",
       "namePlaceholder": "お名前",
-      "emailPlaceholder": "your@email.com",
+      "emailPlaceholder": "your{'@'}email.com",
       "phoneLabel": "電話番号",
       "phonePlaceholder": "+60 12-345 6789",
       "passwordPlaceholder": "8文字以上",

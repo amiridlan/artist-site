@@ -206,7 +206,7 @@
       "step2Label": "Pilih Pakej & Bayar",
       "nameLabel": "Nama Penuh",
       "namePlaceholder": "Nama penuh anda",
-      "emailPlaceholder": "emel@anda.com",
+      "emailPlaceholder": "emel{'@'}anda.com",
       "phoneLabel": "Telefon",
       "phonePlaceholder": "+60 12-345 6789",
       "passwordPlaceholder": "Sekurang-kurangnya 8 aksara",
