@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\FanclubMember;
 use App\Models\FanclubPendingRegistration;
 use App\Models\FanclubSubscription;
+use App\Services\BillplzService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class FanPaymentController extends Controller
@@ -23,6 +24,10 @@ class FanPaymentController extends Controller
         'basic' => 'KLP48 Fanclub — Basic (1 Year)',
         'gold'  => 'KLP48 Fanclub — Gold (1 Year)',
     ];
+
+    public function __construct(private readonly BillplzService $billplz)
+    {
+    }
 
     // ─────────────────────────────────────────────────────────────────
     // NEW REGISTRATION FLOW  (public — no auth required)
@@ -55,26 +60,26 @@ class FanPaymentController extends Controller
         $amount = self::PRICES[$tier];
         $refNo  = 'FCREG-' . strtoupper(substr(md5($data['email'] . time()), 0, 8));
 
-        $returnUrl   = rtrim(config('app.frontend_url', 'http://localhost:5173'), '/') . '/fanclub/payment/return';
+        $returnUrl   = rtrim(config('app.frontend_url', 'http://localhost:3000'), '/') . '/fanclub/payment/return';
         $callbackUrl = rtrim(config('app.url'), '/') . '/api/fan/payment/callback';
 
-        $response = $this->callToyyibPay([
-            'billName'                => self::LABELS[$tier],
-            'billDescription'         => self::LABELS[$tier],
-            'billAmount'              => $amount,
-            'billReturnUrl'           => $returnUrl,
-            'billCallbackUrl'         => $callbackUrl,
-            'billExternalReferenceNo' => $refNo,
-            'billTo'                  => $data['name'],
-            'billEmail'               => $data['email'],
-            'billPhone'               => $data['phone'] ?? '',
+        $bill = $this->billplz->createBill([
+            'description'      => self::LABELS[$tier],
+            'amount'            => $amount,
+            'redirect_url'      => $returnUrl,
+            'callback_url'      => $callbackUrl,
+            'reference_1_label' => 'Reference No',
+            'reference_1'       => $refNo,
+            'name'              => $data['name'],
+            'email'             => $data['email'],
+            'mobile'            => $data['phone'] ?? '',
         ]);
 
-        if (! $response) {
+        if (! $bill) {
             return response()->json(['message' => 'Payment gateway error. Please try again.'], 502);
         }
 
-        $billCode = $response['BillCode'];
+        $billId = $bill['id'];
 
         FanclubPendingRegistration::create([
             'name'         => $data['name'],
@@ -83,13 +88,13 @@ class FanPaymentController extends Controller
             'password'     => Hash::make($data['password']),
             'tier'         => $tier,
             'amount_cents' => $amount,
-            'bill_code'    => $billCode,
+            'bill_code'    => $billId,
             'reference_no' => $refNo,
         ]);
 
         return response()->json([
-            'billUrl'  => rtrim(config('services.toyyibpay.url'), '/') . '/' . $billCode,
-            'billCode' => $billCode,
+            'billUrl'  => $bill['url'],
+            'billCode' => $billId,
         ]);
     }
 
@@ -107,83 +112,89 @@ class FanPaymentController extends Controller
         $amount = self::PRICES[$tier];
         $refNo  = 'FCREN-' . $member->id . '-' . time();
 
-        $returnUrl   = rtrim(config('app.frontend_url', 'http://localhost:5173'), '/') . '/fanclub/payment/return';
+        $returnUrl   = rtrim(config('app.frontend_url', 'http://localhost:3000'), '/') . '/fanclub/payment/return';
         $callbackUrl = rtrim(config('app.url'), '/') . '/api/fan/payment/callback';
 
-        $response = $this->callToyyibPay([
-            'billName'                => self::LABELS[$tier],
-            'billDescription'         => self::LABELS[$tier],
-            'billAmount'              => $amount,
-            'billReturnUrl'           => $returnUrl,
-            'billCallbackUrl'         => $callbackUrl,
-            'billExternalReferenceNo' => $refNo,
-            'billTo'                  => $member->name,
-            'billEmail'               => $member->email,
-            'billPhone'               => $member->phone ?? '',
+        $bill = $this->billplz->createBill([
+            'description'       => self::LABELS[$tier],
+            'amount'            => $amount,
+            'redirect_url'      => $returnUrl,
+            'callback_url'      => $callbackUrl,
+            'reference_1_label' => 'Reference No',
+            'reference_1'       => $refNo,
+            'name'              => $member->name,
+            'email'             => $member->email,
+            'mobile'            => $member->phone ?? '',
         ]);
 
-        if (! $response) {
+        if (! $bill) {
             return response()->json(['message' => 'Payment gateway error. Please try again.'], 502);
         }
 
-        $billCode = $response['BillCode'];
+        $billId = $bill['id'];
 
         FanclubSubscription::create([
             'fanclub_member_id' => $member->id,
             'tier'              => $tier,
             'amount_cents'      => $amount,
-            'bill_code'         => $billCode,
+            'bill_code'         => $billId,
             'reference_no'      => $refNo,
             'status'            => 'pending',
         ]);
 
         return response()->json([
-            'billUrl'  => rtrim(config('services.toyyibpay.url'), '/') . '/' . $billCode,
-            'billCode' => $billCode,
+            'billUrl'  => $bill['url'],
+            'billCode' => $billId,
         ]);
     }
 
     // ─────────────────────────────────────────────────────────────────
-    // TOYYIBPAY CALLBACK  (server-to-server POST)
+    // BILLPLZ CALLBACK  (server-to-server POST)
     // ─────────────────────────────────────────────────────────────────
 
     public function callback(Request $request): string
     {
-        $billCode      = $request->input('billcode');
-        $status        = (int) $request->input('status');
-        $transactionId = $request->input('transaction_id');
+        $billId = $request->input('id');
 
-        // 1. Check pending registrations first
-        $pending = FanclubPendingRegistration::where('bill_code', $billCode)
-            ->whereNull('processed_at')
-            ->first();
+        // Defense in depth, two independent layers:
+        //   1. Verify the `x_signature` field Billplz sends with every
+        //      callback (HMAC-SHA256 of the payload using the X Signature
+        //      Key configured in the Billplz dashboard). A missing/invalid
+        //      signature means the request did not genuinely come from
+        //      Billplz (or the X Signature Key isn't configured yet) and we
+        //      must not trust the posted `paid`/`state` fields.
+        //   2. Regardless of signature outcome, we NEVER activate anything
+        //      from the posted payload alone — we always re-query Billplz's
+        //      "Get a Bill" API server-side for the authoritative payment
+        //      status before granting a membership. This mirrors the same
+        //      anti-fraud pattern used previously with ToyyibPay and covers
+        //      us even if the signature check has an implementation bug.
+        $keyConfigured   = filled(config('services.billplz.x_signature_key'));
+        $signatureValid  = $this->billplz->verifySignature($request->all());
 
-        if ($pending) {
-            if ($status === 1) {
-                $this->activateRegistration($pending, $transactionId);
-            }
-            // status 2 = pending payment, status 3 = failed — do nothing, user can retry
+        if ($keyConfigured && ! $signatureValid) {
+            // The X Signature Key IS configured, so a failed verification
+            // means this callback is either forged or bill_code confusion —
+            // not merely "unconfigured". Do not fall through to reconcile;
+            // reject early. Still respond 'OK' so Billplz doesn't retry-storm.
+            Log::warning('Billplz callback: signature verification failed', ['id' => $billId]);
             return 'OK';
         }
 
-        // 2. Fall back to renewal subscriptions
-        $subscription = FanclubSubscription::where('bill_code', $billCode)->first();
+        if (! $signatureValid) {
+            Log::warning('Billplz callback: x_signature key not configured, skipping verification', ['id' => $billId]);
+            // Do not return early — still fall through to the authoritative
+            // live re-query below, since the X Signature Key isn't set up
+            // yet and there is nothing to verify against. The live re-query
+            // is what actually gates activation.
+        }
 
-        if (! $subscription) {
-            Log::warning('ToyyibPay callback: unknown bill_code', ['billcode' => $billCode]);
+        if (! $billId) {
+            Log::warning('Billplz callback: missing bill id');
             return 'OK';
         }
 
-        if ($status === 1) {
-            $subscription->update([
-                'status'         => 'paid',
-                'transaction_id' => $transactionId,
-                'paid_at'        => now(),
-            ]);
-            $this->activateMember($subscription->member, $subscription->tier);
-        } elseif ($status === 3) {
-            $subscription->update(['status' => 'failed']);
-        }
+        $this->reconcileBill($billId);
 
         return 'OK';
     }
@@ -195,35 +206,19 @@ class FanPaymentController extends Controller
     public function status(Request $request): JsonResponse
     {
         $request->validate(['bill_code' => ['required', 'string']]);
-        $billCode = $request->bill_code;
+        $billId = $request->bill_code;
 
         // ── Registration flow ──
-        $pending = FanclubPendingRegistration::where('bill_code', $billCode)->first();
+        $pending = FanclubPendingRegistration::where('bill_code', $billId)->first();
 
         if ($pending) {
-            if ($pending->isProcessed()) {
-                return response()->json([
-                    'status' => 'paid',
-                    'type'   => 'registration',
-                    'tier'   => $pending->tier,
-                    'email'  => $pending->email,
-                ]);
-            }
-
-            // Not yet processed — poll ToyyibPay
-            $paid = $this->pollToyyibPayForRegistration($pending);
-
-            if ($paid) {
-                return response()->json([
-                    'status' => 'paid',
-                    'type'   => 'registration',
-                    'tier'   => $pending->tier,
-                    'email'  => $pending->email,
-                ]);
+            if (! $pending->isProcessed()) {
+                $this->reconcileBill($billId);
+                $pending->refresh();
             }
 
             return response()->json([
-                'status' => 'pending',
+                'status' => $pending->isProcessed() ? 'paid' : 'pending',
                 'type'   => 'registration',
                 'tier'   => $pending->tier,
                 'email'  => $pending->email,
@@ -231,14 +226,14 @@ class FanPaymentController extends Controller
         }
 
         // ── Renewal flow ──
-        $subscription = FanclubSubscription::where('bill_code', $billCode)->first();
+        $subscription = FanclubSubscription::where('bill_code', $billId)->first();
 
         if (! $subscription) {
             return response()->json(['status' => 'not_found'], 404);
         }
 
         if ($subscription->status === 'pending') {
-            $this->pollToyyibPayForRenewal($subscription);
+            $this->reconcileBill($billId);
             $subscription->refresh();
         }
 
@@ -253,40 +248,75 @@ class FanPaymentController extends Controller
     // PRIVATE HELPERS
     // ─────────────────────────────────────────────────────────────────
 
-    private function callToyyibPay(array $params): ?array
+    /**
+     * Single source of truth for "was this bill actually paid". Re-queries
+     * Billplz's "Get a Bill" API directly (never trusts posted callback
+     * data) and activates the matching registration/subscription if paid.
+     */
+    private function reconcileBill(string $billId): void
     {
-        try {
-            $response = Http::asForm()->post(
-                rtrim(config('services.toyyibpay.url'), '/') . '/index.php/api/createBill',
-                array_merge([
-                    'userSecretKey'        => config('services.toyyibpay.secret_key'),
-                    'categoryCode'         => config('services.toyyibpay.category_code'),
-                    'billPriceSetting'     => 1,
-                    'billPayorInfo'        => 1,
-                    'billSplitPayment'     => 0,
-                    'billSplitPaymentArgs' => '',
-                    'billPaymentChannel'   => 2,
-                    'billContentEmail'     => 'Thank you for joining KLP48 Fanclub! Your membership will be activated upon payment confirmation.',
-                    'billChargeToCustomer' => 1,
-                ], $params)
-            );
+        // 1. Check pending registrations first.
+        $pending = FanclubPendingRegistration::where('bill_code', $billId)
+            ->whereNull('processed_at')
+            ->first();
 
-            if (! $response->successful()) {
-                Log::error('ToyyibPay createBill failed', ['response' => $response->body()]);
-                return null;
+        if ($pending) {
+            $bill = $this->billplz->getBill($billId);
+            if (! $this->billplz->isPaid($bill)) {
+                return;
             }
 
-            $result = $response->json();
+            // The webhook callback and the frontend's status-poll can both
+            // reach here for the same bill concurrently. Re-check under a
+            // row lock inside a transaction so only one request actually
+            // activates — the HTTP call to Billplz above happens *before*
+            // the lock so we're not holding it during network I/O.
+            DB::transaction(function () use ($billId, $bill) {
+                $pending = FanclubPendingRegistration::where('bill_code', $billId)
+                    ->whereNull('processed_at')
+                    ->lockForUpdate()
+                    ->first();
 
-            if (empty($result[0]['BillCode'])) {
-                Log::error('ToyyibPay no BillCode', ['response' => $result]);
-                return null;
-            }
+                if ($pending) {
+                    $this->activateRegistration($pending, $bill['id'] ?? null);
+                }
+            });
+            return;
+        }
 
-            return $result[0];
-        } catch (\Throwable $e) {
-            Log::error('ToyyibPay request exception', ['error' => $e->getMessage()]);
-            return null;
+        // 2. Fall back to renewal subscriptions.
+        $subscription = FanclubSubscription::where('bill_code', $billId)->first();
+
+        if (! $subscription) {
+            Log::warning('Billplz reconcile: unknown bill id', ['id' => $billId]);
+            return;
+        }
+
+        if ($subscription->status !== 'pending') {
+            return;
+        }
+
+        $bill = $this->billplz->getBill($billId);
+
+        if ($this->billplz->isPaid($bill)) {
+            DB::transaction(function () use ($billId, $bill) {
+                $subscription = FanclubSubscription::where('bill_code', $billId)
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($subscription && $subscription->status === 'pending') {
+                    $subscription->update([
+                        'status'         => 'paid',
+                        'transaction_id' => $bill['id'] ?? null,
+                        'paid_at'        => now(),
+                    ]);
+                    $this->activateMember($subscription->member, $subscription->tier);
+                }
+            });
+        } elseif ($bill !== null && ($bill['state'] ?? null) === 'deleted') {
+            // A deleted bill can never be paid — safe to mark failed based
+            // on the live API response (not the unauthenticated payload).
+            $subscription->update(['status' => 'failed']);
         }
     }
 
@@ -321,73 +351,18 @@ class FanPaymentController extends Controller
 
     private function activateMember(FanclubMember $member, string $tier): void
     {
+        // Renewing before expiry stacks the new year on top of the remaining
+        // time instead of forfeiting it; renewing after expiry (or with no
+        // prior expiry) starts fresh from today.
+        $stillValid = $member->expires_at && $member->expires_at->copy()->endOfDay()->isFuture();
+        $base       = $stillValid ? $member->expires_at->copy() : now();
+
         $member->update([
             'tier'       => $tier,
             'status'     => 'active',
-            'expires_at' => now()->addYear()->toDateString(),
+            'expires_at' => $base->addYear()->toDateString(),
             'benefits'   => $this->defaultBenefits($tier),
         ]);
-    }
-
-    private function pollToyyibPayForRegistration(FanclubPendingRegistration $pending): bool
-    {
-        try {
-            $response = Http::asForm()->post(
-                rtrim(config('services.toyyibpay.url'), '/') . '/index.php/api/getBillTransactions',
-                [
-                    'userSecretKey' => config('services.toyyibpay.secret_key'),
-                    'billCode'      => $pending->bill_code,
-                ]
-            );
-
-            if (! $response->successful()) return false;
-
-            $transactions = $response->json();
-            if (empty($transactions)) return false;
-
-            foreach ($transactions as $tx) {
-                if (($tx['billpaymentStatus'] ?? '') === '1') {
-                    $this->activateRegistration($pending, $tx['billpaymentInvoiceNo'] ?? null);
-                    return true;
-                }
-            }
-        } catch (\Throwable $e) {
-            Log::error('ToyyibPay poll (registration) failed', ['error' => $e->getMessage()]);
-        }
-
-        return false;
-    }
-
-    private function pollToyyibPayForRenewal(FanclubSubscription $subscription): void
-    {
-        try {
-            $response = Http::asForm()->post(
-                rtrim(config('services.toyyibpay.url'), '/') . '/index.php/api/getBillTransactions',
-                [
-                    'userSecretKey' => config('services.toyyibpay.secret_key'),
-                    'billCode'      => $subscription->bill_code,
-                ]
-            );
-
-            if (! $response->successful()) return;
-
-            $transactions = $response->json();
-            if (empty($transactions)) return;
-
-            foreach ($transactions as $tx) {
-                if (($tx['billpaymentStatus'] ?? '') === '1') {
-                    $subscription->update([
-                        'status'         => 'paid',
-                        'transaction_id' => $tx['billpaymentInvoiceNo'] ?? null,
-                        'paid_at'        => now(),
-                    ]);
-                    $this->activateMember($subscription->member, $subscription->tier);
-                    break;
-                }
-            }
-        } catch (\Throwable $e) {
-            Log::error('ToyyibPay poll (renewal) failed', ['error' => $e->getMessage()]);
-        }
     }
 
     private function defaultBenefits(string $tier): array

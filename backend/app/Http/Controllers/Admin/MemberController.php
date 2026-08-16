@@ -69,7 +69,7 @@ class MemberController extends Controller
         Cache::flush();
 
         if ($photoFile) {
-            $this->queueImageUpload($member, 'photo', $photoFile, 'members');
+            $this->queueImageUpload($member, 'photo', $photoFile, 'members', sizes: ['thumbnail', 'small', 'medium']);
         }
         if ($coverFile) {
             $this->queueImageUpload($member, 'cover_image', $coverFile, 'members/covers');
@@ -134,7 +134,7 @@ class MemberController extends Controller
         Cache::flush();
 
         if ($photoFile) {
-            $this->queueImageUpload($member, 'photo', $photoFile, 'members', $previousPhoto);
+            $this->queueImageUpload($member, 'photo', $photoFile, 'members', $previousPhoto, ['thumbnail', 'small', 'medium']);
         }
         if ($coverFile) {
             $this->queueImageUpload($member, 'cover_image', $coverFile, 'members/covers', $previousCover);

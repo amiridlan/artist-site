@@ -40,10 +40,11 @@ return [
         'api_key' => env('LIBRETRANSLATE_API_KEY', ''),
     ],
 
-    'toyyibpay' => [
-        'url'           => env('TOYYIBPAY_URL', 'https://dev.toyyibpay.com'),
-        'secret_key'    => env('TOYYIBPAY_SECRET_KEY', ''),
-        'category_code' => env('TOYYIBPAY_CATEGORY_CODE', ''),
+    'billplz' => [
+        'url'              => env('BILLPLZ_URL', 'https://www.billplz-sandbox.com'),
+        'secret_key'       => env('BILLPLZ_SECRET_KEY', ''),
+        'collection_id'    => env('BILLPLZ_COLLECTION_ID', ''),
+        'x_signature_key'  => env('BILLPLZ_X_SIGNATURE_KEY', ''),
     ],
 
 ];

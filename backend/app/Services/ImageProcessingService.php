@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -206,6 +207,14 @@ class ImageProcessingService
         if (Storage::disk($this->disk)->exists($originalPath)) {
             Storage::disk($this->disk)->delete($originalPath);
         }
+
+        // Clear any cached URL resolutions so a reused path can't serve stale URLs
+        Cache::forget("media_urls:{$this->disk}:{$originalPath}");
+        foreach ($suffixes as $suffix) {
+            foreach ($formats as $format) {
+                Cache::forget("media_url:{$this->disk}:{$originalPath}:{$suffix}:{$format}");
+            }
+        }
     }
 
     /**
@@ -221,6 +230,14 @@ class ImageProcessingService
             return null;
         }
 
+        return Cache::rememberForever(
+            "media_url:{$this->disk}:{$originalPath}:{$size}:{$format}",
+            fn () => $this->resolveUrl($originalPath, $size, $format)
+        );
+    }
+
+    private function resolveUrl(string $originalPath, string $size, string $format): ?string
+    {
         // If the path already has a size suffix, extract base info
         if (preg_match('/^(.+)_(original|thumbnail|small|medium|large)\.(webp|avif)$/', $originalPath, $matches)) {
             $basePath = $matches[1];
@@ -240,6 +257,12 @@ class ImageProcessingService
 
     /**
      * Get URLs for all sizes in both formats.
+     *
+     * The exists() + url() calls below hit the storage driver (a network
+     * HeadObject request on R2/S3). Variant paths are UUID-named and never
+     * change in place — a re-upload produces an entirely new path and the
+     * old one is removed via deleteAll() — so the resolved map is cached
+     * forever per path to avoid re-checking on every request.
      */
     public function getAllUrls(string $originalPath): array
     {
@@ -247,6 +270,14 @@ class ImageProcessingService
             return $this->emptyUrls();
         }
 
+        return Cache::rememberForever(
+            "media_urls:{$this->disk}:{$originalPath}",
+            fn () => $this->resolveAllUrls($originalPath)
+        );
+    }
+
+    private function resolveAllUrls(string $originalPath): array
+    {
         // Extract base path
         if (!preg_match('/^(.+)_(original|thumbnail|small|medium|large)\.(webp|avif)$/', $originalPath, $matches)) {
             // Legacy path

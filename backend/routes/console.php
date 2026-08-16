@@ -9,3 +9,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('social-media:fetch')->dailyAt('06:00');
+Schedule::command('fanclub:expire-memberships')->dailyAt('00:10');
+Schedule::command('fanclub:prune-pending-registrations')->dailyAt('03:00');

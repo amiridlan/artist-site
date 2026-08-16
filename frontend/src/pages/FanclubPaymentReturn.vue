@@ -102,16 +102,20 @@ const tierLabel = computed(() => tier.value === 'gold' ? t('fanclub.tiers.gold')
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
 
 onMounted(async () => {
-  const billCode = route.query.billcode as string | undefined
-  const status   = route.query.status   as string | undefined  // '1' paid, '3' failed
+  // Billplz redirects the browser back with bracket-style query params:
+  // ?billplz[id]=...&billplz[paid]=true|false&billplz[paid_at]=...&billplz[x_signature]=...
+  const billCode = route.query['billplz[id]'] as string | undefined
+  const paid     = route.query['billplz[paid]'] as string | undefined  // 'true' | 'false'
 
   if (!billCode) {
     state.value = 'failed'
     return
   }
 
-  if (status === '3') {
-    // ToyyibPay explicitly told us it failed — still fetch type info
+  if (paid === 'false') {
+    // Billplz explicitly told us it failed — still fetch type info, but the
+    // real status is confirmed server-side via a live re-query, not trusted
+    // from this query param alone.
     await checkStatus(billCode, true)
     state.value = 'failed'
     return

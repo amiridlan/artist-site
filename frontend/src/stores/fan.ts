@@ -69,9 +69,9 @@ export const useFanStore = defineStore('fan', () => {
   }
 
   /**
-   * Pre-registration: validate + create ToyyibPay bill.
+   * Pre-registration: validate + create Billplz bill.
    * Account is only created AFTER successful payment.
-   * Returns the ToyyibPay bill URL to redirect the user to.
+   * Returns the Billplz bill URL to redirect the user to.
    */
   async function preRegister(payload: {
     name: string

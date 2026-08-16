@@ -28,7 +28,7 @@ Route::prefix('fan')->group(function () {
     // Public — no auth needed
     Route::post('/login',          [FanAuthController::class,  'login']);
     Route::post('/pre-register',   [FanPaymentController::class, 'preRegister']);  // step 1 of registration
-    Route::post('/payment/callback', [FanPaymentController::class, 'callback']);   // ToyyibPay server callback
+    Route::post('/payment/callback', [FanPaymentController::class, 'callback']);   // Billplz server callback
     Route::get('/payment/status',    [FanPaymentController::class, 'status']);     // return-page polling
 
     // Authenticated fans

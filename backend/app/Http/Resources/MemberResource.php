@@ -24,12 +24,10 @@ class MemberResource extends JsonResource
                 'native' => $this->name_native,
             ],
             'nickname' => $this->nickname,
-            // Default URLs (WebP medium for best compatibility/quality balance)
-            'photo' => $photoUrls['webp']['medium'] ?? $photoUrls['webp']['original'],
+            // 'small' (300px) is enough for the members grid; falls back to
+            // 'medium'/'original' for images uploaded before 'small' existed.
+            'photo' => $photoUrls['webp']['small'] ?? $photoUrls['webp']['medium'] ?? $photoUrls['webp']['original'],
             'coverImage' => $coverUrls['webp']['large'] ?? $coverUrls['webp']['original'],
-            // All sizes and formats for responsive images
-            'photoSizes' => $photoUrls,
-            'coverImageSizes' => $coverUrls,
             'generation' => $this->generation,
             'birthdate' => $this->birthdate,
             'age' => $this->age,
