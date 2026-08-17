@@ -124,6 +124,18 @@
             </NavItem>
           </div>
 
+          <!-- Compliance Section -->
+          <div v-if="canViewContracts" class="space-y-0.5">
+            <div class="px-3 py-1.5 rounded-md bg-gray-50 dark:bg-gray-800 border-l-2 border-teal-500">
+              <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Compliance</p>
+            </div>
+
+            <NavItem :href="route('admin.contracts.index')" :active="isActive('admin.contracts')">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              Contracts
+            </NavItem>
+          </div>
+
           <!-- Analytics Section -->
           <div class="space-y-0.5">
             <div class="px-3 py-1.5 rounded-md bg-gray-50 dark:bg-gray-800 border-l-2 border-teal-500">
@@ -133,6 +145,11 @@
             <NavItem :href="route('admin.social-media.index')" :active="isActive('admin.social-media')">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
               Social Media
+            </NavItem>
+
+            <NavItem v-if="canViewReports" :href="route('admin.reports.index')" :active="isActive('admin.reports')">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17V9m4 8V5m4 12v-4M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              Reports
             </NavItem>
           </div>
 
@@ -356,6 +373,8 @@ const handleLogout = () => {
 // Permission checks for navigation
 const canManageKanban = computed(() => auth.value.can?.['manage-kanban'] || false)
 const canManageResources = computed(() => auth.value.can?.['manage-resources'] || false)
+const canViewContracts = computed(() => auth.value.can?.['view-contracts'] || false)
+const canViewReports = computed(() => auth.value.can?.['view-reports'] || false)
 
 const isActive = (name) => page.url.startsWith('/' + name.replace('admin.', 'admin/').replace(/\./g, '/'))
 

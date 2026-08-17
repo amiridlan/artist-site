@@ -43,6 +43,10 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'override-conflicts']); // Super Admin only
         Permission::create(['name' => 'view-conflict-logs']);
         Permission::create(['name' => 'resolve-conflicts']);
+        Permission::create(['name' => 'manage-documents']); // Super Admin only
+        Permission::create(['name' => 'manage-contracts']); // Super Admin only
+        Permission::create(['name' => 'view-contracts']);
+        Permission::create(['name' => 'view-reports']);
 
         // Create roles and assign permissions
 
@@ -65,6 +69,8 @@ class RolePermissionSeeder extends Seeder
             'view-all-schedules',
             'manage-kanban',
             'view-conflict-logs',
+            'view-contracts',
+            'view-reports',
         ]);
 
         // 3. Events Department
@@ -83,6 +89,8 @@ class RolePermissionSeeder extends Seeder
             'manage-resources',
             'manage-kanban',
             'view-conflict-logs',
+            'view-contracts',
+            'view-reports',
         ]);
 
         // 4. Artist Role

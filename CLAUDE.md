@@ -233,6 +233,37 @@ vue-draggable-plus
 spatie/laravel-permission
 ```
 
+## Compliance, Contracts & Reporting
+
+### Overview
+Extends the admin panel with private compliance document storage, contract lifecycle tracking, an internal analytics dashboard, and proactive fan-club email notifications.
+
+### Compliance Documents
+- Private document storage (signed contracts, IDs, guardian-consent forms) attached to Members via a polymorphic `documents` table (mirrors the `conflict_logs` pattern: manually-indexed `documentable_type`/`documentable_id`, not `$table->morphs()`).
+- Storage: private disk (`documents_disk`, defaults to local in dev, `r2-documents` in production), signed URLs only with a 15-minute expiry — never publicly served, unlike member photos.
+- Access: `manage-documents` permission, Super Admin only.
+- Files: `App\Models\Document`, `App\Services\DocumentStorageService`, `App\Http\Controllers\Admin\DocumentController`. Surfaced inline on `Members/Show.vue` (no separate index page).
+
+### Contracts
+- `contracts` table per Member: start/end dates, exclusivity terms, status (active/expired/terminated), optional link to a signed-contract `Document`.
+- Own admin section (`/admin/contracts`) with status/member filters and an "expiring soon" highlight (`config('contracts.renewal_lookahead_days')`, default 60 days).
+- Contract renewal deadlines are merged onto the existing FullCalendar admin calendar as a second, amber-colored event layer — **not** added to the `schedule_events.type` enum. `CalendarController::events()` merges `Contract` rows into the same JSON response at request time, gated behind `view-contracts`.
+- Access: `manage-contracts` (Super Admin only), `view-contracts` (Super Admin, Marketing Dept, Events Dept).
+- Files: `App\Models\Contract`, `App\Http\Controllers\Admin\ContractController`, `resources/js/Pages/Admin/Contracts/`.
+
+### Reporting Dashboard
+- New `/admin/reports` page, separate from the main `/admin` dashboard (kept separate so the day-to-day landing page doesn't bloat with every new chart).
+- Three charts via the already-installed Chart.js v4 + vue-chartjs v5 (no new dependency): schedule load per member (bar), conflict frequency + by-type breakdown (line + doughnut), fanclub revenue trend by tier (grouped bar, keyed off `paid_at` on `FanclubSubscription`, not `created_at`).
+- Access: `view-reports` (Super Admin, Marketing Dept, Events Dept).
+- Files: `App\Http\Controllers\Admin\ReportController`, `resources/js/Pages/Admin/Reports/Index.vue`.
+
+### Fan-Facing Notifications
+- Two scheduled artisan commands dispatch queueable Mailables via the existing `QUEUE_CONNECTION=database` + `composer run dev`'s concurrent `queue:listen`/`schedule:work` — no extra local setup needed.
+  - `fanclub:send-renewal-reminders` (dailyAt 08:00) — emails active members within `config('fanclub.renewal_reminder_days')` (default 30 days) of their `expires_at`, de-duped via a `renewal_reminder_sent_at` timestamp that self-resets on renewal.
+  - `fanclub:send-content-digest` (weeklyOn Monday 09:00) — emails active members a weekly summary of new events/releases/news.
+- English-only v1 — no locale field exists on `FanclubMember` yet, so this doesn't respect the EN/MS/JA system.
+- Files: `App\Mail\RenewalReminderMail`, `App\Mail\WeeklyContentDigestMail`, `App\Console\Commands\SendFanclubRenewalReminders`, `App\Console\Commands\SendFanclubContentDigest`.
+
 ## Admin Panel UI/UX Features
 
 ### Sidebar Layout (v2.0 - 2026-07-26)
@@ -315,6 +346,33 @@ Comprehensive dark mode implementation across all admin pages:
 - Uses Tailwind's `dark:` variant classes
 - HTML `<html class="dark">` toggle pattern
 - All admin components support both themes
+
+## Future Implementations
+
+The following pain points have been scoped and planned but **not yet implemented**. Full technical plans (schemas, controllers, RBAC additions, risk flags, and open questions) live in `docs/feature-roadmap-finance-compliance.md` — treat this list as an index, not the source of truth.
+
+**Phase 1 — ready to implement, no open questions:**
+- Contract-to-work traceability: link each `Contract` to the `ScheduleEvent`(s) it governs
+- Sign-off/approval trail for contracts, rates, and final kanban deliverables (single Super-Admin approver)
+- Brand/partner deal pipeline (lead → negotiating → signed → lost stages)
+- Additional reports: expiring contracts, content velocity
+
+**Phase 2 — drafted, needs a dedicated pre-implementation review (highest financial-trust risk on the roadmap):**
+- Revenue splitting between group and individual members — record-only, no payout calculation or automation
+- Cost tracking per event/project, with submitter/approver separation enforced
+
+**Phase 3 — drafted, blocked on HR/legal sign-off before go-live:**
+- Central sensitive member record: sizing, structured health notes (allergies/conditions/medications), passport/visa, emergency contacts
+- Encrypted at rest; Super-Admin-configurable per-department access toggle (not a static permission); read-access audit log
+- Retention window after member departure is still unconfirmed — do not build purge logic without sign-off
+
+**Phase 4 — drafted:**
+- Recurring royalty income reconciliation (Spotify, YouTube, PPM, MACP) — manual entry and reconciliation only, no platform API integration
+- Earnings trend and commission-total reporting (depends on Phase 2's data existing)
+
+**Phase 5 — drafted, confirmed in-scope (4+ international gigs/year, some members hold composer credits):**
+- Visa/permit checklist tracker per member per international event
+- MACP (composer) and RPM (performer) royalty society registration status tracking — status only, never calculates amounts
 
 ## Testing
 

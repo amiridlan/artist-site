@@ -23,6 +23,7 @@ class FanclubMember extends Model implements AuthenticatableContract
         'benefits',
         'joined_at',
         'expires_at',
+        'renewal_reminder_sent_at',
         'notes',
     ];
 
@@ -37,6 +38,7 @@ class FanclubMember extends Model implements AuthenticatableContract
             'benefits'          => 'array',
             'joined_at'         => 'date',
             'expires_at'        => 'date',
+            'renewal_reminder_sent_at' => 'datetime',
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
         ];

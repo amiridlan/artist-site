@@ -21,6 +21,9 @@ return [
     // Fan club protected content (behind paywall)
     'fanclub_disk' => env('FANCLUB_DISK', 'public'),
 
+    // Compliance documents (signed contracts, IDs, guardian consent) - private by default
+    'documents_disk' => env('DOCUMENTS_DISK', 'local'),
+
     'media_fallback_disk' => env('MEDIA_FALLBACK_DISK'),
     'media_mirror' => env('MEDIA_MIRROR', false),
 
@@ -92,6 +95,20 @@ return [
             'bucket'                  => env('R2_FANCLUB_BUCKET', 'klp48-media-fanclub'),
             'url'                     => null, // No public URL - access controlled via signed URLs
             'endpoint'                => env('R2_FANCLUB_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+            'throw'                   => false,
+            'report'                  => false,
+        ],
+
+        // Cloudflare R2 - Compliance Documents (private, no CDN)
+        'r2-documents' => [
+            'driver'                  => 's3',
+            'key'                     => env('R2_DOCUMENTS_ACCESS_KEY_ID'),
+            'secret'                  => env('R2_DOCUMENTS_SECRET_ACCESS_KEY'),
+            'region'                  => 'auto',
+            'bucket'                  => env('R2_DOCUMENTS_BUCKET', 'klp48-compliance-documents'),
+            'url'                     => null, // No public URL - access controlled via signed URLs
+            'endpoint'                => env('R2_DOCUMENTS_ENDPOINT'),
             'use_path_style_endpoint' => true,
             'throw'                   => false,
             'report'                  => false,

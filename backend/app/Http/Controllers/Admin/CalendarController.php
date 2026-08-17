@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contract;
 use App\Models\ScheduleEvent;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,7 +13,7 @@ class CalendarController extends Controller
     /**
      * Display the calendar view.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', ScheduleEvent::class);
 
@@ -30,6 +31,7 @@ class CalendarController extends Controller
                 ->orderBy('name_english')
                 ->get(['id', 'name_english as name'])
                 ->toArray(),
+            'showContractRenewals' => $request->user()->can('view-contracts'),
         ]);
     }
 
@@ -102,6 +104,38 @@ class CalendarController extends Controller
                 ],
             ];
         });
+
+        if ($request->boolean('show_contract_renewals') && $request->user()->can('view-contracts')) {
+            $contractsQuery = Contract::with('member')->where('status', 'active');
+
+            if ($request->filled('start')) {
+                $contractsQuery->where('end_date', '>=', $request->start);
+            }
+            if ($request->filled('end')) {
+                $contractsQuery->where('end_date', '<=', $request->end);
+            }
+
+            $contractEvents = $contractsQuery->get()->map(function (Contract $contract) use ($request) {
+                return [
+                    'id' => 'contract-' . $contract->id,
+                    'title' => "Contract Renewal — {$contract->member->name_english}",
+                    'start' => $contract->end_date->toDateString(),
+                    'end' => $contract->end_date->toDateString(),
+                    'allDay' => true,
+                    'backgroundColor' => '#f59e0b',
+                    'borderColor' => '#f59e0b',
+                    'extendedProps' => [
+                        'type' => 'contract_renewal',
+                        'status' => $contract->status,
+                        'members' => [$contract->member->name_english],
+                        'canEdit' => $request->user()->can('manage-contracts'),
+                        'contractId' => $contract->id,
+                    ],
+                ];
+            });
+
+            $calendarEvents = $calendarEvents->merge($contractEvents);
+        }
 
         return response()->json($calendarEvents);
     }

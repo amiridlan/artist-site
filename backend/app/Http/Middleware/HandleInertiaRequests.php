@@ -30,6 +30,10 @@ class HandleInertiaRequests extends Middleware
                     'manage-resources' => $user->can('manage-resources'),
                     'view-all-schedules' => $user->can('view-all-schedules'),
                     'override-conflicts' => $user->can('override-conflicts'),
+                    'manage-documents' => $user->can('manage-documents'),
+                    'manage-contracts' => $user->can('manage-contracts'),
+                    'view-contracts' => $user->can('view-contracts'),
+                    'view-reports' => $user->can('view-reports'),
                 ] : null,
             ],
             'flash' => [

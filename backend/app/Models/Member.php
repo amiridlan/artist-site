@@ -5,10 +5,28 @@ namespace App\Models;
 use App\Models\Concerns\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Member extends Model
 {
     use HasFactory, HasTranslations;
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
+
+    public function contracts(): HasMany
+    {
+        return $this->hasMany(Contract::class);
+    }
+
+    public function scheduleEvents(): BelongsToMany
+    {
+        return $this->belongsToMany(ScheduleEvent::class, 'member_schedule_event');
+    }
 
     public function getTranslatableFields(): array
     {

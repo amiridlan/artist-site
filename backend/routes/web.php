@@ -3,13 +3,16 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\ConflictLogController;
+use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FanclubController;
 use App\Http\Controllers\Admin\KanbanCardController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ReleaseController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ResourceController as AdminResourceController;
 use App\Http\Controllers\Admin\ScheduleEventController;
 use App\Http\Controllers\Admin\SocialMediaController;
@@ -29,11 +32,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('members', MemberController::class);
+        Route::post('members/{member}/documents', [DocumentController::class, 'store'])->name('members.documents.store');
+        Route::get('documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+        Route::delete('documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
         Route::resource('news', NewsController::class)->except(['show']);
         Route::resource('releases', ReleaseController::class)->except(['show']);
         Route::resource('videos', VideoController::class)->except(['show']);
         Route::resource('events', EventController::class)->except(['show']);
         Route::resource('fanclub', FanclubController::class)->except(['show']);
+
+        Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
 
         Route::get('social-media', [SocialMediaController::class, 'index'])->name('social-media.index');
         Route::post('social-media/sync', [SocialMediaController::class, 'sync'])->name('social-media.sync');
@@ -58,6 +66,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Conflict Logs
         Route::get('conflict-logs', [ConflictLogController::class, 'index'])->name('conflict-logs.index');
         Route::post('conflict-logs/{conflictLog}/resolve', [ConflictLogController::class, 'resolve'])->name('conflict-logs.resolve');
+
+        // Contracts
+        Route::get('contracts', [ContractController::class, 'index'])->name('contracts.index');
+        Route::get('members/{member}/contracts/create', [ContractController::class, 'create'])->name('members.contracts.create');
+        Route::post('members/{member}/contracts', [ContractController::class, 'store'])->name('members.contracts.store');
+        Route::get('contracts/{contract}/edit', [ContractController::class, 'edit'])->name('contracts.edit');
+        Route::put('contracts/{contract}', [ContractController::class, 'update'])->name('contracts.update');
+        Route::delete('contracts/{contract}', [ContractController::class, 'destroy'])->name('contracts.destroy');
     });
 });
 

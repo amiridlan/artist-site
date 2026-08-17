@@ -80,6 +80,8 @@ class MemberController extends Controller
 
     public function show(Member $member): Response
     {
+        $member->load('documents.uploadedBy', 'contracts');
+
         return Inertia::render('Admin/Members/Show', [
             'member'       => $member,
             'translations' => $this->loadTranslations($member, $this->translatableFields),

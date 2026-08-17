@@ -57,6 +57,21 @@
           </div>
         </div>
 
+        <!-- Contract Renewals Toggle -->
+        <div v-if="showContractRenewals" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4">
+          <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Compliance</h3>
+          <label class="flex items-center gap-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 px-2 py-1.5 rounded transition-colors">
+            <input
+              type="checkbox"
+              v-model="contractRenewalsVisible"
+              @change="applyFilters"
+              class="rounded text-teal-600 dark:text-teal-500 focus:ring-teal-500 dark:focus:ring-teal-400 border-gray-300 dark:border-gray-600 dark:bg-gray-800"
+            />
+            <span class="w-3 h-3 rounded-full flex-shrink-0" style="background-color: #f59e0b"></span>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Contract Renewals</span>
+          </label>
+        </div>
+
         <!-- Additional Filters -->
         <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4">
           <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Filters</h3>
@@ -121,7 +136,7 @@
           <div class="space-y-3 text-sm">
             <div>
               <span class="text-gray-500 dark:text-gray-400">Type:</span>
-              <span class="ml-2 font-medium text-gray-900 dark:text-gray-100">{{ eventTypes[selectedEvent.extendedProps.type] }}</span>
+              <span class="ml-2 font-medium text-gray-900 dark:text-gray-100">{{ typeLabel(selectedEvent.extendedProps.type) }}</span>
             </div>
             <div>
               <span class="text-gray-500 dark:text-gray-400">Status:</span>
@@ -161,7 +176,14 @@
 
           <div class="mt-6 flex gap-3">
             <Link
-              v-if="selectedEvent.extendedProps.canEdit"
+              v-if="selectedEvent.extendedProps.canEdit && selectedEvent.extendedProps.type === 'contract_renewal'"
+              :href="route('admin.contracts.edit', selectedEvent.extendedProps.contractId)"
+              class="btn-primary text-sm flex-1"
+            >
+              Edit Contract
+            </Link>
+            <Link
+              v-else-if="selectedEvent.extendedProps.canEdit"
               :href="route('admin.schedule-events.edit', selectedEvent.id)"
               class="btn-primary text-sm flex-1"
             >
@@ -189,7 +211,8 @@ import listPlugin from '@fullcalendar/list'
 
 const props = defineProps({
   eventTypes: Object,
-  members: Array
+  members: Array,
+  showContractRenewals: Boolean
 })
 
 const page = usePage()
@@ -201,11 +224,16 @@ const activePreset = ref('all')
 const savedPrefs = JSON.parse(localStorage.getItem('calendarPreferences') || '{}')
 
 const visibleTypes = ref(savedPrefs.visibleTypes || Object.keys(props.eventTypes))
+const contractRenewalsVisible = ref(savedPrefs.contractRenewalsVisible ?? true)
 const filters = ref({
   status: savedPrefs.status || '',
   member: savedPrefs.member || '',
   myEventsOnly: savedPrefs.myEventsOnly || false
 })
+
+function typeLabel(type) {
+  return type === 'contract_renewal' ? 'Contract Renewal' : props.eventTypes[type]
+}
 
 // Quick View Presets
 const quickViewPresets = [
@@ -243,7 +271,8 @@ async function fetchEvents(info) {
     types: visibleTypes.value.join(','),
     ...(filters.value.status && { status: filters.value.status }),
     ...(filters.value.member && { member: filters.value.member }),
-    ...(filters.value.myEventsOnly && { my_events: '1' })
+    ...(filters.value.myEventsOnly && { my_events: '1' }),
+    ...(props.showContractRenewals && contractRenewalsVisible.value && { show_contract_renewals: '1' })
   })
 
   const response = await fetch(route('admin.calendar.events') + '?' + params)
@@ -305,7 +334,8 @@ function savePreferences() {
     visibleTypes: visibleTypes.value,
     status: filters.value.status,
     member: filters.value.member,
-    myEventsOnly: filters.value.myEventsOnly
+    myEventsOnly: filters.value.myEventsOnly,
+    contractRenewalsVisible: contractRenewalsVisible.value
   }))
 }
 
